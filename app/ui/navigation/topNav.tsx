@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import clsx from "clsx";
 import ProfileDropdown from "./profileDropdown";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { set } from "zod";
-import { deleteToken, readToken, reload, updateLastRoute } from "@/app/lib/cookie";
+import { deleteToken, readToken,} from "@/app/lib/cookie";
 
 const exception = ["/login"];
 
@@ -37,10 +35,9 @@ export default function Topnav() {
       setVisible(false);
     } else {
       setVisible(true);
-      updateLastRoute(pathName)
     }
 
-  }, [pathName]); // 라우트가 변경될 때마다 실행
+  }, []); // 라우트가 변경될 때마다 실행
 
   return (
     <>
