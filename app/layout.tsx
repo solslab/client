@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./ui/global.css";
 import Topnav from "./ui/navigation/topNav";
+import LastPathSetter from "./ui/lastPathSetter";
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
   display: "swap",
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="kr" className={`${pretendard.variable}`}>
       <body className={pretendard.className}>
         <Topnav/>
+        <LastPathSetter/>
         <main className="min-h-screen pt-16">
         {children}
         </main>
