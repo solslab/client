@@ -5,13 +5,14 @@ import PositionSelectBox from "./positionSelectBox";
 import Image from "next/image";
 import InfoItem from "./infoItem";
 import LanguageBox from "../languageBox";
+import Link from "next/link";
 
 export default function TestInfo({positions,position_id, data }:{positions:Position[],position_id:string,data: TestData}) {
 
   return (
     <Container className={"px-0 bg-white rounded-md"}>
-    <div className="w-full rounded-md">
-      <div className="flex flex-col  items-center justify-between border-b border-gray-300 py-7">
+    <div className="w-full rounded-md text-gray-90" >
+      <div className="flex flex-col  items-center justify-between border-b border-gray-30 py-7">
         <div className="w-full px-6">
           <div className="flex flex-row w-full flex-wrap mb-4">
             <div className=" w-full md:w-1/4 text-base my-auto">
@@ -34,8 +35,9 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
                   <LanguageBox key={language} language={language}/>
                 ))
               ) : (
-                <div className="flex py-2 px-6 bg-gray-200 rounded-3xl mt-4 md:mt-0">
-                  <div>
+                <>
+                <div className="flex py-2 px-6 bg-gray-5 rounded-3xl mt-4 md:mt-0">
+                  <div className="flex items-center">
                     <Image
                       src={"/icons/lock.png"}
                       width={24}
@@ -43,17 +45,21 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
                       alt="time icon"
                     />
                   </div>
-                  <div className="text-sm ml-2 my-auto ">
+                  <div className="text-sm ml-4 my-auto text-gray-70 ">
                     회원에게만 공개된 정보입니다.
                   </div>
                 </div>
+                <Link href='/login' className="py-3 px-6 ml-6 mt-4 sm:mt-0 rounded-md border-2 font-semibold border-main-base text-main-base">
+                3초만에 가입하기!
+              </Link>
+              </>
               )}
             </div>
           </div>
         </div>
       </div>
-      <div className="border-b border-gray-300 py-7">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 w-full px-6">
+      <div className="border-b border-gray-30 py-7">
+        <div className="grid grid-cols-1 gap-y-4 gap-x-16 md:grid-cols-2 w-full px-6">
           <InfoItem
             src={"/icons/calendar.png"}
             label={"시험시간"}
@@ -94,7 +100,7 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
       <div className=" py-7">
         <div className="w-full px-6">
           <label>참고사항</label>
-          <div className="bg-gray-200 p-4 mt-4 rounded-md">
+          <div className="bg-gray-5 p-4 mt-4 rounded-md">
             {data.note}
           </div>
         </div>

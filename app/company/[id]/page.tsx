@@ -7,9 +7,11 @@ import InfoItem from "@/app/ui/company/infoItem";
 import PositionSelectBox from "@/app/ui/company/positionSelectBox";
 import SectionButton from "@/app/ui/company/sectionButton";
 import TestInfo from "@/app/ui/company/testInfo";
+import TrLink from "@/app/ui/company/trLink";
 import Container from "@/app/ui/container";
 import LanguageBox from "@/app/ui/languageBox";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 const menuList = [
   {
@@ -42,7 +44,7 @@ export default async function Page({
   return (
     <>
       <div className="w-full bg-cyan-400 h-28 md:h-48 lg:h-60"></div>
-      <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-300 relative">
+      <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative">
         <Container>
           <div
             className="bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem]"
@@ -53,9 +55,9 @@ export default async function Page({
           </div>
         </Container>
       </div>
-      <div className="flex flex-col  items-center justify-between border-b border-gray-300">
+      <div className="flex flex-col  items-center justify-between border-b border-gray-30">
         <Container className={"px-0"}>
-          <div className="w-full flex h-12 items-stretch">
+          <div className="w-full flex h-12 ">
             {menuList.map((menu) => (
               <SectionButton
                 key={menu.label + menu.query}
@@ -70,8 +72,8 @@ export default async function Page({
           <>
             <TestInfo positions={positions} position_id={position_id} data={data} />
             <Container>
-              <div className="flex flex-wrap justify-between py-7 w-full">
-                <div className=" text-sm mb-4 md:mb-0 text-gray-400 w-full md:w-1/2 flex flex-col justify-center">
+              <div className="flex flex-wrap justify-between py-7 w-full text-gray-70">
+                <div className=" text-sm mb-4 md:mb-0  w-full md:w-1/2 flex flex-col justify-center">
                   위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
                   채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수
                   있습니다.
@@ -80,25 +82,27 @@ export default async function Page({
                 </div>
                 <div className="w-full md:w-1/2 flex justify-end">
                   <div className="flex justify-between w-full md:w-auto md:flex-col md:justify-center ">
-                    <div className=" text-sm text-gray-400 text-center my-auto md:mb-4">
+                    <div className=" text-sm  text-center my-auto md:mb-4">
                       잘못된 정보가 있나요?
                     </div>
-                    <button className="py-3 px-6  w-36 rounded-md bg-sky-100 text-indigo-800">
+                    <Link  href={`/company/${company_id}/suggestion?position=${position_id}`} className="py-3 px-6  w-36 rounded-md bg-main-light text-main-base">
                       정보 수정 요청
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </Container>
           </>
         ) : (
-          <Container className={"px-0"}>
-            <div className="w-full bg-white mt-10 rounded-md">
-              <div className="w-full h-80">
-                <div className=" text-center text-3xl text-text-base">오픈 준비중!<br/>정보 제공을 위해 후기를 모으고 있어요.</div>
-                <button className="text-2xl">코딩 테스트 후기 작성하기</button>
+          
+          <Container className="bg-white rounded-md">
+            <div className="w-full mt-10 min-h-80 flex flex-col justify-center items-center text-text-base">
+
+                <div className=" text-center text-3xl mb-4">오픈 준비중!</div>
+                <div className=" text-center text-3xl mb-10">정보 제공을 위해 후기를 모으고 있어요.</div>
+                <TrLink/>
               </div>
-            </div>
+
 
           </Container>
 
