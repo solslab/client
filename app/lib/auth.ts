@@ -1,12 +1,7 @@
 import { getToken } from "./cookie";
 
 const url = process.env.SPRING_URL
-
-export async function signIn() {
-}
 export async function signOut() {
-}
-export async function join() {
 }
 
 
@@ -17,6 +12,9 @@ export async function tokenTest() {
             'Cache-Control': 'no-cache'
         };
         const token = await getToken();
+        if (!token) {
+            return null
+        }
         const value = token?.value;
         if (value) {
             headers['Authorization'] = `Bearer ${value}`;
@@ -25,14 +23,13 @@ export async function tokenTest() {
             method: 'GET',
             headers: headers
         });
-        const status = response.status
-        if(status !=200){
-            return false
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
         }
         const data = await response.json();
         return data;
     }
     catch (error) {
-
+        return false
     }
 }
