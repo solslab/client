@@ -1,7 +1,6 @@
-import { usePathname } from "next/navigation";
+
 import { getToken } from "./cookie";
 const url = process.env.SPRING_URL;
-const nextUrl = process.env.NEXT_URL;
 
 export const fetchCompanyData = async () => {
     try {
@@ -87,9 +86,7 @@ export const fetchPositionData = async (id: string) => {
         if (!response.ok) {
             throw new Error(`${response.status}`);
         }
-        const newToken = response.headers.get('Authorization');
         const data = await response.json();
-
         return data
 
     } catch (error) {
@@ -97,19 +94,31 @@ export const fetchPositionData = async (id: string) => {
     }
 };
 
-export const redirectWithLogout = async (path: string) => {
+export const fetchProfile = async () => {
+    const headers: { 'Content-Type': string;'Cache-Control':string; 'Authorization'?: string } = {
+        'Content-Type': 'application/json' ,
+        'Cache-Control': 'no-cache'
+    };
+    const token = await getToken();
+    const value = token?.value ;
+    if(value){
+        headers['Authorization'] = `Bearer ${value}`; 
+    }
+
+
     try {
-        const response = await fetch(`http://localhost:3001/api/logout?path=${path}`, {
+        const response = await fetch(`${url}/member`, {
             method: 'GET',
-            headers: {
-            },
+            headers: headers,
         });
 
         if (!response.ok) {
-            throw new Error(`오류 발생: ${response.status}`);
+            throw new Error(`${response.status}`);
         }
+        const data = await response.json();
+        return data
+
     } catch (error) {
         console.error('Fetch 요청 중 오류 발생:', error);
     }
 };
-
