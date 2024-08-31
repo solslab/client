@@ -1,19 +1,16 @@
-import { tokenTest } from "@/app/lib/auth";
 import {
-  fetchCompanyData,
   fetchCompanyDetail,
   fetchPositionData,
-  redirectWithLogout,
 } from "@/app/lib/data";
 import { Company, Position, TestData } from "@/app/lib/definitions";
 import InfoItem from "@/app/ui/company/infoItem";
 import PositionSelectBox from "@/app/ui/company/positionSelectBox";
 import SectionButton from "@/app/ui/company/sectionButton";
+import TestInfo from "@/app/ui/company/testInfo";
 import Container from "@/app/ui/container";
-import { cookies } from "next/headers";
+import LanguageBox from "@/app/ui/languageBox";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { NextResponse } from "next/server";
 const menuList = [
   {
     label: "기업정보",
@@ -24,7 +21,6 @@ const menuList = [
     query: "dataLab",
   },
 ];
-const infoList = [];
 
 export default async function Page({
   params,
@@ -72,111 +68,7 @@ export default async function Page({
       <div className="md:my-12">
         {query == menuList[0].query ? (
           <>
-            <Container className={"px-0 bg-white rounded-md"}>
-              <div className="w-full rounded-md">
-                <div className="flex flex-col  items-center justify-between border-b border-gray-300 py-7">
-                  <div className="w-full px-6">
-                    <div className="flex flex-row w-full flex-wrap mb-4">
-                      <div className=" w-full md:w-1/4 text-base my-auto">
-                        직무구분
-                      </div>
-                      <div className=" w-full md:w-3/4  mt-4 md:mt-0">
-                        <PositionSelectBox
-                          positions={positions}
-                          selected={position_id}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-row w-full flex-wrap ">
-                      <div className=" w-full md:w-1/4 text-base my-auto">
-                        지원언어
-                      </div>
-                      <div className=" w-full md:w-3/4 flex flex-wrap ">
-                        {data.support_languages.length > 0 ? (
-                          data.support_languages.map((language) => (
-                            <div
-                              key={language}
-                              className="border border-gray-400 rounded-2xl px-4 py-1 mx-2 my-2 flex"
-                            >
-                              <div className="mr-2 flex flex-col justify-center">
-                                <Image
-                                  src={`/icons/${language}.png`}
-                                  alt="language logo"
-                                  width={24}
-                                  height={24}
-                                />
-                              </div>
-                              <div>{language}</div>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="flex py-2 px-6 bg-gray-200 rounded-3xl mt-4 md:mt-0">
-                            <div>
-                              <Image
-                                src={"/icons/lock.png"}
-                                width={24}
-                                height={24}
-                                alt="time icon"
-                              />
-                            </div>
-                            <div className="text-sm ml-2 my-auto ">
-                              회원에게만 공개된 정보입니다.
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="border-b border-gray-300 py-7">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 w-full px-6">
-                    <InfoItem
-                      src={"/icons/calendar.png"}
-                      label={"시험시간"}
-                      data={data.test_time}
-                    />
-                    <InfoItem
-                      src={"/icons/messageCode.png"}
-                      label={"문제수"}
-                      data={data.problem_info}
-                    />
-                    <InfoItem
-                      src={"/icons/jump.png"}
-                      label={"IDE사용"}
-                      data={data.permit_ide}
-                    />
-                    <InfoItem
-                      src={"/icons/glassEye.png"}
-                      label={"구글링"}
-                      data={data.permit_search}
-                    />
-                    <InfoItem
-                      src={"/icons/interrogation.png"}
-                      label={"히든 테스트케이스"}
-                      data={data.hidden_case}
-                    />
-                    <InfoItem
-                      src={"/icons/document.png"}
-                      label={"시험방식"}
-                      data={data.exam_mode}
-                    />
-                    <InfoItem
-                      src={"/icons/marker.png"}
-                      label={"응시장소 / 플랫폼"}
-                      data={data.test_place}
-                    />
-                  </div>
-                </div>
-                <div className=" py-7">
-                  <div className="w-full px-6">
-                    <label>참고사항</label>
-                    <div className="bg-gray-200 p-4 mt-4 rounded-md">
-                      {data.note}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Container>
+            <TestInfo positions={positions} position_id={position_id} data={data} />
             <Container>
               <div className="flex flex-wrap justify-between py-7 w-full">
                 <div className=" text-sm mb-4 md:mb-0 text-gray-400 w-full md:w-1/2 flex flex-col justify-center">
@@ -200,7 +92,16 @@ export default async function Page({
             </Container>
           </>
         ) : (
-          <div>데이터랩 준비중~</div>
+          <Container className={"px-0"}>
+            <div className="w-full bg-white mt-10 rounded-md">
+              <div className="w-full h-80">
+                <div className=" text-center text-3xl text-text-base">오픈 준비중!<br/>정보 제공을 위해 후기를 모으고 있어요.</div>
+                <button className="text-2xl">코딩 테스트 후기 작성하기</button>
+              </div>
+            </div>
+
+          </Container>
+
         )}
       </div>
     </>
