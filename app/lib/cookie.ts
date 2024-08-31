@@ -5,6 +5,10 @@ import { cookies } from 'next/headers'
 export async function updateLastRoute(path:string) {
     cookies().set('sols-lastPath', path)
 }
+export async function getLastRoute() {
+    const path = cookies().get('sols-lastPath');
+    return path
+}
 
 export async function updateToken(token: string) {
     cookies().set('sols-accessToken', token)
