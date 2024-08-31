@@ -21,6 +21,11 @@ export interface Company {
     company_logo: string;
     positions:Position[];
 }
+export interface CompanyQuery {
+    company_id:string;
+    company_name: string;
+    company_logo: string;
+}
 export interface Position {
     position_id:string;
     position_name:string;
@@ -38,4 +43,16 @@ export interface TestData {
     exam_mode: string;
     test_place: string;
     note: string;
+  }
+
+  export interface Profile {
+    name: string;
+    nickname: string;
+    email: string;
+    al_platform: string;
+    member_tier: number;
+    prefer_languages: string[]
+    prefer_industries: string[]
+    social_type: string;
+    created_date: string;
   }
