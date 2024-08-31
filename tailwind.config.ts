@@ -29,6 +29,7 @@ const config: Config = {
         'custom-purple-1': '#2C2B38',
         'custom-purple-2': '#3E2E51',
         'text-base': '#4A4C4F',
+        "gray-5": "#F6F7F8",
         'gray-10': '#ECEEF0',
         "gray-20": "#E8E9EB",
         "gray-30": "#E3E4E6",
