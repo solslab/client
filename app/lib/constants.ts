@@ -1,4 +1,4 @@
-const SKILLS = [
+export const SKILLS = [
     "C",
     "C++",
     "C#",
@@ -13,11 +13,30 @@ const SKILLS = [
     "SQL",
     "Oracle"
   ];
+  export const SKILLS_LOGO :{
+    [key: string]: { logo: string };
+  } = {
+    C: { logo: "/icons/c.png" },
+    "C++": { logo: "/icons/cpp.png" },
+    "C#": { logo: "/icons/cSharp.png" },
+    Java: { logo: "/icons/java.png" },
+    JavaScript: { logo: "/icons/javaScript.png" },
+    Kotlin: { logo: "/icons/kotlin.png" },
+    Python: { logo: "/icons/python.png" },
+    Go: { logo: "/icons/go.png" },
+    Ruby: { logo: "/icons/ruby.png" },
+    Scala: { logo: "/icons/scala.png" },
+    Swift: { logo: "/icons/swift.png" },
+    SQL: { logo: "/icons/sql.png" },
+    Oracle: { logo: "/icons/oracle.png" }
+  };
 
-  const PLATFORM = [
-    { platform: "선택안함", level: [] },
+  export const PLATFORMLIST = [
+    { platform: "선택안함", level: [{
+      label:'선택안함',value:0
+    }], code: "NONE" },
     {
-      platform: "백준 (solved.ac)",
+      platform: "solved.ac",
       level: [
         { label: "브론즈5", value: 1 },
         { label: "브론즈4", value: 2 },
@@ -51,6 +70,7 @@ const SKILLS = [
         { label: "루비1", value: 35 },
         { label: "마스터 (이상)", value: 36 },
       ],
+      code: "SV",
     },
     {
       platform: "프로그래머스",
@@ -61,6 +81,7 @@ const SKILLS = [
         { label: "레벨4", value: 19 },
         { label: "레벨5", value: 28 },
       ],
+      code: "PG",
     },
     {
       platform: "CodeForces",
@@ -73,5 +94,21 @@ const SKILLS = [
         { label: "1901~2100", value: 20 },
         { label: "2101~", value: 28 },
       ],
+      code: "CF",
     },
+  ];
+
+  export const FEILDLIST = [
+    "IT 서비스",
+    "금융",
+    "게임",
+    "솔루션",
+    "SI",
+    "SM",
+    "빅테크",
+    "대기업",
+    "중견기업",
+    "중소기업",
+    "스타트업",
+    "공기업",
   ];
