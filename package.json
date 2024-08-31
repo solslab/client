@@ -11,10 +11,11 @@
   "dependencies": {
     "axios": "^1.7.3",
     "clsx": "^2.1.1",
-    "next": "14.2.5",
+    "next": "15.0.0-canary.56",
     "next-auth": "^4.24.7",
-    "react": "^18",
-    "react-dom": "^18",
+    "preline": "^2.4.1",
+    "react": "19.0.0-rc-f38c22b244-20240704",
+    "react-dom": "19.0.0-rc-f38c22b244-20240704",
     "use-debounce": "^10.0.2",
     "zod": "^3.23.8"
   },
