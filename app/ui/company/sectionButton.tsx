@@ -21,8 +21,9 @@ export default function SectionButton({ menu }:{menu:Menu}) {
       return `${pathname}?${params}`;
     };
   return (
-<Link href={createPageURL(menu.query)} className={clsx(`flex flex-1  justify-center items-center min-w-0 `, {
-                        'border-b-2 border-black': query==menu.query
+<Link href={createPageURL(menu.query)} className={clsx(`flex justify-center items-center w-40 font-semibold`, {
+                        "border-b-2 border-main-base text-main-base": query==menu.query,
+                        " border-black text-text-base": query!=menu.query
                     })} >{menu.label}</Link>
   );
 }
