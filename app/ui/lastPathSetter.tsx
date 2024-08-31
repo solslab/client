@@ -6,7 +6,7 @@ import {
   updateLastRoute,
 } from "@/app/lib/cookie";
 
-const exception = ["/login"];
+const exception = ["/login","/profiles/additional"];
 
 export default function LastPathSetter() {
   const pathName = usePathname();

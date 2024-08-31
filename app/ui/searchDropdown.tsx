@@ -1,28 +1,29 @@
 import Link from "next/link";
 import { fetchFilteredCompanys } from "../lib/data";
+import { CompanyQuery } from "../lib/definitions";
 
 export default async function SearchDropDown({ query }: { query: string }) {
   const result = await fetchFilteredCompanys(query);
   return (
-    <>
-    {   result&&
-        result.map((el)=>
+    <div className="absolute  w-full  mt-2">
+      <div className="w-11/12 bg-white rounded-md mx-auto">
+      {   result&&
+        result.map((el:CompanyQuery)=>
             <Link
             href={`/company/${el.company_id}`}
             key={el.company_id}
-        className="absolute z-50 w-full bg-white border border-gray-200 rounded-lg"
-        style={{}}
-        data-hs-combo-box-output=""
+
       >
         <div
-          className="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 "
-          data-hs-combo-box-output-items-wrapper=""
+          className="py-2 px-4 hover:bg-gray-100 rounded-md"
         >
           {el.company_name}
         </div>
       </Link>)
     }
-    </>
+      </div>
+
+    </div>
 
   );
 }
