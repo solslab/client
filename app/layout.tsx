@@ -3,13 +3,13 @@ import localFont from "next/font/local";
 import "./ui/global.css";
 import Topnav from "./ui/navigation/topNav";
 import LastPathSetter from "./ui/lastPathSetter";
+import PrelineScript from "./ui/PrelineScript";
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard",
 });
-
 
 export const metadata: Metadata = {
   title: "Sols",
@@ -24,16 +24,14 @@ export default function RootLayout({
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
       <body className={pretendard.className}>
-        <Topnav/>
-        <LastPathSetter/>
-        <main className="min-h-screen pt-16">
-        {children}
-        </main>
+        <Topnav />
+        <LastPathSetter />
+        <main className="min-h-screen pt-16">{children}</main>
         <footer className="py-20">
           <div className="text-center text-gray-500 ">2024 © solslab Corp.</div>
-
         </footer>
-</body>
+      </body>
+      <PrelineScript />
     </html>
   );
 }
