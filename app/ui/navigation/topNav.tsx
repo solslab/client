@@ -3,50 +3,58 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProfileDropdown from "./profileDropdown";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { deleteToken, readToken,} from "@/app/lib/cookie";
+import { readToken,} from "@/app/lib/cookie";
+import { logOut } from "@/app/lib/auth";
+import { fetchProfile } from "@/app/lib/data";
 
-const exception = ["/login"];
+const exception = ["/company"];
 
 export default function Topnav() {
   const router = useRouter();
   const pathName = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [userName,setUserName] = useState('');
+  const [isTransparent,setIsTransparent] = useState(false);
+
+
   const logout = async () => {
-    await deleteToken();
+    await logOut(pathName);
     setIsLoggedIn(false);
-    // await reload(pathName);
   };
+  
+  const containsException = useCallback((path:string)=> {
+    return exception.some(exceptionStr => path.includes(exceptionStr));
+},[])
 
   useEffect(() => {
     async function checkToken() {
       const cookieExist = await readToken();
+      console.log(cookieExist,'@@@@')
       if (cookieExist) {
+        const profile = await fetchProfile();
         setIsLoggedIn(true);
+        setUserName(profile.nickname)
       } else {
         setIsLoggedIn(false);
       }
     }
+    
     checkToken();
 
-    if (exception.includes(pathName)) {
-      setVisible(false);
-    } else {
-      setVisible(true);
-    }
-
-  }, []); // 라우트가 변경될 때마다 실행
+   
+  }, []); 
 
   return (
     <>
       {visible ? (
-        <nav className="fixed w-full bg-white border-b-2 z-50">
+        <nav className="fixed w-full bg-white shadow  z-50">
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <button
+                {/* <button
                   type="button"
                   className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   aria-controls="mobile-menu"
@@ -82,26 +90,26 @@ export default function Topnav() {
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
-                </button>
+                </button> */}
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <Link href="/" className="flex flex-shrink-0 items-center">
                   <Image
-                    width={100}
-                    height={100}
+                    width={40}
+                    height={40}
                     className="h-8 w-auto"
-                    src="/logoExam.png"
+                    src="/icons/logo_light.png"
                     alt="Sols"
                   />
                 </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    <Link
+                    {/* <Link
                       href="/company/naver"
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:text-black"
                     >
                       Naver
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -129,10 +137,10 @@ export default function Topnav() {
                 </button> */}
                 <div className="relative ml-3">
                   {isLoggedIn ? (
-                    <ProfileDropdown logout={logout} />
+                    <ProfileDropdown userName={userName} logout={logout} />
                   ) : (
                     <Link
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:text-black "
+                      className="rounded-3xl px-5 py-2 text-sm font-medium border border-gray-40 text-text-base hover:text-black "
                       href="/login"
                     >
                       로그인 / 회원가입
