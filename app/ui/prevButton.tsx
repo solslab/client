@@ -1,4 +1,3 @@
-import clsx from "clsx";
 
 export default function PrevButton({
   text,
@@ -13,7 +12,7 @@ export default function PrevButton({
     <button
       onClick={() => onClick()}
       type='button'
-      className="w-44 mr-1 h-16 rounded-xl text-text-base bg-main-light  text-xl font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="mr-1 w-28 h-10 rounded-2xl text-text-base bg-main-light  text-xl font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
       {btnText}
     </button>
