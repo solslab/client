@@ -18,7 +18,7 @@ export default function NextButton({
       type="submit"
       onClick={() => activeOnClick && activeOnClick()}
       className={clsx(
-        `w-44 h-16 rounded-xl text-text-base cursor-default bg-gray-10  text-xl font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`,
+        `w-28 h-10 rounded-2xl text-text-base cursor-default bg-gray-10  text-xl font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`,
         {
           "bg-main-base text-white cursor-pointer": isActive,
         }
