@@ -19,11 +19,11 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   return (
         <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-            <Image src='/icons/search.png' alt="search" width={36} height={36}/>
+          <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-5">
+            <Image src='/icons/gradient_clover.png' alt="search" width={28} height={28}/>
           </div>
           <input
-            className="w-full h-14 py-3 ps-16 pe-4 block border-gray-400 text-2xl rounded-full  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+            className="w-full h-14 py-3 px-16 block border border-gray-50 text-2xl rounded-full focus:rounded-none  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-customShadow"
             type="text"
             role="combobox"
             aria-expanded="false"
@@ -32,8 +32,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
               handleSearch(e.target.value);
             }}
             defaultValue={searchParams.get("query")?.toString()}
-            data-hs-combo-box-input=""
           />
+          <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-3.5">
+            <Image src='/icons/search.png' alt="search" width={32} height={32}/>
+          </div>
         </div>
   );
 }
