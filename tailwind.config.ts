@@ -13,7 +13,10 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'gradient-text-1': 'linear-gradient(to right, #484697, #7976FD)', 
+        'gradient-text-2': 'linear-gradient(to left, #484697, #7976FD)', 
+
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
@@ -41,13 +44,27 @@ const config: Config = {
         "gray-90": "#4A4C4F",
         "main-base": "#403CE5",
         "main-light": "#E8E8FA",
-        "bg-base": "#F8F9FB"
+        "bg-base": "#F8F9FB",
+        'login-start': '#4C507C',
+        'login-middle': '#5C6095',
+        'login-end': '#6C71AF',
+        'red-warning': '#EF3535',
+        'light-blue':'#ECEEF6',
+        'green-success':'#07bc0c'
 
+      },
+      spacing: {
+        '738': '46.125rem',
+        '512': '32rem',
+      },
+      boxShadow: {
+        customShadow: '0 4px 5px rgba(0, 0, 0, 0.06)',
       },
     },
   },
   plugins: [
     require('preline/plugin'),
+    require("tailwind-scrollbar-hide"),
   ],
 };
 export default config;
