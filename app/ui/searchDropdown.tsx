@@ -4,9 +4,10 @@ import { CompanyQuery } from "../lib/definitions";
 
 export default async function SearchDropDown({ query }: { query: string }) {
   const result = await fetchFilteredCompanys(query);
+
   return (
-    <div className="absolute  w-full  mt-2">
-      <div className="w-11/12 bg-white rounded-md mx-auto">
+    <div className="absolute  w-full ">
+      <div className="w-full bg-white rounded-md mx-auto max-h-56 overflow-y-scroll scrollbar-hide">
       {   result&&
         result.map((el:CompanyQuery)=>
             <Link
