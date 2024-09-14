@@ -26,8 +26,8 @@ export default function RootLayout({
       <body className={pretendard.className}>
         <Topnav />
         <LastPathSetter />
-        <main className="min-h-screen pt-16">{children}</main>
-        <footer className="py-20">
+        <main className="min-h-screen">{children}</main>
+        <footer className="py-16">
           <div className="text-center text-gray-500 ">2024 © solslab Corp.</div>
         </footer>
       </body>
