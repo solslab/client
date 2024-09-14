@@ -1,4 +1,4 @@
-import clsx from "clsx";
+
 import React, { useState } from "react";
 
 const ComboBox = ({
@@ -10,19 +10,19 @@ const ComboBox = ({
   onClick?: (el:string) => void;
   className?:string;
 }) => {
-  const [value, setValue] = useState("검색 및 선택");
+  const [value, setValue] = useState("");
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
   return (
     <div className="relative" data-hs-combo-box="">
-      <div className={`relative max-w-80 w-full ${className&& className}`}>
+      <div className={`relative max-w-80 w-full shadow-customShadow ${className&& className}`}>
         <input
           className=" w-full border border-gray-50 px-2 py-1 rounded-lg ps-4 pe-9 block  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
           type="text"
           role="combobox"
           aria-expanded="false"
-          placeholder=""
+          placeholder="검색 및 선택"
           value={value}
           data-hs-combo-box-input=""
           onChange={onChange}
