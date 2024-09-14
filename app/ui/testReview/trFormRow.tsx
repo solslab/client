@@ -13,7 +13,7 @@ export default function TrFormRow({
 }) {
   const isRequired = required || true;
   return (
-    <div className="text-base pt-5 flex flex-wrap w-full ">
+    <div className="text-base pt-6 flex flex-wrap w-full ">
       <div className="flex flex-wrap w-full">
         <div className="text-gray-80 font-bold w-full md:w-1/5 ">
           {label}
@@ -25,8 +25,8 @@ export default function TrFormRow({
           {children}
         </div>
       </div>
-      <div className="h-5 w-full flex justify-end">
-        <p className="text-base text-red-warning">
+      <div className="h-6 w-full flex justify-end items-center">
+        <p className="text-sm text-red-warning">
             {error}
         </p>
       </div>
