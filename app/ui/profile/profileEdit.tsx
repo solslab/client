@@ -71,7 +71,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="text-3xl font-bold">정보 수정</div>
+      <div className="text-3xl font-bold text-title-black">정보 수정</div>
       <div className="px-5 py-16">
         <div className="flex w-full flex-wrap py-4 text-lg">
           <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
@@ -111,7 +111,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
                 value={platform}
                 id=" al_platform"
                 onChange={(e) => handlePlatform(e)}
-                className="w-full max-w-full rounded-lg border border-gray-50 px-2 py-1 shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+                className="w-full max-w-full rounded-lg border border-gray-50 px-2 py-1 shadow-customShadow focus:outline-none disabled:opacity-50"
               >
                 {PLATFORMLIST.map((platform, index) => (
                   <option value={index} key={platform.platform}>

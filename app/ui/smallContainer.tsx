@@ -4,6 +4,6 @@ export default function SmallContainer({
     children: React.ReactNode;
     className?:string;
   }>) {
-    return <div className={`max-w-3xl w-full mx-auto px-4 py-20 ${className}`}>{children}</div>;
+    return <div className={`max-w-3xl w-full mx-auto px-4 pt-20 ${className}`}>{children}</div>;
   }
   
