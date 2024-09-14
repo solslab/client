@@ -43,7 +43,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="w-full h-44 md:h-64 lg:h-96 bg-[url('/company_3.png')] bg-cover bg-center blur-lg relative">
+      <div className="w-full h-44 md:h-64 lg:h-64 bg-[url('/company_3.png')] bg-cover bg-center blur-lg relative">
       </div>
       <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-gray-5">
         <Container>
