@@ -1,7 +1,7 @@
 export interface User {
     name: string;
     email: string;
-    ember_tier: number;
+    member_tier: number;
     prefer_languages: string[];
     prefer_positions: string[];
     prefer_industries: string[];
