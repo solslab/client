@@ -8,7 +8,7 @@ export default async function InfoTable({ query }: { query: string }) {
          네이버
         </h3>
         <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          네이버는 병신이다.
+          네이버는 멋져
         </p>
       </div>
       <div className="mt-6 border-t border-gray-100">
