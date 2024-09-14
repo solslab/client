@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Float() {
     return(
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden hidden sm:block">
         <div className="w-full  absolute left-0 top-15/20 ">
         <Image src='/companyLogo/naver.png' alt='naver logo' width={219} height={38} className=" absolute left-5/20 w-auto h-auto animate-[float_3s_ease-in-out_infinite_2s]"/>
         </div>
