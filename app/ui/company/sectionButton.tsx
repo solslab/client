@@ -5,7 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 interface Menu {
     label:string;
-    query:string;
+    section:string;
 }
 
 
@@ -13,17 +13,17 @@ export default function SectionButton({ menu }:{menu:Menu}) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
-    const query = params.get('query') || `companyInfo`;
+    const section = params.get('section') || `companyInfo`;
 
-    const createPageURL = (query:string) => {
+    const createPageURL = (section:string) => {
       const params = new URLSearchParams(searchParams);
-      params.set('query', query);
+      params.set('section', section);
       return `${pathname}?${params}`;
     };
   return (
-<Link href={createPageURL(menu.query)} className={clsx(`flex justify-center items-center w-40 font-semibold`, {
-                        "border-b-2 border-main-base text-main-base": query==menu.query,
-                        " border-black text-text-base": query!=menu.query
+<Link href={createPageURL(menu.section)} className={clsx(`flex justify-center items-center w-40 font-semibold`, {
+                        "border-b-2 border-main-base text-main-base": section==menu.section,
+                        " border-black text-text-base": section!=menu.section
                     })} >{menu.label}</Link>
   );
 }
