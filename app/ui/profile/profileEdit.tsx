@@ -8,24 +8,28 @@ import FieldToggleButton from "./fieldTogglebutton";
 import LanguageToggleButton from "./languageToggleButton";
 import ComboBox from "../comboBox";
 import BaseSubmitButton from "../baseSubmitButton";
-import { AdditionalInformationState, updateAdditionalInformation } from "@/app/lib/actions";
+import {
+  AdditionalInformationState,
+  updateAdditionalInformation,
+} from "@/app/lib/actions";
 
 export default function ProfileEdit({ profileData }: { profileData: Profile }) {
   const platformIndex = findPlatformIndex(profileData.al_platform) || 0;
   const [skills, setSkills] = useState<Set<string>>(
-    new Set(profileData.prefer_languages)
+    new Set(profileData.prefer_languages),
   );
-console.log(platformIndex)
   const [platform, setPlatform] = useState(platformIndex);
   const [level, setLevel] = useState(profileData.member_tier || 0);
-  const [field, setFeild] = useState<string[]>(profileData.prefer_industries||[]);
+  const [field, setFeild] = useState<string[]>(
+    profileData.prefer_industries || [],
+  );
   const initialState: AdditionalInformationState = {
     message: null,
     errors: {},
   };
   const [state, formAction] = useActionState(
     updateAdditionalInformation,
-    initialState
+    initialState,
   );
   const handlePlatform = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
@@ -69,41 +73,45 @@ console.log(platformIndex)
     <form onSubmit={handleSubmit}>
       <div className="text-3xl font-bold">정보 수정</div>
       <div className="px-5 py-16">
-        <div className="text-lg py-4 flex flex-wrap w-full ">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             이름
           </div>
-          <div className="text-gray-70 w-full md:w-4/5 mt-4 md:mt-0">
+          <div className="mt-4 w-full text-gray-70 md:mt-0 md:w-4/5">
             {profileData.name}
           </div>
         </div>
-        <div className="text-lg py-4 flex flex-wrap w-full">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             이메일
           </div>
-          <div className="text-gray-70 w-full md:w-4/5 mt-4 md:mt-0">
+          <div className="mt-4 w-full text-gray-70 md:mt-0 md:w-4/5">
             {profileData.email}
           </div>
         </div>
-        <div className="text-lg py-4 flex flex-wrap w-full">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             닉네임
           </div>
-          <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-            <Input name='nickname' id="nickname" defaultValue={profileData.nickname} />
+          <div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">
+            <Input
+              name="nickname"
+              id="nickname"
+              defaultValue={profileData.nickname}
+            />
           </div>
         </div>
-        <div className="text-lg py-4 flex flex-wrap w-full">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 ">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="w-full font-bold text-gray-80 md:w-1/5">
             티어 / 점수
           </div>
-          <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-            <div className="max-w-80 w-full">
+          <div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">
+            <div className="w-full max-w-80">
               <select
                 value={platform}
                 id=" al_platform"
                 onChange={(e) => handlePlatform(e)}
-                className="shadow-customShadow w-full border border-gray-50 px-2 py-1 rounded-lg  max-w-full   focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                className="w-full max-w-full rounded-lg border border-gray-50 px-2 py-1 shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
               >
                 {PLATFORMLIST.map((platform, index) => (
                   <option value={index} key={platform.platform}>
@@ -114,12 +122,12 @@ console.log(platformIndex)
             </div>
 
             {platform != 0 && (
-              <div className="max-w-80 w-full mt-4">
+              <div className="mt-4 w-full max-w-80">
                 <select
                   id="member_tier"
                   value={level}
                   onChange={(e) => setLevel(Number(e.target.value))}
-                  className="shadow-customShadow w-full border border-gray-50 px-2 py-1 rounded-lg  max-w-full   focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                  className="w-full max-w-full rounded-lg border border-gray-50 px-2 py-1 shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
                 >
                   {PLATFORMLIST[platform].level.map((platform) => (
                     <option value={platform.value} key={platform.label}>
@@ -131,11 +139,11 @@ console.log(platformIndex)
             )}
           </div>
         </div>
-        <div className="text-lg py-4 flex flex-wrap w-full">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 ">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="w-full font-bold text-gray-80 md:w-1/5">
             선호 언어
           </div>
-          <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-col">
+          <div className="mt-4 flex w-full flex-col text-text-base md:mt-0 md:w-4/5">
             <ComboBox list={SKILLS} onClick={addSkills} />
             <div>
               {Array.from(skills).map((el: string) => (
@@ -148,11 +156,11 @@ console.log(platformIndex)
             </div>
           </div>
         </div>
-        <div className="text-lg py-4 flex flex-wrap w-full">
-          <div className="text-gray-80 font-bold w-full md:w-1/5 ">
+        <div className="flex w-full flex-wrap py-4 text-lg">
+          <div className="w-full font-bold text-gray-80 md:w-1/5">
             취업 희망분야
           </div>
-          <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
+          <div className="mt-4 flex w-full flex-wrap text-text-base md:mt-0 md:w-4/5">
             {FEILDLIST.map((el) => (
               <FieldToggleButton
                 key={el}
