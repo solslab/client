@@ -9,20 +9,21 @@ export default function MobileNavSearchBox() {
 	const [companyList, setCompanyList] = useState<CompanyQuery[]>([]);
 	const [visible, setVisible] = useState(false);
 
-	const clearFeild = () => {
-		setValue('');
-		setCompanyList([]);
-		setVisible(false);
-	};
+    const clearFeild = ()=>{
+        setValue('');
+        setQuery('')
+        setCompanyList([]);
+    }
 
 	useEffect(() => {
-		if (value == '') {
-			setCompanyList([]);
-		}
+        if(value==''){
+			setQuery('')
+            setCompanyList([]);
+        }
 		const handler = setTimeout(() => {
-			if (value != '') {
-				setQuery(value);
-			}
+            if(value!=''){
+                setQuery(value);
+            }
 		}, 200);
 
 		return () => {
@@ -30,11 +31,13 @@ export default function MobileNavSearchBox() {
 		};
 	}, [value]);
 	useEffect(() => {
-		const fetchQuery = async () => {
+    const fetchQuery = async () => {
 			const data = await fetchFilteredCompanys(query);
 			setCompanyList(data);
 		};
-		fetchQuery();
+    if(query!=''){
+      fetchQuery();
+    }
 	}, [query]);
 
 	return (

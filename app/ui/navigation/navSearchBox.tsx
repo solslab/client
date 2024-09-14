@@ -11,11 +11,15 @@ export default function NavSearchBox() {
 
     const clearFeild = ()=>{
         setValue('');
+        setQuery('')
         setCompanyList([]);
     }
+    console.log('현재 밸류: ',value)
+    console.log('현재 검색어: ',query)
 
 	useEffect(() => {
         if(value==''){
+			setQuery('')
             setCompanyList([]);
         }
 		const handler = setTimeout(() => {
@@ -29,11 +33,13 @@ export default function NavSearchBox() {
 		};
 	}, [value]);
 	useEffect(() => {
-		const fetchQuery = async () => {
+    const fetchQuery = async () => {
 			const data = await fetchFilteredCompanys(query);
 			setCompanyList(data);
 		};
-        fetchQuery();
+    if(query!=''){
+      fetchQuery();
+    }
 	}, [query]);
 
 
