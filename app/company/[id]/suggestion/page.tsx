@@ -1,7 +1,12 @@
 import { fetchCompanyDetail, fetchPositionData } from "@/app/lib/data";
 import { Company, Position, TestData } from "@/app/lib/definitions";
+import BaseButton from "@/app/ui/baseButton";
+import BaseSubmitButton from "@/app/ui/baseSubmitButton";
 import Container from "@/app/ui/container";
+import SuggestionForm from "@/app/ui/company/suggestionForm";
+import { BaseNextResponse } from "next/dist/server/base-http";
 import { notFound } from "next/navigation";
+
 
 export default async function Page({
   params,
@@ -17,7 +22,10 @@ export default async function Page({
     notFound();
   }
   const positions: Position[] = companyData.positions;
-  const position_id = searchParams.position || positions[0].position_id;
+  const position_id = searchParams.position || positions[0]?.position_id;
+  if(!position_id){
+    notFound();
+  }
 
   return (
     <main className="flex min-h-screen  justify-between py-20 bg-white">
@@ -27,7 +35,7 @@ export default async function Page({
           <div className="px-5 py-16">
             <div className="flex">
               <div
-                className="bg-no-repeat bg-center w-16 h-16 rounded-md "
+                className="bg-cover bg-no-repeat bg-center w-16 h-16 rounded-md border-gray-10 "
                 style={{ backgroundImage: ` url(${companyData.company_logo})` }}
               />
               <div className="flex flex-row items-center ml-2">
@@ -36,16 +44,7 @@ export default async function Page({
                 </div>
               </div>
             </div>
-            <div className=" w-full mt-4">
-              <input
-                className=" w-full border border-gray-50 px-2 py-1 rounded-lg"
-                placeholder="제목을 작성해주세요."
-              />
-              <textarea
-                className=" w-full h-80  border border-gray-50 px-2 py-1 rounded-lg mt-4"
-                placeholder="내용을 작성해주세요."
-              />
-            </div>
+            <SuggestionForm position_id={position_id}/>
           </div>
         </div>
       </Container>
