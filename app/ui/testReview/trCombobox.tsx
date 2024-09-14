@@ -37,8 +37,22 @@ const TrComboBox = ({
 					aria-expanded={true}
 					data-hs-combo-box-toggle=""
 				>
-					<button type="button" className="text-gray-60">
-						▼
+					<button type="button" className="text-gray-60 flex justify-center items-center">
+						<svg
+							className="size-3.5 shrink-0 text-gray-500 dark:text-neutral-500"
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<path d="m7 15 5 5 5-5"></path>
+							<path d="m7 9 5-5 5 5"></path>
+						</svg>
 					</button>
 				</div>
 			</div>
@@ -51,11 +65,11 @@ const TrComboBox = ({
 						key={index}
 						className="w-full cursor-pointer rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
 						tabIndex={index}
-						data-hs-combo-box-output-item={el.value}
+						data-hs-combo-box-output-item={el.label}
 						onClick={() => onClick && onClick(el.label)}
 					>
 						<div className="flex w-full items-center justify-between">
-							<span data-hs-combo-box-search-text={el.value} data-hs-combo-box-value={el.value}>
+							<span  data-hs-combo-box-search-text={el.value} data-hs-combo-box-value={el.label}>
 								{el.label}
 							</span>
               <span className='text-gray-80 bg-main-light px-2 py-1 text-xs ml-2 rounded-2xl'>{el.type}</span>
