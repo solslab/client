@@ -3,24 +3,21 @@ import {
   fetchPositionData,
 } from "@/app/lib/data";
 import { Company, Position, TestData } from "@/app/lib/definitions";
-import InfoItem from "@/app/ui/company/infoItem";
-import PositionSelectBox from "@/app/ui/company/positionSelectBox";
 import SectionButton from "@/app/ui/company/sectionButton";
 import TestInfo from "@/app/ui/company/testInfo";
 import TrLink from "@/app/ui/company/trLink";
 import Container from "@/app/ui/container";
-import LanguageBox from "@/app/ui/languageBox";
-import Image from "next/image";
+import FeedBackBtn from "@/app/ui/feedBackBtn";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 const menuList = [
   {
     label: "기업정보",
-    query: "companyInfo",
+    section: "companyInfo",
   },
   {
     label: "데이터랩",
-    query: "dataLab",
+    section: "dataLab",
   },
 ];
 
@@ -29,25 +26,28 @@ export default async function Page({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { query?: string; position?: string };
+  searchParams: { section?: string; position?: string };
 }) {
   const company_id = params.id;
-  const query = searchParams.query || menuList[0].query;
+  const section = searchParams.section || menuList[0].section;
   const companyData: Company = await fetchCompanyDetail(company_id);
   if (!companyData) {
     notFound();
   }
   const positions: Position[] = companyData.positions;
-  const position_id = searchParams.position || positions[0].position_id;
+  const position_id = searchParams.position || positions[0]?.position_id;
+  if(!position_id) {
+    notFound();
+  }
   const data: TestData = await fetchPositionData(position_id);
 
   return (
     <>
-      <div className="w-full bg-cyan-400 h-28 md:h-48 lg:h-60"></div>
+      <div className="w-full h-44 md:h-64 lg:h-64 bg-[url('/company_background.png')] bg-cover bg-center"></div>
       <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative">
         <Container>
           <div
-            className="bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem]"
+            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem] "
             style={{ backgroundImage: ` url(${companyData.company_logo})` }}
           />
           <div className="flex flex-row items-center">
@@ -60,7 +60,7 @@ export default async function Page({
           <div className="w-full flex h-12 ">
             {menuList.map((menu) => (
               <SectionButton
-                key={menu.label + menu.query}
+                key={menu.label + menu.section}
                 menu={menu}
               ></SectionButton>
             ))}
@@ -68,7 +68,7 @@ export default async function Page({
         </Container>
       </div>
       <div className="md:my-12">
-        {query == menuList[0].query ? (
+        {section == menuList[0].section ? (
           <>
             <TestInfo positions={positions} position_id={position_id} data={data} />
             <Container>
@@ -108,6 +108,7 @@ export default async function Page({
 
         )}
       </div>
+      <FeedBackBtn/>
     </>
   );
 }
