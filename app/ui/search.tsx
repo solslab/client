@@ -20,7 +20,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   return (
         <div className="relative">
           <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-5">
-            <Image src='/icons/gradient_clover.png' alt="search" width={28} height={28}/>
+            <Image src='/icons/gradient_clover.png' alt="search" width={28} height={28} className="h-auto w-auto"/>
           </div>
           <input
             className="w-full h-14 py-3 px-16 block border border-gray-50 text-2xl rounded-full focus:rounded-none  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-customShadow"
