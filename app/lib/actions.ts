@@ -274,6 +274,7 @@ export type TestReviewState = {
         tr_comment?: string[];
     };
     message?: string | null;
+    fullfilled?:boolean;
 };
 
 const TestReviewFormSchema = z.object({
@@ -330,7 +331,7 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 
         return {
             errors: validatedFields.error.flatten().fieldErrors,
-            message: '채워지지 않은 필드가 있습니다.',
+            message: '잘못된 필드가 있습니다.',
         };
     }
 
