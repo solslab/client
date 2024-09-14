@@ -1,6 +1,5 @@
 "use client";
 import ComboBox from "@/app/ui/comboBox";
-import Container from "@/app/ui/container";
 import NextButton from "@/app/ui/nextbutton";
 import PrevButton from "@/app/ui/prevButton";
 import LanguageToggleButton from "@/app/ui/profile/languageToggleButton";
@@ -12,6 +11,7 @@ import {
 } from "@/app/lib/actions";
 import FieldToggleButton from "@/app/ui/profile/fieldTogglebutton";
 import SubmitButton from "@/app/ui/submitButton";
+import SmallContainer from "@/app/ui/smallContainer";
 
 export default function Page() {
   const [step, setStep] = useState(1);
@@ -55,12 +55,6 @@ export default function Page() {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
-      al_platform: PLATFORMLIST[platform].code,
-      member_tier: level,
-      prefer_languages: skills,
-      prefer_industries: field,
-    };
     const formData = new FormData(e.currentTarget);
     formData.append("al_platform", PLATFORMLIST[platform].code);
     formData.append("member_tier", level.toString());
@@ -80,13 +74,13 @@ export default function Page() {
 
     loadPreline();
   }, [step]);
-  console.log(level,'@@@@')
+
   return (
-    <Container className="pt-20">
+    <SmallContainer className="pt-10">
       <div>
-        <div className="mx-auto w-full h-4 bg-main-light rounded-full">
+        <div className="mx-auto w-full h-3 bg-main-light rounded-full">
           <div
-            className=" h-4 bg-main-base rounded-full"
+            className=" h-3 bg-main-base rounded-full"
             style={{
               width: `${(step / 3) * 100}%`,
               transition: "width 0.5s ease",
@@ -140,7 +134,7 @@ export default function Page() {
                 <select
                   value={platform}
                   onChange={(e) => handlePlatform(e)}
-                  className="py-3 mb-6 pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                  className="shadow-customShadow py-3 mb-6 pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {PLATFORMLIST.map((platform, index) => (
                     <option value={index} key={platform.platform}>
@@ -152,7 +146,7 @@ export default function Page() {
                   <select
                     value={level}
                     onChange={(e) => setLevel(Number(e.target.value))}
-                    className="py-3  pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+                    className=" shadow-customShadow py-3  pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                   >
                     {PLATFORMLIST[platform].level.map((platform) => (
                       <option value={platform.value} key={platform.label}>
@@ -201,6 +195,6 @@ export default function Page() {
           )}
         </div>
       </form>
-    </Container>
+    </SmallContainer>
   );
 }
