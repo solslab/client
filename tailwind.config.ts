@@ -27,7 +27,8 @@ const config: Config = {
       },
       width: {
         '160': '58rem',
-        '120': '48rem'
+        '120': '48rem',
+        '8xl': '90rem'
       },
       colors: {
         'custom-purple-1': '#2C2B38',
@@ -51,24 +52,37 @@ const config: Config = {
         'login-end': '#6C71AF',
         'red-warning': '#EF3535',
         'light-blue': '#ECEEF6',
-        'green-success': '#07bc0c'
+        'green-success': '#07bc0c',
+        'title-black': '#1E2124'
 
       },
       spacing: {
         '738': '46.125rem',
         '512': '32rem',
-        '1/10':'10%',
-        '2/10':'20%',
-        '3/10':'30%',
-        '4/10':'40%',
-        '5/10':'50%',
-        '6/10':'60%',
-        '7/10':'70%',
-        '8/10':'80%',
-        '9/10':'90%',
+        '700': '43.75rem',
+        '1/20': '5%',
+        '2/20': '10%',
+        '3/20': '15%',
+        '4/20': '20%',
+        '5/20': '25%',
+        '6/20': '30%',
+        '7/20': '35%',
+        '8/20': '40%',
+        '9/20': '45%',
+        '10/20': '50%',
+        '11/20': '55%',
+        '12/20': '60%',
+        '13/20': '65%',
+        '14/20': '70%',
+        '15/20': '75%',
+        '16/20': '80%',
+        '17/20': '85%',
+        '18/20': '90%',
+        '19/20': '95%',
       },
       boxShadow: {
         customShadow: '0 4px 5px rgba(0, 0, 0, 0.06)',
+        'customShadow-up': '0 -4px 15px rgba(0, 0, 0, 0.06)',
       },
       translate: {
         '-100': '-100%',
@@ -76,6 +90,7 @@ const config: Config = {
       },
       animation: {
         logo: 'logo 1s linear infinite',
+        float:'float 3s ease-in-out  infinite'
       },
       keyframes: {
         logo: {
@@ -86,7 +101,7 @@ const config: Config = {
           '10%': {
             opacity: '1'
           },
-          '90%':{
+          '90%': {
             opacity: '1'
           },
           '100%': {
@@ -94,6 +109,20 @@ const config: Config = {
             opacity: '0'
           },
         },
+        float: {
+          '0%': {
+            'transform': 'translateY(0px)',
+          },
+          '50%': {
+            'transform': 'translateY(-20px)',
+          },
+          '100%': {
+            'transform': 'translateY(0px)',
+          },
+        },
+      },
+      borderRadius: {
+        '2.5xl': '1.25rem', 
       },
     },
   },
