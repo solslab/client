@@ -8,16 +8,18 @@ export async function GET(request:Request) {
     const accessToken = url.searchParams.get('accessToken') || ''; 
     const prevPath = cookies().get('sols-lastPath')
     const infoTest = await infoCheck(accessToken);
+    console.log(infoTest,'@@@@')
     if (accessToken) {
         cookies().set('sols-accessToken', accessToken);
     }
     if(!infoTest){
-        redirect(NEXT_URL + '/profiles/additional')
+        redirect('/profiles/additional')
     }
     if(prevPath){
-        redirect(NEXT_URL +prevPath.value)
+        redirect(prevPath.value)
     }
-    
-    redirect(NEXT_URL )
+    else{
+        redirect('/')
+    }
     
 }
