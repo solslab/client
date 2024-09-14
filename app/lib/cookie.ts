@@ -1,6 +1,9 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers'
+import { permanentRedirect, redirect } from 'next/navigation';
+import { NEXT_URL } from './constants';
+import Layout from '../company/layout';
 
 export async function updateLastRoute(path:string) {
     cookies().set('sols-lastPath', path)
@@ -26,6 +29,24 @@ export async function getToken() {
 export async function deleteToken() {
     cookies().delete('sols-accessToken')
 }
-export async function reload(path:string) {
-    revalidatePath(path);
+
+export async function redirectToPrev() {
+    
+    const pathCookie = await getLastRoute();
+    const path = pathCookie?.value || '/'
+    redirect(path)
+}
+export async function permanentRedirectToPrev() {
+    
+    const pathCookie = await getLastRoute();
+    const path = pathCookie?.value || '/'
+    revalidatePath(path,'layout')
+    permanentRedirect(path)
+}
+export async function redirectIfNoToken(){
+    const tokenCookie = await getToken();
+    const token = tokenCookie?.value || undefined;
+    if (!token) {
+        redirect(NEXT_URL+'/login')
+    }
 }
