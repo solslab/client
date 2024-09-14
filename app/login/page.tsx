@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import Float from "../ui/interaction/float";
 
 export default function Page() {
   // const router = useRouter()
@@ -13,29 +14,34 @@ export default function Page() {
   //   }
   // }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center py-24 bg-gradient-to-b from-login-start via-login-middle to-login-end">
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <main className="flex min-h-screen flex-col items-center justify-center py-24 relative">
+      <Float/>
+      <div className=" absolute w-full h-full  bg-white bg-opacity-65 backdrop-blur-sm">
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Image
           width={201}
           height={101}
-          className="mx-auto w-auto h-auto"
-          src="/icons/logo_dark.png"
+          className="mx-auto"
+          src="/icons/logo_login.png"
           alt="Sols"
         />
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="mt-20 sm:mx-auto sm:w-full sm:max-w-sm">
         <div>
           <Link
             href="https://solslab.site/api/oauth2/authorization/kakao"
             className="flex  justify-center rounded-md   text-sm font-semibold  text-white shadow-sm"
           >
-            <Image src='/icons/kakao_login_medium_wide.png' alt='kakao button' width={300} height={45} />
+            <Image src='/kakao_login.png' alt='kakao button' width={230} height={52} />
           </Link>
         </div>
       </div>
     </div>
+      </div>
+
     </main>
   );
 }

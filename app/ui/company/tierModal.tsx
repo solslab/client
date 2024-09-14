@@ -50,7 +50,7 @@ export default function TierModal({
 						<select
 							value={platform}
 							onChange={(e) => handlePlatform(e)}
-							className="mb-1 block w-60 max-w-full rounded-lg border-2 border-gray-60 py-1 pe-9 text-sm shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+							className="mb-1 block w-60 max-w-full rounded-lg border border-gray-60 py-1 pe-9 text-sm shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 						>
 							{PLATFORMLIST.map((platform, index) => (
 								<option value={index} key={platform.platform}>
@@ -62,7 +62,7 @@ export default function TierModal({
 							<select
 								value={level}
 								onChange={(e) => setLevel(Number(e.target.value))}
-								className="block w-60 max-w-full rounded-lg border-2 border-gray-60 py-1 pe-9 text-sm shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+								className="block w-60 max-w-full rounded-lg border border-gray-60 py-1 pe-9 text-sm shadow-customShadow focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 							>
 								{PLATFORMLIST[platform].level.map((platform) => (
 									<option value={platform.value} key={platform.label}>

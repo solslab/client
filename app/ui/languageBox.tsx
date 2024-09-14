@@ -6,7 +6,7 @@ export default function LanguageBox({language}:{language:string}) {
   return (
     <div
       key={language}
-      className="border border-gray-30 rounded-3xl px-4 py-1 mx-2 my-2 flex"
+      className="border border-gray-30 rounded-3xl px-4 py-1 mr-2 mb-2 flex"
     >
       <div className="mr-2 flex flex-col justify-center">
         {

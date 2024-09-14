@@ -12,7 +12,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 const menuList = [
   {
-    label: "기업정보",
+    label: "시험정보",
     section: "companyInfo",
   },
   {
@@ -43,19 +43,20 @@ export default async function Page({
 
   return (
     <>
-      <div className="w-full h-44 md:h-64 lg:h-64 bg-[url('/company_background.png')] bg-cover bg-center"></div>
-      <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative">
+      <div className="w-full h-44 md:h-64 lg:h-96 bg-[url('/company_3.png')] bg-cover bg-center blur-lg relative">
+      </div>
+      <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-gray-5">
         <Container>
           <div
-            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem] "
+            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem] border border-gray-30 "
             style={{ backgroundImage: ` url(${companyData.company_logo})` }}
           />
-          <div className="flex flex-row items-center">
-            <div className="text-xl md:text-3xl ">{companyData.company_name}</div>
+          <div className="flex flex-row items-center text-title-black font-bold">
+            <div className="text-xl md:text-2xl ">{companyData.company_name}</div>
           </div>
         </Container>
       </div>
-      <div className="flex flex-col  items-center justify-between border-b border-gray-30">
+      <div className="flex flex-col  items-center justify-between border-b border-gray-30 ">
         <Container className={"px-0"}>
           <div className="w-full flex h-12 ">
             {menuList.map((menu) => (
@@ -85,9 +86,8 @@ export default async function Page({
                     <div className=" text-sm  text-center my-auto md:mb-4">
                       잘못된 정보가 있나요?
                     </div>
-                    <Link  href={`/company/${company_id}/suggestion?position=${position_id}`} className="py-3 px-6  w-36 rounded-md bg-main-light text-main-base">
-                      정보 수정 요청
-                    </Link>
+                    <Link  href={`/company/${company_id}/suggestion?position=${position_id}`} className="py-3 px-6  w-36 rounded-md bg-main-light text-main-base text-center">
+                      정보 수정 요청</Link>
                   </div>
                 </div>
               </div>
@@ -98,8 +98,8 @@ export default async function Page({
           <Container className="bg-white rounded-md">
             <div className="w-full mt-10 min-h-80 flex flex-col justify-center items-center text-text-base">
 
-                <div className=" text-center text-3xl mb-4">오픈 준비중!</div>
-                <div className=" text-center text-3xl mb-10">정보 제공을 위해 후기를 모으고 있어요.</div>
+                <div className=" text-center text-xl mb-4">오픈 준비중!</div>
+                <div className=" text-center text-xl mb-10">정보 제공을 위해 후기를 모으고 있어요.</div>
                 <TrLink/>
               </div>
 

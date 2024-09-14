@@ -112,7 +112,7 @@ export default function Page() {
                   ))}
                 </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-10">
                 <NextButton
                   active={skills.size != 0}
                   onClick={() => setStep(2)}
@@ -134,7 +134,7 @@ export default function Page() {
                 <select
                   value={platform}
                   onChange={(e) => handlePlatform(e)}
-                  className="shadow-customShadow py-3 mb-6 pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                  className="shadow-customShadow py-3 mb-6 ps-2 pe-9 block w-80 max-w-full border border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {PLATFORMLIST.map((platform, index) => (
                     <option value={index} key={platform.platform}>
@@ -146,7 +146,7 @@ export default function Page() {
                   <select
                     value={level}
                     onChange={(e) => setLevel(Number(e.target.value))}
-                    className=" shadow-customShadow py-3  pe-9 block w-80 max-w-full border-2 border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+                    className=" shadow-customShadow py-3 ps-2  pe-9 block w-80 max-w-full border border-gray-60 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                   >
                     {PLATFORMLIST[platform].level.map((platform) => (
                       <option value={platform.value} key={platform.label}>
@@ -156,7 +156,7 @@ export default function Page() {
                   </select>
                 )}
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-10">
                 <PrevButton onClick={() => setStep(step - 1)} />
                 <NextButton
                   onClick={() => setStep(3)}
@@ -168,7 +168,7 @@ export default function Page() {
             <div>
               <div className="h-48">
                 <h1 className="text-center text-2xl font-bold  text-gray-900 md:text-4xl">
-                  어떤 기업에 가고싶으신가요?
+                  어떤 기업에 가고 싶으신가요?
                 </h1>
                 <p className="mt-6 text-lg md:text-2xl  text-gray-600 text-center">
                   최대 5개까지 선택할 수 있습니다.
@@ -187,7 +187,7 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-10">
                 <PrevButton onClick={() => setStep(step - 1)} />
                 <SubmitButton active={field.length!=0} onClick={()=>undefined}/>
               </div>

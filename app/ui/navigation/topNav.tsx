@@ -30,7 +30,7 @@ export default function Topnav() {
 			if (cookieExist) {
 				const profile = await fetchProfile();
 				setIsLoggedIn(true);
-				setUserName(profile.nickname);
+				// setUserName('plc');
 			} else {
 				setIsLoggedIn(false);
 			}
@@ -43,7 +43,7 @@ export default function Topnav() {
 	return (
 		<>
 			<nav className="fixed z-50 w-full bg-white shadow">
-				<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+				<div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
 					<div className="relative flex h-16 items-center justify-between">
 						<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 							{/* <button
@@ -87,7 +87,7 @@ export default function Topnav() {
 						<div className="flex flex-1 items-stretch justify-start">
 							<Link href="/" className="flex flex-shrink-0 items-center">
 								<Image
-									width={64}
+									width={58}
 									height={32}
 									className="hidden h-auto w-auto sm:block"
 									src="/icons/logo_light.png"
