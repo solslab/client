@@ -15,7 +15,7 @@ export async function logOut(path: string) {
         };
         const token = await getToken();
         if (!token) {
-            redirect(NEXT_URL + path)
+            redirect(path)
         }
         const value = token?.value;
         if (value) {
@@ -35,7 +35,7 @@ export async function logOut(path: string) {
     catch (error) {
         console.error(error)
         await deleteToken();
-        redirect(NEXT_URL + path)
+        redirect( path)
     }
 }
 
