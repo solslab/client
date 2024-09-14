@@ -13,7 +13,7 @@ export default async function InfoItem({src,label,data}:{src:string;label:string
                         /></div>
                         <div className="ml-2 text-sm md:text-base my-auto">{label}</div>
                       </div>
-                      <div className="text-base md:text-lg my-auto font-semibold">{data}</div>
+                      <div className="text-base md:text-lg my-auto font-medium">{data}</div>
                     </div>
                   </div>
     )
