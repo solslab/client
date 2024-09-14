@@ -13,9 +13,9 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        'gradient-text-1': 'linear-gradient(to right, #484697, #7976FD)', 
-        'gradient-text-2': 'linear-gradient(to left, #484697, #7976FD)', 
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'gradient-text-1': 'linear-gradient(to right, #484697, #7976FD)',
+        'gradient-text-2': 'linear-gradient(to left, #484697, #7976FD)',
 
       },
       fontFamily: {
@@ -23,6 +23,7 @@ const config: Config = {
       },
       height: {
         '46': '46rem',
+        '0.25': '0.0625'
       },
       width: {
         '160': '58rem',
@@ -49,16 +50,50 @@ const config: Config = {
         'login-middle': '#5C6095',
         'login-end': '#6C71AF',
         'red-warning': '#EF3535',
-        'light-blue':'#ECEEF6',
-        'green-success':'#07bc0c'
+        'light-blue': '#ECEEF6',
+        'green-success': '#07bc0c'
 
       },
       spacing: {
         '738': '46.125rem',
         '512': '32rem',
+        '1/10':'10%',
+        '2/10':'20%',
+        '3/10':'30%',
+        '4/10':'40%',
+        '5/10':'50%',
+        '6/10':'60%',
+        '7/10':'70%',
+        '8/10':'80%',
+        '9/10':'90%',
       },
       boxShadow: {
         customShadow: '0 4px 5px rgba(0, 0, 0, 0.06)',
+      },
+      translate: {
+        '-100': '-100%',
+
+      },
+      animation: {
+        logo: 'logo 1s linear infinite',
+      },
+      keyframes: {
+        logo: {
+          '0%': {
+            transform: 'translateX(0)',
+            opacity: '0'
+          },
+          '10%': {
+            opacity: '1'
+          },
+          '90%':{
+            opacity: '1'
+          },
+          '100%': {
+            transform: 'translateX(120%)',
+            opacity: '0'
+          },
+        },
       },
     },
   },
