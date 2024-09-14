@@ -1,5 +1,6 @@
 
 
+import { NEXT_URL } from "@/app/lib/constants";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +12,7 @@ export default async function Page({
     searchParams: {accessToken?:string,message?:string};
   }) {
     if (searchParams.accessToken) {
-        const res = await fetch(`${process.env.NEXT_URL}/api/cookieTest`, {
+        const res = await fetch(`${NEXT_URL}/api/cookieTest`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
