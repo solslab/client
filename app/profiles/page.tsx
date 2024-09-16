@@ -18,7 +18,7 @@ export default async function Page() {
 
   return (
       <SmallContainer>
-        <div className="text-3xl font-bold">내 프로필</div>
+        <div className="text-3xl font-bold text-title-black">내 프로필</div>
         <div className="px-5 py-16">
           <div className="text-lg py-4 flex flex-wrap w-full ">
             <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
@@ -57,7 +57,7 @@ export default async function Page() {
             </div>
           </div>
           <div className="text-lg py-4 flex flex-wrap w-full">
-            <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center ">
+            <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-start ">
               선호 언어
             </div>
             <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
@@ -68,7 +68,7 @@ export default async function Page() {
             </div>
           </div>
           <div className="text-lg py-4 flex flex-wrap w-full">
-            <div className="text-gray-80 font-bold w-full md:w-1/5  flex flex-col justify-center">
+            <div className="text-gray-80 font-bold w-full md:w-1/5  flex flex-col justify-start">
               취업 희망분야
             </div>
             <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">

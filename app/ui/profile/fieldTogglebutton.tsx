@@ -14,10 +14,10 @@ export default function FieldToggleButton({
     type='button'
       onClick={() => onClick()}
       className={clsx(
-        `rounded-2xl mx-2 mt-4 px-3.5 py-2.5 text-sm font-bold  `,
+        `rounded-3xl mx-1 mb-4 px-4 py-2 text-sm font-bold  `,
         {
           "bg-main-base text-white": active,
-          "text-base bg-bg-base hover:bg-gray-60": !active,
+          "text-text-base text-base bg-bg-base hover:bg-gray-60 border border-gray-50": !active,
         }
       )}
     >

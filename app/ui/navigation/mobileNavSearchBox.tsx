@@ -9,32 +9,35 @@ export default function MobileNavSearchBox() {
 	const [companyList, setCompanyList] = useState<CompanyQuery[]>([]);
 	const [visible, setVisible] = useState(false);
 
-	const clearFeild = () => {
-		setValue('');
-		setCompanyList([]);
-		setVisible(false);
-	};
+    const clearFeild = ()=>{
+        setValue('');
+        setQuery('')
+        setCompanyList([]);
+    }
 
 	useEffect(() => {
-		if (value == '') {
-			setCompanyList([]);
-		}
+        if(value==''){
+			setQuery('')
+            setCompanyList([]);
+        }
 		const handler = setTimeout(() => {
-			if (value != '') {
-				setQuery(value);
-			}
-		}, 300);
+            if(value!=''){
+                setQuery(value);
+            }
+		}, 200);
 
 		return () => {
 			clearTimeout(handler);
 		};
 	}, [value]);
 	useEffect(() => {
-		const fetchQuery = async () => {
+    const fetchQuery = async () => {
 			const data = await fetchFilteredCompanys(query);
 			setCompanyList(data);
 		};
-		fetchQuery();
+    if(query!=''){
+      fetchQuery();
+    }
 	}, [query]);
 
 	return (
@@ -47,6 +50,7 @@ export default function MobileNavSearchBox() {
 			) : (
 				<div className="fixed left-0 top-16">
 					<div className="relative">
+					<div onClick={()=>{setVisible(false); clearFeild()}} className="fixed w-screen h-screen top-0 left-0  -z-10 "></div>
 						<div className="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-3">
 							<Image src="/icons/search.png" alt="search" width={16} height={16} />
 						</div>

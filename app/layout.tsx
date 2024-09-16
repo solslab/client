@@ -12,8 +12,11 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Sols",
+  title: "몇솔",
   description: "기업별 코딩테스트 정보를 제공하는 사이트",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -23,6 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
+      <link rel="icon" href="/favicon.png" sizes="any" />
       <body className={pretendard.className}>
         <Topnav />
         <LastPathSetter />

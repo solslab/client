@@ -16,7 +16,7 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
         <div className="w-full px-6">
           <div className="flex flex-row w-full flex-wrap mb-4">
             <div className=" w-full md:w-1/4 text-base my-auto">
-              직무구분
+              시기/직무구분
             </div>
             <div className=" w-full md:w-3/4  mt-4 md:mt-0">
               <PositionSelectBox
@@ -58,7 +58,7 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
           </div>
         </div>
       </div>
-      <div className="border-b border-gray-30 py-7">
+      <div className="py-7">
         <div className="grid grid-cols-1 gap-y-4 gap-x-16 md:grid-cols-2 w-full px-6">
           <InfoItem
             src={"/icons/calendar.png"}
@@ -97,7 +97,8 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
           />
         </div>
       </div>
-      <div className=" py-7">
+      {data.note?
+        <div className=" py-7 border-t border-gray-30 ">
         <div className="w-full px-6">
           <label>참고사항</label>
           <div className="bg-gray-5 p-4 mt-4 rounded-md">
@@ -105,6 +106,11 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
           </div>
         </div>
       </div>
+      :
+      <></>
+
+      }
+
     </div>
   </Container>
   );

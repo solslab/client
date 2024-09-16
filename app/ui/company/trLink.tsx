@@ -28,7 +28,7 @@ export default function TrLink() {
           else{
            setModalVisible(true);
           }
-				}} type="button" className=" rounded-md text-xl bg-main-base px-6 py-3 text-white">
+				}} type="button" className=" rounded-md text-lg bg-main-base px-6 py-3 text-white">
 					코딩테스트 후기 작성하기
 				</button>
 			</div>

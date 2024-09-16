@@ -29,8 +29,9 @@ export default function SuggestionForm({
           <textarea
             id="suggestion_content"
             name="suggestion_content"
-            className=" w-full h-80  border border-gray-50 px-2 py-1 rounded-lg mt-4"
+            className=" w-full h-80  border border-gray-50 p-3 rounded-lg mt-4 resize-none focus:outline-none "
             placeholder="내용을 작성해주세요."
+            maxLength={200}
           />
           <div className="flex justify-end min-h-7">
             {state.errors?.suggestion_content &&

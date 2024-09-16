@@ -8,6 +8,8 @@ import TrComboBox from './testReview/trCombobox';
 import { TestReviewState, createTestReview } from '../lib/actions';
 import Select from './select';
 import TrFormRow from './testReview/trFormRow';
+import BasicAlert from './basicAlert';
+import { redirectToPrev } from '../lib/cookie';
 const years: number[] = [];
 for (let i = 2024; i >= 2000; i--) {
 	years.push(i);
@@ -40,8 +42,9 @@ export default function TrForm() {
 		});
 	};
 	return (
+		<>
 		<form onSubmit={handleSubmit}>
-			<div className="text-3xl font-bold">코딩테스트 후기 작성</div>
+			<div className="text-3xl font-bold text-title-black">코딩테스트 후기 작성</div>
 			<div className="px-5 py-16">
 				<div className="border-b border-gray-30 py-6">
 					<TrFormRow
@@ -137,9 +140,10 @@ export default function TrForm() {
 						</div>
 						<div className="mt-4 flex w-full justify-end text-text-base">
 							<textarea
+							maxLength={100}
 								id="tr_comment"
 								name="tr_comment"
-								className="h-36 w-full rounded-lg border border-gray-50 px-2 py-1"
+								className="h-36 w-full rounded-lg border border-gray-50 p-3 resize-none"
 								placeholder="간단한 시험 후기를 들려주세요! 직접적으로 시험의 지문, 테스트케이스, 힌트 등을 게시하게 되면 문제 유출로 간주될 수 있으니 조심해주세요!"
 							/>
 						</div>
@@ -159,5 +163,15 @@ export default function TrForm() {
 				{state.message && <p className="text-sm text-red-warning">{state.message}</p>}
 			</div>
 		</form>
+		{/* {
+			state.fullfilled?
+			<BasicAlert onClick={async()=>await redirectToPrev()}>
+				<div>제출에 성공하였습니다.</div>
+			</BasicAlert>
+			:
+			<>
+		} */}
+		</>
+		
 	);
 }

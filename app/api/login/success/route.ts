@@ -12,12 +12,13 @@ export async function GET(request:Request) {
         cookies().set('sols-accessToken', accessToken);
     }
     if(!infoTest){
-        redirect(NEXT_URL + '/profiles/additional')
+        redirect('/profiles/additional')
     }
     if(prevPath){
-        redirect(NEXT_URL +prevPath.value)
+        redirect(prevPath.value)
     }
-    
-    redirect(NEXT_URL )
+    else{
+        redirect('/')
+    }
     
 }

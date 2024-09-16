@@ -47,6 +47,6 @@ export async function redirectIfNoToken(){
     const tokenCookie = await getToken();
     const token = tokenCookie?.value || undefined;
     if (!token) {
-        redirect(NEXT_URL+'/login')
+        redirect('/login')
     }
 }
