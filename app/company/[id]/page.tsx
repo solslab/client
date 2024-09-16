@@ -43,16 +43,16 @@ export default async function Page({
 
   return (
     <>
-      <div className="w-full h-44 md:h-64 lg:h-64 bg-[url('/company_3.png')] bg-cover bg-center blur-lg relative">
+      <div className="w-full h-32 md:h-64 lg:h-64 bg-[url('/company_30.png')] bg-cover bg-center blur-lg relative">
       </div>
       <div className="flex flex-col  items-center justify-center border-b py-10 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-white  md:bg-gray-5">
         <Container>
           <div
-            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-xl absolute  top-[-2rem] md:top-[-3rem] border border-gray-30 "
+            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-xl absolute  top-[-1.375rem]  md:top-[-3rem] border border-gray-30 "
             style={{ backgroundImage: ` url(${companyData.company_logo})` }}
           />
           <div className=" flex flex-row items-center text-title-black font-bold">
-            <div className="text-xl md:text-2xl ">{companyData.company_name}</div>
+            <div className="text-xl md:text-2xl pt-[0.625rem] md:pt-0">{companyData.company_name}</div>
           </div>
         </Container>
       </div>
@@ -83,7 +83,7 @@ export default async function Page({
                 </div>
                 <div className="w-full md:w-1/2 flex justify-end">
                   <div className="flex justify-between w-full md:w-auto md:flex-col md:justify-center ">
-                    <div className=" text-sm text-gray-90 sm:text-text-base  text-center my-auto md:mb-2">
+                    <div className=" text-sm  text-gray-90 md:text-gray-70 sm:text-70  text-center my-auto md:mb-2">
                       잘못된 정보가 있나요?
                     </div>
                     <Link  href={`/company/${company_id}/suggestion?position=${position_id}`} className="py-3 px-6  w-36 rounded-md bg-main-light text-main-base text-center">
