@@ -17,8 +17,6 @@ export default function ClientSearchBox() {
 		setQuery('');
 		setCompanyList([]);
 	};
-	console.log('현재 밸류: ', value);
-	console.log('현재 검색어: ', query);
 
 	useEffect(() => {
 		if (value == '') {
