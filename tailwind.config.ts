@@ -90,7 +90,7 @@ const config: Config = {
       },
       animation: {
         logo: 'logo 1s linear infinite',
-        float:'float 3s ease-in-out  infinite'
+        float: 'float 3s ease-in-out  infinite'
       },
       keyframes: {
         logo: {
@@ -122,7 +122,9 @@ const config: Config = {
         },
       },
       borderRadius: {
-        '2.5xl': '1.25rem', 
+        '2.5xl': '1.25rem',
+        '3.5xl': '1.625rem',
+        '4xl': '1.75rem'
       },
     },
   },

@@ -87,9 +87,9 @@ export default function Topnav() {
 						<div className="flex flex-1 items-stretch justify-start">
 							<Link href="/" className="flex flex-shrink-0 items-center">
 								<Image
-									width={58}
-									height={32}
-									className="hidden h-auto w-auto sm:block"
+									width={60}
+									height={30}
+									className="hidden  sm:block"
 									src="/icons/logo_light.png"
 									alt="Sols"
 								/>
@@ -122,7 +122,7 @@ export default function Topnav() {
 									<ProfileDropdown userName={userName} logout={logout} />
 								) : (
 									<Link
-										className="rounded-3xl border border-gray-40 px-5 py-2 text-sm font-medium text-text-base hover:text-black"
+										className="rounded-3xl border border-gray-40 px-6 py-2 text-sm font-medium text-text-base hover:text-black"
 										href="/login"
 									>
 										로그인 / 회원가입
