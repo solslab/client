@@ -69,7 +69,7 @@ export default async function Page() {
           </div>
           <div className="text-lg py-4 flex flex-wrap w-full">
             <div className="text-gray-80 font-bold w-full md:w-1/5  flex flex-col justify-start">
-              취업 희망분야
+              취업 희망 분야
             </div>
             <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
               {profileData.prefer_industries &&

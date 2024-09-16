@@ -12,7 +12,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 const menuList = [
   {
-    label: "시험정보",
+    label: "코딩테스트 정보 ",
     section: "companyInfo",
   },
   {
@@ -45,13 +45,13 @@ export default async function Page({
     <>
       <div className="w-full h-44 md:h-64 lg:h-64 bg-[url('/company_3.png')] bg-cover bg-center blur-lg relative">
       </div>
-      <div className="flex flex-col  items-center justify-center border-b py-8 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-gray-5">
+      <div className="flex flex-col  items-center justify-center border-b py-10 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-white  md:bg-gray-5">
         <Container>
           <div
-            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-md absolute  top-[-2rem] md:top-[-3rem] border border-gray-30 "
+            className="bg-cover bg-no-repeat bg-center w-16 h-16 md:w-24 md:h-24  rounded-xl absolute  top-[-2rem] md:top-[-3rem] border border-gray-30 "
             style={{ backgroundImage: ` url(${companyData.company_logo})` }}
           />
-          <div className="flex flex-row items-center text-title-black font-bold">
+          <div className=" flex flex-row items-center text-title-black font-bold">
             <div className="text-xl md:text-2xl ">{companyData.company_name}</div>
           </div>
         </Container>
@@ -74,7 +74,7 @@ export default async function Page({
             <TestInfo positions={positions} position_id={position_id} data={data} />
             <Container>
               <div className="flex flex-wrap justify-between py-7 w-full text-gray-70">
-                <div className=" text-sm mb-4 md:mb-0  w-full md:w-1/2 flex flex-col justify-center">
+                <div className=" text-sm mb-8 md:mb-0  w-full md:w-1/2 flex flex-col justify-center">
                   위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
                   채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수
                   있습니다.
@@ -83,7 +83,7 @@ export default async function Page({
                 </div>
                 <div className="w-full md:w-1/2 flex justify-end">
                   <div className="flex justify-between w-full md:w-auto md:flex-col md:justify-center ">
-                    <div className=" text-sm  text-center my-auto md:mb-4">
+                    <div className=" text-sm text-gray-90 sm:text-text-base  text-center my-auto md:mb-2">
                       잘못된 정보가 있나요?
                     </div>
                     <Link  href={`/company/${company_id}/suggestion?position=${position_id}`} className="py-3 px-6  w-36 rounded-md bg-main-light text-main-base text-center">

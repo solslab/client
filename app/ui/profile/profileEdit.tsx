@@ -158,7 +158,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
         </div>
         <div className="flex w-full flex-wrap py-4 text-lg">
           <div className="w-full font-bold text-gray-80 md:w-1/5">
-            취업 희망분야
+            취업 희망 분야
           </div>
           <div className="mt-4 flex w-full flex-wrap text-text-base md:mt-0 md:w-4/5">
             {FEILDLIST.map((el) => (
