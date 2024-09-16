@@ -7,8 +7,8 @@ export default function DeletionBtn() {
     const [modalVisible,setModalVisible] = useState(false);
   return (
     <>
-    <div className="w-full flex justify-end py-8">
-      <button onClick={()=>setModalVisible(true)} className="text-gray-70 text-xl">탈퇴하기</button>
+    <div className="w-full flex justify-end py-16">
+      <button onClick={()=>setModalVisible(true)} className="text-gray-70 ">탈퇴하기</button>
     </div>
     {
         modalVisible&& 

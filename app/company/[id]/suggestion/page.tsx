@@ -6,6 +6,7 @@ import Container from "@/app/ui/container";
 import SuggestionForm from "@/app/ui/company/suggestionForm";
 import { BaseNextResponse } from "next/dist/server/base-http";
 import { notFound } from "next/navigation";
+import SmallContainer from "@/app/ui/smallContainer";
 
 
 export default async function Page({
@@ -29,9 +30,9 @@ export default async function Page({
 
   return (
     <main className="flex min-h-screen  justify-between py-20 bg-white">
-      <Container>
+      <SmallContainer>
         <div>
-          <div className="text-3xl font-bold">정보 수정 요청</div>
+          <div className="text-3xl font-bold text-title-black">정보 수정 요청</div>
           <div className="px-5 py-16">
             <div className="flex">
               <div
@@ -47,7 +48,7 @@ export default async function Page({
             <SuggestionForm position_id={position_id}/>
           </div>
         </div>
-      </Container>
+      </SmallContainer>
     </main>
   );
 }

@@ -16,17 +16,17 @@ export default function FeedBackBtn() {
           <button
           onClick={()=>setActive(true)}
             type="button"
-            className="w-28 h-28 bg-light-blue rounded-full shadow-customShadow flex justify-center items-center "
+            className=""
           >
             <Image
-              src="/icons/gradient_clover.png"
-              width={36}
-              height={36}
+              src="/icons/clover_circle.png"
+              width={88}
+              height={88}
               alt="feedback button"
-              className="h-auto w-auto"
+              className=""
             />
           </button>
-          <div className="my-4  bg-gradient-text-2 text-center text-transparent bg-clip-text font-bold">
+          <div className="my-2  bg-gradient-text-2 text-center text-transparent bg-clip-text font-bold">
             피드백 남기기
           </div>
         </div>
