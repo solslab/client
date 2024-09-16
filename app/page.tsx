@@ -30,9 +30,16 @@ export default function Home({
                 <div className="text-4xl pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   더 빠르고, 쉽게
                 </div>
-                <div className="text-4xl pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                <div className="hidden sm:block text-4xl pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   기업 코딩테스트를 준비하는 방법
                 </div>
+                <div className=" block sm:hidden text-4xl pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                  기업 코딩테스트를 
+                </div>
+                <div className=" block sm:hidden text-4xl pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                  준비하는 방법
+                </div>
+                
               </div>
 
              <ClientSearchBox/>

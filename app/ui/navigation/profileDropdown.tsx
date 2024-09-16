@@ -23,7 +23,7 @@ export default function ProfileDropdown({
 		<>
 			<button
 				type="button"
-				className="relative hidden rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 sm:flex"
+				className="relative hidden rounded-full text-sm focus:outline-none sm:flex"
 				id="user-menu-button"
 				aria-expanded="false"
 				aria-haspopup="true"
