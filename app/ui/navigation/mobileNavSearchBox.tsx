@@ -50,7 +50,7 @@ export default function MobileNavSearchBox() {
 			) : (
 				<div className="fixed left-0 top-16">
 					<div className="relative">
-					<div onClick={clearFeild} className="fixed w-screen h-screen top-0 left-0 -z-10"></div>
+					<div onClick={()=>{setVisible(false); clearFeild()}} className="fixed w-screen h-screen top-0 left-0  -z-10 "></div>
 						<div className="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-3">
 							<Image src="/icons/search.png" alt="search" width={16} height={16} />
 						</div>
