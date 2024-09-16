@@ -8,7 +8,6 @@ export async function GET(request:Request) {
     const accessToken = url.searchParams.get('accessToken') || ''; 
     const prevPath = cookies().get('sols-lastPath')
     const infoTest = await infoCheck(accessToken);
-    console.log(infoTest,'@@@@')
     if (accessToken) {
         cookies().set('sols-accessToken', accessToken);
     }
