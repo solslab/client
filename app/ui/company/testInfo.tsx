@@ -16,7 +16,7 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
         <div className="w-full px-6">
           <div className="flex flex-row w-full flex-wrap mb-4">
             <div className=" w-full md:w-1/4 text-base my-auto">
-              직무구분
+              시기/직무구분
             </div>
             <div className=" w-full md:w-3/4  mt-4 md:mt-0">
               <PositionSelectBox
