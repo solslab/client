@@ -30,10 +30,10 @@ export default function Page() {
       </div>
 
       <div className="mt-20 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div>
+        <div className="flex justify-center">
           <Link
             href="https://solslab.site/api/oauth2/authorization/kakao"
-            className="flex  justify-center rounded-md   text-sm font-semibold  text-white shadow-sm"
+            className="flex flex-wrap  justify-center rounded-md   text-sm font-semibold  text-white shadow-sm"
           >
             <Image src='/kakao_login.png' alt='kakao button' width={230} height={52} />
           </Link>

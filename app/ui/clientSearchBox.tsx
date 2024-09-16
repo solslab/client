@@ -44,7 +44,7 @@ export default function ClientSearchBox() {
 	}, [query]);
 
 	return (
-		<div className="relative hidden sm:block">
+		<div className="relative hidden sm:block z-20">
 			<div className="relative">
 				<div className="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-5">
 					<Image src="/icons/search.png" alt="search" width={20} height={20} />
@@ -53,7 +53,7 @@ export default function ClientSearchBox() {
 					className={clsx(
 						`w-700 block h-14 rounded-full border border-gray-50 px-16 py-3 text-xl shadow-customShadow focus:outline-none`,
 						{
-							'rounded-t-2.5xl rounded-b-none border-b-0 bg-white outline-none':
+							'rounded-t-4xl rounded-b-none border-b-0 bg-white outline-none':
 								companyList.length > 0
 						}
 					)}
@@ -73,7 +73,7 @@ export default function ClientSearchBox() {
 						className={clsx(
 							`mx-auto max-h-56 w-full overflow-y-scroll bg-white shadow-customShadow scrollbar-hide`,
 							{
-								'rounded-b-2.5xl border-x border-b border-x-gray-50 border-b-gray-50':
+								'rounded-b-4xl border-x border-b border-x-gray-50 border-b-gray-50':
 									companyList.length > 0
 							}
 						)}
@@ -81,9 +81,9 @@ export default function ClientSearchBox() {
 						{companyList &&
 							companyList.map((el: CompanyQuery) => (
 								<Link href={`/company/${el.company_id}`} key={el.company_id}>
-									<div className="flex rounded-md px-4 py-4 hover:bg-gray-100">
+									<div className="flex rounded- px-4 py-4 hover:bg-gray-100">
 										<div
-											className="mr-4 h-12 w-12 rounded-sm border border-gray-5 bg-cover bg-center bg-no-repeat"
+											className="mr-4 h-12 w-12 rounded-lg border border-gray-20 bg-cover bg-center bg-no-repeat"
 											style={{ backgroundImage: ` url(${el.company_logo})` }}
 										/>
 										<div className="flex flex-col justify-center text-lg">{el.company_name}</div>

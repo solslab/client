@@ -49,7 +49,7 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
                     회원에게만 공개된 정보입니다.
                   </div>
                 </div>
-                <Link href='/login' className="py-3 px-6 ml-6 mt-4 sm:mt-0 rounded-md border-2 font-semibold border-main-base text-main-base">
+                <Link href='/login' className="py-3 px-6 ml:0 sm:ml-6 mt-4 sm:mt-0 rounded-md border-2 font-semibold border-main-base text-main-base">
                 3초만에 가입하기!
               </Link>
               </>
@@ -59,41 +59,41 @@ export default function TestInfo({positions,position_id, data }:{positions:Posit
         </div>
       </div>
       <div className="py-7">
-        <div className="grid grid-cols-1 gap-y-4 gap-x-16 md:grid-cols-2 w-full px-6">
+        <div className="grid grid-cols-1 gap-y-2 sm:gap-y-4 gap-x-16 md:grid-cols-2 w-full px-6">
           <InfoItem
             src={"/icons/calendar.png"}
             label={"시험시간"}
-            data={data.test_time}
+            data={data.test_time || '-'}
           />
           <InfoItem
             src={"/icons/messageCode.png"}
             label={"문제수"}
-            data={data.problem_info}
+            data={data.problem_info || '-'}
           />
           <InfoItem
             src={"/icons/jump.png"}
             label={"IDE사용"}
-            data={data.permit_ide}
+            data={data.permit_ide || '-'}
           />
           <InfoItem
             src={"/icons/glassEye.png"}
             label={"구글링"}
-            data={data.permit_search}
+            data={data.permit_search || '-'}
           />
           <InfoItem
             src={"/icons/interrogation.png"}
             label={"히든 테스트케이스"}
-            data={data.hidden_case}
+            data={data.hidden_case || '-'}
           />
           <InfoItem
             src={"/icons/document.png"}
             label={"시험방식"}
-            data={data.exam_mode}
+            data={data.exam_mode || '-'}
           />
           <InfoItem
             src={"/icons/marker.png"}
             label={"응시장소 / 플랫폼"}
-            data={data.test_place}
+            data={data.test_place || '-'}
           />
         </div>
       </div>
