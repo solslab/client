@@ -14,14 +14,14 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-	title: '몇솔',
-	description: '기업별 코딩테스트 정보를 제공하는 사이트',
+	title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
+	description: '기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
 	icons: {
 		icon: '/favicon.png'
 	},
 	openGraph: {
-		title: '몇솔',
-		description: '기업별 코딩테스트 정보를 제공하는 사이트',
+		title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
+		description: '기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
 		siteName: '몇솔',
 		images: [
 			{
