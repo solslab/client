@@ -2,6 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import Float from "../ui/interaction/float";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "로그인 | 몇솔",
+};
 
 export default function Page() {
   // const router = useRouter()
