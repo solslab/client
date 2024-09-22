@@ -8,10 +8,6 @@ import ClientSearchBox from "./ui/clientSearchBox";
 import { Metadata } from "next";
 
 
-export const metadata: Metadata = {
-  title: "몇솔",
-};
-
 export default function Home({
   searchParams,
 }: {
