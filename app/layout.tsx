@@ -4,7 +4,8 @@ import './ui/global.css';
 import Topnav from './ui/navigation/topNav';
 import LastPathSetter from './ui/lastPathSetter';
 import PrelineScript from './ui/PrelineScript';
-import GoogleAnalytics from './context/GoogleAnalytics';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -44,8 +45,7 @@ export default function RootLayout({
 			<link rel="icon" href="/favicon.png" sizes="any" />
 
 			<script async src="https://www.googletagmanager.com/gtag/js?id=G-9PG6DER9G1"></script>
-			<GoogleAnalytics />
-
+      <GoogleTagManager gtmId='GTM-57ML2L7S'/>
 			<body className={pretendard.className}>
 				<Topnav />
 				<LastPathSetter />
@@ -54,6 +54,7 @@ export default function RootLayout({
 					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
 				</footer>
 			</body>
+      <GoogleAnalytics gaId="G-9PG6DER9G1"/>
 			<PrelineScript />
 		</html>
 	);
