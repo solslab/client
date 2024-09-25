@@ -53,7 +53,8 @@ const config: Config = {
         'red-warning': '#EF3535',
         'light-blue': '#ECEEF6',
         'green-success': '#07bc0c',
-        'title-black': '#1E2124'
+        'title-black': '#1E2124',
+        'kakao':'#FEE500'
 
       },
       spacing: {
