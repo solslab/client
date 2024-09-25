@@ -96,7 +96,7 @@ export default function ProfileDropdown({
 							tabIndex={-1}
 						>
 							<div className="py-1 sm:block" role="none">
-								<div className="py-2" role="none">
+								{/* <div className="py-2" role="none">
 									<div
 										className="flex items-center px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
@@ -112,7 +112,7 @@ export default function ProfileDropdown({
 										/>
 										<div className="px-4 text-text-base">{userName}</div>
 									</div>
-								</div>
+								</div> */}
 								{links.map((link) => (
 									<Link
 										key={link.href + link.name}
@@ -147,15 +147,15 @@ export default function ProfileDropdown({
 							id="mobile-menu"
 						>
 							<div className="space-y-2 px-2 pb-3 pt-2">
-								<div className="flex h-44 w-full flex-col justify-between p-6">
-									<div className="flex w-full justify-between">
-										<Image
+								<div className="flex w-full flex-col justify-between p-6">
+									<div className="flex w-full justify-end">
+										{/* <Image
 											className="rounded-full"
 											width={74}
 											height={74}
 											src="/icons/default_profile.png"
 											alt="User avatar"
-										/>
+										/> */}
 										<button
 											onClick={handleProfileClicked}
 											className="flex h-6 w-6 items-center justify-center"
