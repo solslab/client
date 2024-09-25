@@ -20,7 +20,7 @@ export default function LanguageBox({language}:{language:string}) {
         :<></>
         }
       </div>
-      <div className="text-text-base text-base">{language}</div>
+      <div className="text-text-base text-sm flex justify-center items-center">{language}</div>
     </div>
   );
 }
