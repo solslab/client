@@ -9,7 +9,7 @@ export default function TrFormRow({
   label: string;
   children: React.ReactNode;
   required?: boolean;
-  error?:string;
+  error?:string[];
 }) {
   const isRequired = required || true;
   return (
@@ -27,7 +27,7 @@ export default function TrFormRow({
       </div>
       <div className="h-6 w-full flex justify-end items-center">
         <p className="text-sm text-red-warning">
-            {error}
+            {error?.map((el)=><span>{el}</span>)}
         </p>
       </div>
     </div>
