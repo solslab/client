@@ -20,7 +20,7 @@ export default function Home({
   console.log(process.memoryUsage());
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="flex min-h-screen flex-col items-center justify-between">
         <div className=" w-full h-screen flex justify-center items-center relative">
           <Float/>
 
@@ -28,17 +28,17 @@ export default function Home({
           <Container className=" flex relative max-w-7xl h-46 justify-center">
             <div className="flex flex-col justify-center items-center z-30 ">
               <div>
-              <div>
-                <div className="text-4xl pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+              <div className="text-3xl">
+                <div className=" pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   더 빠르고, 쉽게
                 </div>
-                <div className="hidden sm:block text-4xl pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                <div className="hidden sm:block pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   기업 코딩테스트를 준비하는 방법
                 </div>
-                <div className=" block sm:hidden text-4xl pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                <div className=" block sm:hidden  pb-6 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   기업 코딩테스트를 
                 </div>
-                <div className=" block sm:hidden text-4xl pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
+                <div className=" block sm:hidden  pb-16 font-extrabold bg-gradient-text-2 text-center text-transparent bg-clip-text">
                   준비하는 방법
                 </div>
                 
@@ -53,7 +53,7 @@ export default function Home({
         <div className='hidden lg:block'>
         </div>
 
-      </main>
+      </div>
     </>
   );
 }

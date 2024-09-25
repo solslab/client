@@ -41,9 +41,10 @@ export default async function Page({
   }
   const data: TestData = await fetchPositionData(position_id);
 
+
   return (
     <>
-      <div className="w-full h-32 md:h-64 lg:h-64 bg-[url('/company_30.png')] bg-cover bg-center blur-lg relative">
+      <div className="w-full h-32 md:h-64 lg:h-64 bg-[url('/company_sm.png')]   sm:bg-[url('/company_30.png')] bg-cover bg-center relative">
       </div>
       <div className="flex flex-col  items-center justify-center border-b py-10 md:py-16 border-gray-30 relative border-t border-t-gray-30 bg-white  md:bg-gray-5">
         <Container>
@@ -100,7 +101,7 @@ export default async function Page({
 
                 <div className=" text-center text-xl mb-4">오픈 준비중!</div>
                 <div className=" text-center text-xl mb-10">정보 제공을 위해 후기를 모으고 있어요.</div>
-                <TrLink/>
+                <TrLink company_id={company_id}/>
               </div>
 
 

@@ -4,8 +4,7 @@ import './ui/global.css';
 import Topnav from './ui/navigation/topNav';
 import LastPathSetter from './ui/lastPathSetter';
 import PrelineScript from './ui/PrelineScript';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
-
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -16,13 +15,15 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
 	title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
-	description: '기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
+	description:
+		'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
 	icons: {
 		icon: '/favicon.png'
 	},
 	openGraph: {
 		title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
-		description: '기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
+		description:
+			'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
 		siteName: '몇솔',
 		images: [
 			{
@@ -45,7 +46,7 @@ export default function RootLayout({
 			<link rel="icon" href="/favicon.png" sizes="any" />
 
 			<script async src="https://www.googletagmanager.com/gtag/js?id=G-9PG6DER9G1"></script>
-      <GoogleTagManager gtmId='GTM-57ML2L7S'/>
+			<GoogleTagManager gtmId="GTM-57ML2L7S" />
 			<body className={pretendard.className}>
 				<Topnav />
 				<LastPathSetter />
@@ -54,7 +55,7 @@ export default function RootLayout({
 					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
 				</footer>
 			</body>
-      <GoogleAnalytics gaId="G-9PG6DER9G1"/>
+			<GoogleAnalytics gaId="G-9PG6DER9G1" />
 			<PrelineScript />
 		</html>
 	);

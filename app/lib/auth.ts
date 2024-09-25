@@ -28,14 +28,13 @@ export async function logOut(path: string) {
         if (!response.ok) {
             throw new Error(`${response.status}`);
         }
-        const data = await response.json();
         await deleteToken();
-        redirect(path)
     }
     catch (error) {
-        console.error(error)
-        await deleteToken();
-        redirect( path)
+        console.error('logOut중 오류발생',error)
+    }
+    finally{
+        redirect(path)
     }
 }
 
@@ -65,6 +64,7 @@ export async function tokenTest() {
         return data;
     }
     catch (error) {
+        console.log('tokenTest중 오류발생',error)
         return false
     }
 }
@@ -113,7 +113,7 @@ export async function deleteMember(prevState: DeletionState, formData: FormData)
         };
 
     } catch (error) {
-        console.error(error)
+        console.error('deleteMember중 오류발생',error)
         return {
             submitted: true,
             message: '탈퇴가 정상적으로 완료되지않았습니다.',

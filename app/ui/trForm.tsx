@@ -8,6 +8,7 @@ import TrComboBox from './testReview/trCombobox';
 import { TestReviewState, createTestReview } from '../lib/actions';
 import Select from './select';
 import TrFormRow from './testReview/trFormRow';
+import TrSearchBox from './testReview/trSearchbox';
 import BasicAlert from './basicAlert';
 import { redirectToPrev } from '../lib/cookie';
 const years: number[] = [];
@@ -15,8 +16,10 @@ for (let i = 2024; i >= 2000; i--) {
 	years.push(i);
 }
 
-export default function TrForm() {
+export default function TrForm({company_id}:{company_id:string|undefined}) {
 	const [problems, setProblems] = useState<Set<string>>(new Set());
+	const [value, setValue] = useState('');
+    const [companyId,setCompanyId] = useState(company_id)
 	const addProblem = (problem: string) => {
 		const newSet = new Set(problems);
 		newSet.add(problem);
@@ -29,13 +32,16 @@ export default function TrForm() {
 	};
 	const initialState: TestReviewState = {
 		message: null,
-		errors: {}
+		errors: {},
+		fullfilled:false
 	};
 	const [state, formAction] = useActionState(createTestReview, initialState);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
+		companyId&& formData.append('company_id',companyId)
+		formData.append('company_name', value);
 		formData.append('tr_problem_type', Array.from(problems).toString());
 		startTransition(() => {
 			formAction(formData);
@@ -44,8 +50,8 @@ export default function TrForm() {
 	return (
 		<>
 		<form onSubmit={handleSubmit}>
-			<div className="text-3xl font-bold text-title-black">코딩테스트 후기 작성</div>
-			<div className="px-5 py-16">
+			<div className="text-2xl font-bold text-title-black">코딩테스트 후기 작성</div>
+			<div className=" px-5 py-16">
 				<div className="border-b border-gray-30 py-6">
 					<TrFormRow
 						required={true}
@@ -53,7 +59,7 @@ export default function TrForm() {
 						error={state.errors?.company_name && state.errors.company_name}
 					>
 						{' '}
-						<Input name="company_name" id="company_name" required={true} />
+						<TrSearchBox value={value} setValue={setValue} companyId={companyId} setCompanyId={setCompanyId} />
 					</TrFormRow>
 					<TrFormRow
 						label={'지원직무(선택)'}
@@ -163,14 +169,14 @@ export default function TrForm() {
 				{state.message && <p className="text-sm text-red-warning">{state.message}</p>}
 			</div>
 		</form>
-		{/* {
+		{
 			state.fullfilled?
 			<BasicAlert onClick={async()=>await redirectToPrev()}>
 				<div>제출에 성공하였습니다.</div>
 			</BasicAlert>
 			:
-			<>
-		} */}
+			<></>
+		}
 		</>
 		
 	);

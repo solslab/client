@@ -6,7 +6,7 @@ export default function Page({
   }: {
     searchParams: {accessToken?:string,message?:string};
   }) {
-    const res = searchParams.message || '실패했~ㅋㅋ';
+    const res = searchParams.message ;
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

@@ -20,13 +20,13 @@ export default function FeedBackBtn() {
           >
             <Image
               src="/icons/clover_circle.png"
-              width={88}
-              height={88}
+              width={72}
+              height={72}
               alt="feedback button"
               className=""
             />
           </button>
-          <div className="my-2  bg-gradient-text-2 text-center text-transparent bg-clip-text font-bold">
+          <div className="my-2  bg-gradient-text-2 text-sm text-center text-transparent bg-clip-text font-bold">
             피드백 남기기
           </div>
         </div>

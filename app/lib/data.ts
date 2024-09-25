@@ -2,7 +2,8 @@
 
 import { permanentRedirect, redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
-import { getToken, updateToken } from "./cookie";
+import { deleteToken, getToken, updateToken } from "./cookie";
+import { Company } from "./definitions";
 
 
 export const fetchCompanyData = async () => {
@@ -23,7 +24,7 @@ export const fetchCompanyData = async () => {
         const data = await response.json();
         return data
     } catch (error) {
-        console.error('Fetch 요청 중 오류 발생:', error);
+        console.error('fetchCompanyData중 오류 발생:', error);
     }
 };
 
@@ -44,11 +45,11 @@ export const fetchFilteredCompanys = async (query: string) => {
         return data
 
     } catch (error) {
-        console.error('Fetch 요청 중 오류 발생:', error);
+        console.error('fetchFilteredCompanys중 오류 발생:', error);
     }
 
 };
-export const fetchCompanyDetail = async (id: string) => {
+export const fetchCompanyDetail = async (id: string): Promise<Company|undefined>  => {
     try {
         const response = await fetch(`${SPRING_URL}/company/${id}`, {
             method: 'GET',
@@ -66,7 +67,7 @@ export const fetchCompanyDetail = async (id: string) => {
         return data
 
     } catch (error) {
-        console.error('Fetch 요청 중 오류 발생:', error);
+        console.error('fetchCompanyDetail중 오류 발생:', error);
     }
 };
 
@@ -75,6 +76,7 @@ export const fetchPositionData = async (id: string) => {
         'Content-Type': 'application/json' ,
         'Cache-Control': 'no-cache'
     };
+    console.log('fetch~~')
     const token = await getToken();
     const value = token?.value ;
     if(value){
@@ -100,7 +102,7 @@ export const fetchPositionData = async (id: string) => {
         return data
 
     } catch (error) {
-        console.error('Fetch 요청 중 오류 발생:', error);
+        console.error('fetchPositionData중 오류 발생:', error);
     }
 };
 
@@ -134,6 +136,8 @@ export const fetchProfile = async () => {
         return data
 
     } catch (error) {
-        redirect('/login')
+        console.error('fetchProfile중 에러발생',error)
+        deleteToken();
+        // redirect('/login')
     }
 };

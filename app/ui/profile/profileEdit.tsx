@@ -71,9 +71,9 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="text-3xl font-bold text-title-black">정보 수정</div>
+      <div className="text-2xl font-bold text-title-black">정보 수정</div>
       <div className="px-5 py-16">
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             이름
           </div>
@@ -81,7 +81,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
             {profileData.name}
           </div>
         </div>
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             이메일
           </div>
@@ -89,7 +89,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
             {profileData.email}
           </div>
         </div>
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
             닉네임
           </div>
@@ -101,7 +101,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
             />
           </div>
         </div>
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="w-full font-bold text-gray-80 md:w-1/5">
             티어 / 점수
           </div>
@@ -139,7 +139,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
             )}
           </div>
         </div>
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="w-full font-bold text-gray-80 md:w-1/5">
             선호 언어
           </div>
@@ -156,7 +156,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-wrap py-4 text-lg">
+        <div className="flex w-full flex-wrap py-4 text-base">
           <div className="w-full font-bold text-gray-80 md:w-1/5">
             취업 희망 분야
           </div>
