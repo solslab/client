@@ -65,7 +65,7 @@ export default function Float() {
         <Image src='/companyLogo/skTelecom.png' alt='Sk Telecom logo' width={76} height={27} className="absolute left-5/20  w-auto h-auto animate-[float_3s_ease-in-out_infinite_3s]"/>
         </div>
         <div className="w-full  absolute left-0 top-15/20 ">
-        <Image src='/companyLogo/suhyup.png' alt='suhyup bank logo' width={70} height={70} className="absolute left-5/20  w-auto h-auto animate-[float_3s_ease-in-out_infinite_2s]"/>
+        <Image src='/companyLogo/suhyup.png' alt='suhyup bank logo' width={70} height={70} className="absolute left-5/20  w-auto h-auto animate-[float_3s_ease-in-out_infinite_4s]"/>
         </div>
         <div className="w-full  absolute left-0 top-10/20">
         <Image src='/companyLogo/toss.png' alt='toss logo' width={143} height={71} className="absolute left-14/20  w-auto h-auto animate-[float_3s_ease-in-out_infinite_4s]"/>
