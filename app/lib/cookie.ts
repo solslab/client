@@ -6,12 +6,12 @@ import { NEXT_URL } from './constants';
 import Layout from '../company/layout';
 import { getDateOneMonthLater } from './utils';
 
-export async function updateLastRoute(path:string) {
-    cookies().set('sols-lastPath', path,{
+export async function updateLastRoute(path: string) {
+    cookies().set('sols-lastPath', path, {
         httpOnly: true,
-        secure:true,
-        expires:getDateOneMonthLater()
-      })
+        secure: true,
+        expires: getDateOneMonthLater()
+    })
 }
 export async function getLastRoute() {
     const path = cookies().get('sols-lastPath');
@@ -36,19 +36,22 @@ export async function deleteToken() {
 }
 
 export async function redirectToPrev() {
-    
+
     const pathCookie = await getLastRoute();
     const path = pathCookie?.value || '/'
     redirect(path)
 }
+export async function redirectServerAction(path: string) {
+    redirect(path)
+}
 export async function permanentRedirectToPrev() {
-    
+
     const pathCookie = await getLastRoute();
     const path = pathCookie?.value || '/'
-    revalidatePath(path,'layout')
+    revalidatePath(path, 'layout')
     permanentRedirect(path)
 }
-export async function redirectIfNoToken(){
+export async function redirectIfNoToken() {
     const tokenCookie = await getToken();
     const token = tokenCookie?.value || undefined;
     if (!token) {
