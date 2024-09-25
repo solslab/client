@@ -5,8 +5,8 @@ export default function Layout({
   children: React.ReactNode
 }) {
   return (
-    <main lang="en">
+    <div lang="en">
       {children}
-    </main>
+    </div>
   )
 }

@@ -1,4 +1,3 @@
-import Topnav from "@/app/ui/navigation/topNav";
 
 export default function Layout({
     children,
