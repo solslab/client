@@ -27,7 +27,7 @@ export default function TrFormRow({
       </div>
       <div className="h-6 w-full flex justify-end items-center">
         <p className="text-sm text-red-warning">
-            {error?.map((el)=><span>{el}</span>)}
+            {error?.map((el)=><span className="text-sm text-red-warning" key={el}>{el}</span>)}
         </p>
       </div>
     </div>

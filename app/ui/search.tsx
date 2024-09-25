@@ -26,6 +26,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
             className="w-700 h-14 py-3 px-16 block border border-gray-50 text-xl rounded-full focus:outline-none shadow-customShadow"
             type="text"
             role="combobox"
+            aria-controls=""
             aria-expanded="false"
             placeholder={placeholder}
             onChange={(e) => {

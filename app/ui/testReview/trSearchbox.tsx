@@ -79,6 +79,7 @@ export default function TrSearchBox({
 						)}
 						type="text"
 						role="combobox"
+                        aria-controls=""
 						aria-expanded="false"
 						placeholder={''}
 						onChange={(e) => {
