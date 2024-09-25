@@ -26,3 +26,13 @@ export const findPlatformIndex = (code: string) => {
 
     return platformIndex
 }
+
+export const  getDateOneMonthLater = (): Date=> {
+    const currentDate = new Date();
+    const oneMonthLater = new Date(currentDate);
+    
+    // 현재 날짜에 1개월을 더합니다.
+    oneMonthLater.setMonth(currentDate.getMonth() + 1);
+    
+    return oneMonthLater;
+  }
