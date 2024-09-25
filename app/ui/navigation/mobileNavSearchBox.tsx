@@ -67,6 +67,7 @@ export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 									className="block h-10 w-screen border bg-gray-5 px-8 py-3 shadow-inner focus:border-blue-500 focus:bg-white focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 									type="text"
 									role="combobox"
+									aria-controls=""
 									aria-expanded="false"
 									placeholder={'기업을 검색해보세요!'}
 									onChange={(e) => {

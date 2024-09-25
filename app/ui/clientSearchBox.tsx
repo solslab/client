@@ -59,6 +59,7 @@ export default function ClientSearchBox() {
 					)}
 					type="text"
 					role="combobox"
+					aria-controls=""
 					aria-expanded="false"
 					placeholder={'지금 바로 기업을 검색해 보세요!'}
 					onChange={(e) => {
