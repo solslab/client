@@ -5,7 +5,7 @@ import { useState } from 'react';
 import TierModal from './tierModal';
 import { useRouter } from 'next/navigation';
 
-export default function TrLink() {
+export default function TrLink({company_id}:{company_id?:string}) {
   const[modalVisible,setModalVisible] = useState(false);
   const router = useRouter()
 
@@ -23,7 +23,7 @@ export default function TrLink() {
 					}
 					const infoChecked = await infoCheck(token);
 					if (infoChecked) {
-						router.push('/testReview')
+						router.push(`/testReview${company_id?'?company_id='+company_id:''}`)
 					}
           else{
            setModalVisible(true);

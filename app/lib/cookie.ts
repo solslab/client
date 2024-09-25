@@ -4,9 +4,14 @@ import { cookies } from 'next/headers'
 import { permanentRedirect, redirect } from 'next/navigation';
 import { NEXT_URL } from './constants';
 import Layout from '../company/layout';
+import { getDateOneMonthLater } from './utils';
 
 export async function updateLastRoute(path:string) {
-    cookies().set('sols-lastPath', path)
+    cookies().set('sols-lastPath', path,{
+        httpOnly: true,
+        secure:true,
+        expires:getDateOneMonthLater()
+      })
 }
 export async function getLastRoute() {
     const path = cookies().get('sols-lastPath');

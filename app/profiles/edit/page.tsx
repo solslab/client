@@ -9,7 +9,7 @@ export default async function Page() {
   const platformAndLabel = findPlatformAndLabel(
     profileData.al_platform,
     profileData.member_tier
-  ) || { platform: "알수없음", label: "" };
+  ) || { platform: "", label: "" };
   return (
       <SmallContainer>
         <ProfileEdit profileData={profileData} />
