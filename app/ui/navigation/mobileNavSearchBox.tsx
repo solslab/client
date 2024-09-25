@@ -78,7 +78,7 @@ export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 							</div>
 							<div>
 								<div className="absolute w-screen">
-									<div className="mx-auto max-h-56 w-full overflow-y-scroll bg-white scrollbar-hide">
+									<div className="mx-auto max-h-56 w-full overflow-y-scroll bg-white scrollbar-hide shadow-customShadow">
 										{companyList &&
 											companyList.map((el: CompanyQuery) => (
 												<Link href={`/company/${el.company_id}`} key={el.company_id}>
