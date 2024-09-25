@@ -8,17 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  // const router = useRouter()
-  // const pathName = usePathname();
-  // useEffect(() => {
-  //   const previousPath = document.referrer;
-  //   console.log(previousPath)
-  //   if (previousPath) {
-  //     updateLastRoute(previousPath);
-  //   }
-  // }, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center py-24 relative">
+    <div className="flex min-h-screen flex-col items-center justify-center py-24 relative">
       <Float/>
       <div className=" absolute w-full h-full  bg-white bg-opacity-65 backdrop-blur-sm">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -46,6 +38,6 @@ export default function Page() {
     </div>
       </div>
 
-    </main>
+    </div>
   );
 }

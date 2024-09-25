@@ -51,7 +51,7 @@ export default function ClientSearchBox() {
 				</div>
 				<input
 					className={clsx(
-						`w-700 block h-14 rounded-full border border-gray-50 px-16 py-3 text-xl shadow-customShadow focus:outline-none`,
+						`w-700 block h-14 rounded-full border border-gray-50 px-16 py-3 text-lg shadow-customShadow focus:outline-none`,
 						{
 							'rounded-t-4xl rounded-b-none border-b-0 bg-white outline-none':
 								companyList.length > 0

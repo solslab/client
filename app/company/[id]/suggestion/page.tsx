@@ -7,6 +7,7 @@ import SuggestionForm from "@/app/ui/company/suggestionForm";
 import { BaseNextResponse } from "next/dist/server/base-http";
 import { notFound } from "next/navigation";
 import SmallContainer from "@/app/ui/smallContainer";
+import XsContainer from "@/app/ui/xsContainer";
 
 
 export default async function Page({
@@ -18,7 +19,7 @@ export default async function Page({
 }) {
   const company_id = params.id;
 
-  const companyData: Company = await fetchCompanyDetail(company_id);
+  const companyData: Company|undefined = await fetchCompanyDetail(company_id);
   if (!companyData) {
     notFound();
   }
@@ -29,10 +30,10 @@ export default async function Page({
   }
 
   return (
-    <main className="flex min-h-screen  justify-between py-20 bg-white">
+    <div className="flex min-h-screen  justify-between py-20 bg-white">
       <SmallContainer>
         <div>
-          <div className="text-3xl font-bold text-title-black">정보 수정 요청</div>
+          <div className="text-2xl font-bold text-title-black">정보 수정 요청</div>
           <div className="px-5 py-16">
             <div className="flex">
               <div
@@ -40,7 +41,7 @@ export default async function Page({
                 style={{ backgroundImage: ` url(${companyData.company_logo})` }}
               />
               <div className="flex flex-row items-center ml-2">
-                <div className="text-xl md:text-3xl ">
+                <div className="text-base">
                   {companyData.company_name}
                 </div>
               </div>
@@ -49,6 +50,6 @@ export default async function Page({
           </div>
         </div>
       </SmallContainer>
-    </main>
+    </div>
   );
 }
