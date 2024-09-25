@@ -30,7 +30,7 @@ export default async function Page({
 }) {
   const company_id = params.id;
   const section = searchParams.section || menuList[0].section;
-  const companyData: Company = await fetchCompanyDetail(company_id);
+  const companyData: Company|undefined = await fetchCompanyDetail(company_id);
   if (!companyData) {
     notFound();
   }
