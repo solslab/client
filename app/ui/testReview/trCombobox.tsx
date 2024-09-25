@@ -26,6 +26,7 @@ const TrComboBox = ({
 					className="block w-full rounded-lg border border-gray-50 px-2 py-1 pe-9 ps-4 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 					type="text"
 					role="combobox"
+					aria-controls=""
 					aria-expanded="false"
 					placeholder="검색 및 선택"
 					value={value}
