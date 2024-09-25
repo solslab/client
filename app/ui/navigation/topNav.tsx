@@ -1,52 +1,17 @@
-'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import ProfileDropdown from './profileDropdown';
-import { useState, useEffect, useCallback } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { readToken } from '@/app/lib/cookie';
-import { logOut } from '@/app/lib/auth';
-import { fetchProfile } from '@/app/lib/data';
-import NavSearchBox from './navSearchBox';
-import MobileNavSearchBox from './mobileNavSearchBox';
+import NavBtn from './navBtn';
 
-const exception = ['/company'];
 
 export default function Topnav() {
-	const router = useRouter();
-	const pathName = usePathname();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [userName, setUserName] = useState('');
-
-	const logout = async () => {
-		await logOut(pathName);
-		setIsLoggedIn(false);
-	};
-	useEffect(() => {
-		async function checkToken() {
-			const cookieExist = await readToken();
-			if (cookieExist) {
-				const profile = await fetchProfile();
-				setIsLoggedIn(true);
-				// setUserName('plc');
-			} else {
-				setIsLoggedIn(false);
-			}
-			setLoading(false);
-		}
-
-		checkToken();
-	}, []);
-
 	return (
 		<>
-			<nav className="fixed z-50 w-full bg-white shadow">
-				<div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
-					<div className="relative flex h-16 items-center justify-between">
-						<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-							{/* <button
+				<nav className="fixed z-50 w-full bg-white shadow">
+					<div className="max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
+						<div className="relative flex h-16 items-center justify-between">
+							<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+								{/* <button
                   type="button"
                   className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   aria-controls="mobile-menu"
@@ -83,25 +48,25 @@ export default function Topnav() {
                     />
                   </svg>
                 </button> */}
-						</div>
-						<div className="flex flex-1 items-stretch justify-start">
-							<Link href="/" className="flex flex-shrink-0 items-center">
-								<Image
-									width={60}
-									height={30}
-									className="hidden  sm:block"
-									src="/icons/logo_light.png"
-									alt="Sols"
-								/>
-								<Image
-									width={48}
-									height={48}
-									className="block h-auto w-auto sm:hidden"
-									src="/icons/mobile_logo.png"
-									alt="Sols"
-								/>
-							</Link>
-							{/* <div className="hidden sm:ml-6 sm:block">
+							</div>
+							<div className="flex flex-1 items-stretch justify-start">
+								<Link href="/" className="flex flex-shrink-0 items-center">
+									<Image
+										width={48}
+										height={24}
+										className="hidden sm:block"
+										src="/icons/logo_light.png"
+										alt="Sols"
+									/>
+									<Image
+										width={48}
+										height={48}
+										className="block h-auto w-auto sm:hidden"
+										src="/icons/mobile_logo.png"
+										alt="Sols"
+									/>
+								</Link>
+								{/* <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     <Link
                       href="/company/naver"
@@ -111,28 +76,11 @@ export default function Topnav() {
                     </Link>
                   </div>
                 </div> */}
-						</div>
-						<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-							<MobileNavSearchBox />
-							<NavSearchBox />
-							<div className="relative ml-3">
-								{loading ? (
-									<></>
-								) : isLoggedIn ? (
-									<ProfileDropdown userName={userName} logout={logout} />
-								) : (
-									<Link
-										className="rounded-3xl border border-gray-40 px-6 py-2 text-sm font-medium text-text-base hover:text-black"
-										href="/login"
-									>
-										로그인 / 회원가입
-									</Link>
-								)}
 							</div>
+							<NavBtn/>
 						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
 		</>
 	);
 }
