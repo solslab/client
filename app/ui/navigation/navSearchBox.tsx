@@ -59,6 +59,7 @@ export default function NavSearchBox({ visible }: { visible?: boolean }) {
 							)}
 							type="text"
 							role="combobox"
+							aria-controls=""
 							aria-expanded="false"
 							placeholder={'기업을 검색해보세요!'}
 							onChange={(e) => {

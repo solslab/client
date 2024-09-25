@@ -26,6 +26,7 @@ export default function NavSearchInput({ placeholder }: { placeholder: string })
             className="w-96 h-14 py-3 px-16 block border border-gray-50 text-2xl rounded-full focus:rounded-none  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-customShadow"
             type="text"
             role="combobox"
+            aria-controls=""
             aria-expanded="false"
             placeholder={placeholder}
             onChange={(e) => {
