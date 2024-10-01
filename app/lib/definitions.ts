@@ -56,3 +56,9 @@ export interface TestData {
     social_type: string;
     created_date: string;
   }
+
+  export interface CompanyOverviewData {
+      company_id: string;
+    company_name: string;
+    company_logo: string;
+  }

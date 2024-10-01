@@ -3,7 +3,7 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
 import { deleteToken, getToken, updateToken } from "./cookie";
-import { Company } from "./definitions";
+import { Company, CompanyOverviewData } from "./definitions";
 
 
 export const fetchCompanyData = async () => {
@@ -13,6 +13,10 @@ export const fetchCompanyData = async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            next:{
+                revalidate: 60 * 60 * 24,
+            }
+            
         });
 
         if (!response.ok) {
@@ -21,7 +25,7 @@ export const fetchCompanyData = async () => {
 
         
 
-        const data = await response.json();
+        const data:CompanyOverviewData[] = await response.json();
         return data
     } catch (error) {
         console.error('fetchCompanyData중 오류 발생:', error);
