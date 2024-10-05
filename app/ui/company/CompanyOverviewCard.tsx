@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverviewData }) {
 	return (
-		<div className="flex w-full flex-row items-center justify-between rounded-[10px] border-[1px] border-gray-50 p-[10px] text-[14px] md:p-5">
+		<div className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5">
 			<div className="flex items-center gap-[14px]">
 				<Image
 					src={companyData.company_logo}
@@ -14,7 +14,16 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 				/>
 				<h2>{companyData.company_name}</h2>
 			</div>
-			<h2 className="text-gray-80">{companyData.company_name}</h2>
+			<div className="flex flex-row gap-2">
+				{companyData.industry_type.map((industry) => (
+					<div
+						className="rounded-xl border-[1px] border-gray-50 px-3 py-1 text-xs text-text-base"
+						key={industry}
+					>
+						{industry}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

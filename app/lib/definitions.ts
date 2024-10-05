@@ -61,4 +61,5 @@ export interface TestData {
       company_id: string;
     company_name: string;
     company_logo: string;
+    industry_type: string[];
   }
