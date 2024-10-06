@@ -3,28 +3,30 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
 import { deleteToken, getToken, updateToken } from "./cookie";
-import { Company } from "./definitions";
+import { Company, CompanyOverviewData, CompanyPageResponse } from "./definitions";
 
 
-export const fetchCompanyData = async () => {
+export const fetchCompanyData = async (page: number, size: number): Promise<CompanyPageResponse | undefined> => {
     try {
-        const response = await fetch(`${SPRING_URL}/company`, {
+        const response = await fetch(`${SPRING_URL}/company?page=${page}&size=${size}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
+            next: {
+                revalidate: 60 * 60 * 24,
+            }
         });
 
         if (!response.ok) {
             throw new Error(`오류 발생: ${response.status}`);
         }
 
-        
-
-        const data = await response.json();
-        return data
+        const data: CompanyPageResponse = await response.json();
+        return data;
     } catch (error) {
         console.error('fetchCompanyData중 오류 발생:', error);
+        return undefined;
     }
 };
 

@@ -56,3 +56,18 @@ export interface TestData {
     social_type: string;
     created_date: string;
   }
+
+  export interface CompanyOverviewData {
+      company_id: string;
+    company_name: string;
+    company_logo: string;
+    industry_type: string[];
+  }
+
+  export interface CompanyPageResponse {
+    companies: CompanyOverviewData[];
+    total_elements: number;
+    total_pages: number;
+    current_page: number;
+    page_size: number;
+  }
