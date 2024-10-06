@@ -132,6 +132,14 @@ const config: Config = {
   plugins: [
     require('preline/plugin'),
     require("tailwind-scrollbar-hide"),
+    function ({ addUtilities }: { addUtilities: (utilities: Record<string, any>) => void }) {
+      const newUtilities = {
+        '.hover-effect': {
+          '@apply transition-all duration-300 ease-in-out hover:scale-[1.02] hover:border-main-base hover:bg-main-light hover:shadow-lg': {}
+        },
+      }
+      addUtilities(newUtilities)
+    }
   ],
 };
 export default config;
