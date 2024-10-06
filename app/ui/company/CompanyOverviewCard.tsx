@@ -1,16 +1,20 @@
 import { CompanyOverviewData } from '@/app/lib/definitions';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverviewData }) {
 	return (
-		<div className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5">
+		<Link
+			href={`/company/${companyData.company_id}`}
+			className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5"
+		>
 			<div className="flex items-center gap-[14px]">
 				<Image
 					src={companyData.company_logo}
 					alt={companyData.company_name}
 					width={50}
 					height={50}
-					className="rounded-[10px]"
+					className="rounded-[10px] border-[1px] border-gray-50"
 				/>
 				<h2>{companyData.company_name}</h2>
 			</div>
@@ -24,6 +28,6 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 					</div>
 				))}
 			</div>
-		</div>
+		</Link>
 	);
 }

@@ -2,11 +2,10 @@ import Link from 'next/link';
 import { FiChevronsLeft, FiChevronLeft, FiChevronRight, FiChevronsRight } from 'react-icons/fi';
 import { BsThreeDots } from 'react-icons/bs';
 
-const baseButtonClasses =
-	'flex h-8 w-8 items-center justify-center rounded-lg border-[1px] border-gray-50';
-const disabledButtonClasses = `${baseButtonClasses} cursor-not-allowed text-gray-50`;
-const activeButtonClasses = `${baseButtonClasses} cursor-pointer`;
-const currentPageClasses = `${baseButtonClasses} bg-main-base text-main-light`;
+const baseButtonClasses = 'flex h-8 w-8 items-center justify-center rounded-lg';
+const disabledButtonClasses = `${baseButtonClasses} border-[1px] border-gray-50 cursor-not-allowed text-gray-50`;
+const activeButtonClasses = `${baseButtonClasses} border-[1px] border-gray-50 cursor-pointer`;
+const currentPageClasses = `${baseButtonClasses} bg-main-light text-main-base`;
 
 const Pagination = () => (
 	<span className="flex h-8 w-8 items-center justify-center">

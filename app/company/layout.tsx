@@ -5,7 +5,7 @@ export default function Layout({
 }>) {
 	return (
 		<>
-			<div className="min-h-screen overflow-hidden bg-gray-5 pt-16">{children}</div>
+			<div className="min-h-screen overflow-hidden bg-white pt-16">{children}</div>
 		</>
 	);
 }
