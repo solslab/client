@@ -63,3 +63,11 @@ export interface TestData {
     company_logo: string;
     industry_type: string[];
   }
+
+  export interface CompanyPageResponse {
+    companies: CompanyOverviewData[];
+    total_elements: number;
+    total_pages: number;
+    current_page: number;
+    page_size: number;
+  }

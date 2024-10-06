@@ -15,18 +15,13 @@ export default async function Page({
 }) {
 	const currentPage = Number(searchParams.page) || 1;
 
-	const companyData = await fetchCompanyData();
+	const companyData = await fetchCompanyData(currentPage, PAGE_SIZE);
 
 	if (!companyData) {
 		return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
 	}
 
-	const totalItems = companyData.length;
-	const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-
-	const startIndex = (currentPage - 1) * PAGE_SIZE;
-	const endIndex = startIndex + PAGE_SIZE;
-	const paginatedData = companyData.slice(startIndex, endIndex);
+	const { companies, total_pages: totalPages } = companyData;
 
 	let pageNumbers: (number | JSX.Element)[] = [];
 
@@ -56,7 +51,7 @@ export default async function Page({
 	return (
 		<Container>
 			<div className="flex flex-col gap-[10px] py-5 md:gap-5">
-				{paginatedData.map((company) => (
+				{companies.map((company) => (
 					<CompanyOverviewCard key={company.company_id} companyData={company} />
 				))}
 			</div>
