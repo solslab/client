@@ -3,8 +3,27 @@ import Container from '@/app/ui/container';
 import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import { BsThreeDots } from 'react-icons/bs';
 import { PaginationButtons } from '@/app/ui/paging/Pagination';
+import { Metadata } from 'next';
 
 const PAGE_SIZE = 2;
+
+export const metadata: Metadata = {
+	title: '기업 소개 | 몇솔',
+	description: '기업 소개 페이지',
+	openGraph: {
+		title: '기업 소개 | 몇솔',
+		description: '기업별 코딩테스트 정보와 개발자 취업 준비를 위한 기업 소개 페이지',
+		siteName: '몇솔',
+		images: [
+			{
+				url: 'https://sols.kr/og-company.png',
+				width: 1200,
+				height: 628,
+				alt: '몇솔 기업 소개 OpenGraph 이미지'
+			}
+		]
+	}
+};
 
 export default async function Page({
 	searchParams
