@@ -6,7 +6,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 	return (
 		<Link
 			href={`/company/${companyData.company_id}`}
-			className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5"
+			className="hover-effect flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5"
 		>
 			<div className="flex items-center gap-[14px]">
 				<Image
@@ -21,7 +21,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 			<div className="flex flex-row gap-2">
 				{companyData.industry_type.map((industry) => (
 					<div
-						className="rounded-xl border-[1px] border-gray-50 px-3 py-1 text-xs text-text-base"
+						className="rounded-xl border-[1px] border-gray-50 bg-white px-3 py-1 text-xs text-text-base"
 						key={industry}
 					>
 						{industry}
