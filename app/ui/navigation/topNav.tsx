@@ -66,16 +66,16 @@ export default function Topnav() {
 										alt="Sols"
 									/>
 								</Link>
-								{/* <div className="hidden sm:ml-6 sm:block">
+								<div className="hidden sm:ml-6 md:ml-32 sm:block">
                   <div className="flex space-x-4">
                     <Link
-                      href="/company/naver"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:text-black"
+                      href="/company"
+                      className="rounded-md px-3 py-2 text-base font-medium text-text-base hover:text-black"
                     >
-                      Naver
+                      전체기업
                     </Link>
                   </div>
-                </div> */}
+                </div>
 							</div>
 							<NavBtn/>
 						</div>
