@@ -15,26 +15,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-	title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
-	description:
-		'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
-	icons: {
-		icon: '/favicon.png'
-	},
-	openGraph: {
-		title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
-		description:
-			'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
-		siteName: '몇솔',
-		images: [
-			{
-				url: 'https://sols.kr/og.png',
-				width: 1200,
-				height: 628,
-				alt: 'openGraph Image'
-			}
-		]
-	}
+	title: '몇솔',
 };
 
 export default function RootLayout({
