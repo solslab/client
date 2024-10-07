@@ -5,7 +5,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { PaginationButtons } from '@/app/ui/paging/Pagination';
 import { Metadata } from 'next';
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 10;
 
 export const metadata: Metadata = {
 	title: '기업 소개 | 몇솔',
