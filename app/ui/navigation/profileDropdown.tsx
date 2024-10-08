@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { logOut, tokenTest } from '@/app/lib/auth';
 import { usePathname } from 'next/navigation';
+import { getToken } from '@/app/lib/cookie';
 
 const links = [{ name: '내 프로필', href: '/profiles' }];
 
@@ -29,7 +30,7 @@ export default function ProfileDropdown({
 	};
 	useEffect(() => {
 		async function checkToken() {
-			const cookieExist = await tokenTest();
+			const cookieExist = await getToken();
 			if (cookieExist) {
 				setIsLoggedIn(true);
 			} else {
