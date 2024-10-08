@@ -1,11 +1,16 @@
-import Search from "./ui/search";
-import SearchDropDown from "./ui/searchDropdown";
 import Container from "./ui/container";
-import FeedBackBtn from "./ui/feedBackBtn";
-import Image from "next/image";
 import Float from "./ui/interaction/float";
 import ClientSearchBox from "./ui/clientSearchBox";
 import { Metadata } from "next";
+import Script from "next/script";
+
+const jsonLd = {
+  '@context': 'https://sols.kr',
+  '@type': 'WebSite',
+  name: '몇솔',
+  image: 'https://sols.kr/favicon.png',
+  description: '기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
+}
 
 export const metadata: Metadata = {
 	title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
@@ -43,6 +48,11 @@ export default function Home({
   console.log(process.memoryUsage());
   return (
     <>
+     <Script
+     id="jsonLd"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="flex min-h-screen flex-col items-center justify-between">
         <div className=" w-full h-screen flex justify-center items-center relative">
           <Float/>
