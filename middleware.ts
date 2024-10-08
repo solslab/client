@@ -10,6 +10,7 @@ export default async function middleware(request: NextRequest) {
     const requestUrl = request.nextUrl.href;
     const pathName = request.nextUrl.pathname;
     const token = await tokenTest();
+    console.log(token,'토큰!')
     const lastPathCookie = await getLastRoute();
     const lastPath = lastPathCookie?.value || '/';
     let response;
@@ -54,12 +55,6 @@ export default async function middleware(request: NextRequest) {
 
         if (token) {
             response = NextResponse.next();
-            if (pathName.startsWith('/profiles/additional')) {
-                const infoChecked: boolean = await infoCheck();
-
-                if (infoChecked)
-                    response = NextResponse.redirect(NEXT_URL + lastPath);
-            }
 
             if (token.new_token) {
                 const clearToken = token.new_token.replace('Bearer ', '');
@@ -69,6 +64,13 @@ export default async function middleware(request: NextRequest) {
                     expires:getDateOneMonthLater()
                   });
             }
+            if (pathName.startsWith('/profiles/additional')) {
+                const infoChecked: boolean = await infoCheck();
+
+                if (infoChecked)
+                    response = NextResponse.redirect(NEXT_URL + lastPath);
+            }
+
         }
         else {
             response = NextResponse.redirect(NEXT_URL + '/login');

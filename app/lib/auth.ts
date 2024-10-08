@@ -1,6 +1,6 @@
 'use server';
 import { revalidatePath } from "next/cache";
-import { deleteToken, getToken } from "./cookie";
+import { deleteToken, getToken, updateToken } from "./cookie";
 import { redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
 
@@ -61,6 +61,10 @@ export async function tokenTest() {
             throw new Error(`${response.status}`);
         }
         const data = await response.json();
+        const newToken = response.headers.get('Authorization');
+        if (newToken) {
+            data.new_token = newToken
+        }
         return data;
     }
     catch (error) {

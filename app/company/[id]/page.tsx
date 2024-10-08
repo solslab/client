@@ -28,7 +28,14 @@ export async function generateMetadata({
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
   const section = searchParams.section || menuList[0].section;
-  const metaTitle = companyData ? `${companyData&& companyData.company_name} ${section}`:'몇솔';
+  let sectionLabel:string = '코딩테스트 정보';
+	for(let menu of menuList){
+		if(menu.section == section){
+			sectionLabel=menu.label
+			break;
+		}
+	}
+  const metaTitle = companyData ? `${companyData&& companyData.company_name} ${sectionLabel}`:'몇솔';
 
 	return {
 		title: metaTitle,
