@@ -11,7 +11,7 @@ export default async function NavSearchDropDown({ query }: { query: string }) {
       {   result&&
         result.map((el:CompanyQuery)=>
             <Link
-            href={`/company/${el.company_id}`}
+            href={`/company/${el.company_id}?section=companyInfo`}
             key={el.company_id}
 
       >

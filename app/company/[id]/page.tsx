@@ -11,11 +11,13 @@ import { notFound } from 'next/navigation';
 const menuList = [
 	{
 		label: '코딩테스트 정보 ',
-		section: 'companyInfo'
+		section: 'companyInfo',
+		metaTitle: '코딩테스트 정보 - 지원 언어, 시험 방식, 응시 후기 모음 | 몇솔'
 	},
 	{
 		label: '데이터랩',
-		section: 'dataLab'
+		section: 'dataLab',
+		metaTitle: '데이터랩'
 	}
 ];
 export async function generateMetadata({
@@ -27,30 +29,37 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
-  const section = searchParams.section || menuList[0].section;
-  let sectionLabel:string = '코딩테스트 정보';
-	for(let menu of menuList){
-		if(menu.section == section){
-			sectionLabel=menu.label
+	const section = searchParams.section || menuList[0].section;
+	let sectionLabel: string = '코딩테스트 정보';
+	for (let menu of menuList) {
+		if (menu.section == section) {
+			sectionLabel = menu.metaTitle;
 			break;
 		}
 	}
-  const metaTitle = companyData ? `${companyData&& companyData.company_name} ${sectionLabel}`:'몇솔';
+	const companyName = companyData ? companyData?.company_name : '';
+	const metaTitle = companyData
+		? `${companyData && companyData.company_name + sectionLabel}`
+		: '몇솔';
+	const metaDesc = `${companyName}코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`
+	const metaKeyword = `${companyName}코딩테스트, ${companyName}채용, ${companyName}코딩 언어, ${companyName}코딩테스트 후기, 개발자 취업 준비, 몇솔`
 
 	return {
 		title: metaTitle,
-    keywords:'코딩테스트, 코테, 지원언어, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, ',
+		description:metaDesc,
+		keywords: metaKeyword,
 		openGraph: {
-      title:metaTitle,
-      images: [
-        {
-          url: 'https://sols.kr/og.png',
-          width: 1200,
-          height: 628,
-          alt: 'openGraph Image'
-        }
-      ]
-    }
+			title: metaTitle,
+			description:metaDesc,
+			images: [
+				{
+					url: 'https://sols.kr/og.png',
+					width: 1200,
+					height: 628,
+					alt: 'openGraph Image'
+				}
+			]
+		}
 	};
 }
 

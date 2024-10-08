@@ -81,7 +81,7 @@ export default function ClientSearchBox() {
 					>
 						{companyList &&
 							companyList.map((el: CompanyQuery) => (
-								<Link href={`/company/${el.company_id}`} key={el.company_id}>
+								<Link href={`/company/${el.company_id}?section=companyInfo`} key={el.company_id}>
 									<div className="flex rounded- px-4 py-4 hover:bg-gray-100">
 										<div
 											className="mr-4 h-12 w-12 rounded-lg border border-gray-20 bg-cover bg-center bg-no-repeat"

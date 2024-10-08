@@ -81,7 +81,7 @@ export default function NavSearchBox({ visible }: { visible?: boolean }) {
 							>
 								{companyList &&
 									companyList.map((el: CompanyQuery) => (
-										<Link href={`/company/${el.company_id}`} key={el.company_id}>
+										<Link href={`/company/${el.company_id}?section=companyInfo`} key={el.company_id}>
 											<div onClick={clearFeild} className="px-4 py-2 text-sm hover:bg-gray-100">
 												{el.company_name}
 											</div>
