@@ -39,10 +39,10 @@ export async function generateMetadata({
 	}
 	const companyName = companyData ? companyData?.company_name : '';
 	const metaTitle = companyData
-		? `${companyData && companyData.company_name} ${sectionLabel}`
+		? `${companyData && companyData.company_name + sectionLabel}`
 		: '몇솔';
-	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`
-	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔`
+	const metaDesc = `${companyName}코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`
+	const metaKeyword = `${companyName}코딩테스트, ${companyName}채용, ${companyName}코딩 언어, ${companyName}코딩테스트 후기, 개발자 취업 준비, 몇솔`
 
 	return {
 		title: metaTitle,
