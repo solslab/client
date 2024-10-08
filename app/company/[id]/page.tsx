@@ -27,7 +27,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
-  const metaTitle = companyData ? `${companyData&& companyData.company_name} 코딩테스트 정보`:'몇솔';
+  const section = searchParams.section || menuList[0].section;
+  const metaTitle = companyData ? `${companyData&& companyData.company_name} ${section}`:'몇솔';
 
 	return {
 		title: metaTitle,
