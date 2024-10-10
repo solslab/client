@@ -5,8 +5,9 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 
 const jsonLd = {
-	'@context': 'https://sols.kr',
+	'@context': 'https://schema.org',
 	'@type': 'WebSite',
+	url: 'https://sols.kr/',
 	name: '몇솔',
 	image: 'https://sols.kr/favicon.png',
 	description:
