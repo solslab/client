@@ -14,7 +14,7 @@ export const fetchCompanyData = async (page: number, size: number): Promise<Comp
                 'Content-Type': 'application/json',
             },
             next: {
-                revalidate: 60 * 60 * 24,
+                revalidate: 60 * 60 * 3,
             }
         });
 
