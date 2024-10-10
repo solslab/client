@@ -8,10 +8,10 @@ import { Metadata } from 'next';
 const PAGE_SIZE = 10;
 
 export const metadata: Metadata = {
-	title: '기업 소개 | 몇솔',
-	description: '기업 소개 페이지',
+	title: '전체 기업 | 몇솔',
+	description: '기업별 코딩테스트 정보',
 	openGraph: {
-		title: '기업 소개 | 몇솔',
+		title: '전체 기업 | 몇솔',
 		description: '기업별 코딩테스트 정보와 개발자 취업 준비를 위한 기업 소개 페이지',
 		siteName: '몇솔',
 		images: [
