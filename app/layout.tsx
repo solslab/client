@@ -15,7 +15,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-	title: '몇솔',
+	title: '몇솔'
 };
 
 export default function RootLayout({
@@ -35,7 +35,7 @@ export default function RootLayout({
 			<body className={pretendard.className}>
 				<Topnav />
 				<LastPathSetter />
-				<main className="min-h-screen">{children}</main>
+				<main className="">{children}</main>
 				<footer className="py-16">
 					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
 				</footer>

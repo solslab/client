@@ -56,8 +56,8 @@ export default function Home({
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
-			<div className="flex min-h-screen flex-col items-center justify-between">
-				<div className="relative flex h-screen w-full items-center justify-center">
+			<div className="flex flex-col items-center justify-between">
+				<div className="relative flex w-full items-center justify-center">
 					<Float />
 
 					<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
