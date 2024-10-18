@@ -44,16 +44,16 @@ export default function ClientSearchBox() {
 	}, [query]);
 
 	return (
-		<div className="relative hidden sm:block z-20">
+		<div className="relative z-20 hidden sm:block">
 			<div className="relative">
 				<div className="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-5">
 					<Image src="/icons/search.png" alt="search" width={20} height={20} />
 				</div>
 				<input
 					className={clsx(
-						`w-700 block h-14 rounded-full border border-gray-50 px-16 py-3 text-lg shadow-customShadow focus:outline-none`,
+						`block h-14 w-700 rounded-full border border-gray-50 px-16 py-3 text-lg shadow-customShadow focus:outline-none`,
 						{
-							'rounded-t-4xl rounded-b-none border-b-0 bg-white outline-none':
+							'rounded-b-none rounded-t-4xl border-b-0 bg-white outline-none':
 								companyList.length > 0
 						}
 					)}
@@ -82,7 +82,7 @@ export default function ClientSearchBox() {
 						{companyList &&
 							companyList.map((el: CompanyQuery) => (
 								<Link href={`/company/${el.company_id}?section=companyInfo`} key={el.company_id}>
-									<div className="flex rounded- px-4 py-4 hover:bg-gray-100">
+									<div className="rounded- flex px-4 py-4 hover:bg-gray-100">
 										<div
 											className="mr-4 h-12 w-12 rounded-lg border border-gray-20 bg-cover bg-center bg-no-repeat"
 											style={{ backgroundImage: ` url(${el.company_logo})` }}
@@ -92,10 +92,7 @@ export default function ClientSearchBox() {
 								</Link>
 							))}
 						{companyList && (
-							<div
-								onClick={clearFeild}
-								className="fixed left-0 top-0 -z-10 h-screen w-screen"
-							></div>
+							<div onClick={clearFeild} className="fixed left-0 top-0 -z-10 w-screen"></div>
 						)}
 					</div>
 				</div>
