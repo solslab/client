@@ -72,7 +72,7 @@ export default function ClientSearchBox() {
 				<div className="absolute w-full">
 					<div
 						className={clsx(
-							`mx-auto max-h-56 w-full overflow-y-scroll bg-white shadow-customShadow scrollbar-hide`,
+							`mx-auto max-h-60 w-full overflow-y-scroll bg-white shadow-customShadow scrollbar-hide`,
 							{
 								'rounded-b-4xl border-x border-b border-x-gray-50 border-b-gray-50':
 									companyList.length > 0
