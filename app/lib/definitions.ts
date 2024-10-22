@@ -34,6 +34,7 @@ export interface Position {
 export interface TestData {
     login_status: string;
     position_name: string;
+    is_official:boolean;
     support_languages: string[];
     test_time: string;
     problem_info: string;

@@ -83,7 +83,9 @@ export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 											companyList.map((el: CompanyQuery) => (
 												<Link href={`/company/${el.company_id}?section=companyInfo`} key={el.company_id}>
 													<div
-														onClick={clearFeild}
+														onClick={()=>{
+															clearFeild();
+															setDropdownVisible(false);}}
 														className="rounded-md px-4 py-2 hover:bg-gray-100"
 													>
 														{el.company_name}

@@ -1,6 +1,7 @@
 "use client";
 
 import { Position } from "@/app/lib/definitions";
+import Image from "next/image";
 import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -28,7 +29,7 @@ export default function PositionSelectBox({
     <select
       value={value}
       onChange={(e) =>handleChange(e)}
-      className="shadow-customShadow py-3 px-2  pe-9 block w-full  sm:w-60 border text-text-base border-gray-30 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none0"
+      className="shadow-customShadow py-3 px-2  ps-8 pe-9 block w-full  sm:w-60 border text-text-base border-gray-30 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none0"
     >
       {positions.map((position, index) => (
         <option value={position.position_id} key={position.position_id}>
