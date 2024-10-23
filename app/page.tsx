@@ -5,7 +5,8 @@ import ClientSearchBox from './ui/clientSearchBox';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import Image from 'next/image';
-import React from 'react';
+import LogoCarousel from './components/LogoCarousel';
+import Link from 'next/link';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -90,14 +91,34 @@ export default function Home({
 							</div>
 						</div>
 						<div className="hidden lg:block"></div>
-						<Image src="/icons/scroll.svg" alt="scroll" width={40} height={40} />
+						<Image
+							className="animate-bounce"
+							src="/icons/scroll.svg"
+							alt="scroll"
+							width={40}
+							height={40}
+						/>
 					</div>
 				</section>
 
-				<section className="flex h-full w-full items-center justify-center bg-orange-500">
-					<h2 className="text-4xl font-bold text-white">두 번째 섹션</h2>
+				<section className="flex h-full w-full flex-col items-center justify-center">
+					<article className="flex flex-col gap-2">
+						<h2 className="bg-gradient-text-1 bg-clip-text text-2xl font-bold text-transparent">
+							이 기업 코딩테스트, 내가 합격할 수 있을까?
+						</h2>
+						<span className="text-gray-80">응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요</span>
+					</article>
+					<div className="flex w-full max-w-4xl flex-col items-center justify-center gap-4 py-8">
+						<LogoCarousel />
+						<Link
+							className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"
+							href="/company"
+						>
+							기업 전체 보기 →
+						</Link>
+					</div>
 					<div className="py-16">
-						<div className="text-center text-white">2024 © solslab Corp.</div>
+						<div className="text-center text-black">2024 © solslab Corp.</div>
 					</div>
 				</section>
 			</FullPageScroll>
