@@ -1,8 +1,11 @@
+import FullPageScroll from './components/FullPageScroll';
 import Container from './ui/container';
 import Float from './ui/interaction/float';
 import ClientSearchBox from './ui/clientSearchBox';
 import { Metadata } from 'next';
 import Script from 'next/script';
+import Image from 'next/image';
+import React from 'react';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -47,46 +50,57 @@ export default function Home({
 	};
 }) {
 	const query = searchParams?.query || '';
-	let isFocused = false;
-	console.log(process.memoryUsage());
+
 	return (
-		<>
+		<div className="h-screen">
 			<Script
 				id="jsonLd"
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
-			<div className="flex flex-col items-center justify-between">
-				<div className="relative flex w-full items-center justify-center">
-					<Float />
+			<FullPageScroll>
+				<section className="flex h-full w-full items-center justify-center bg-white">
+					<div className="flex flex-col items-center justify-between">
+						<div className="relative flex w-full items-center justify-center">
+							<Float />
 
-					<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
-						<Container className="relative flex h-46 max-w-7xl justify-center">
-							<div className="z-30 flex flex-col items-center justify-center">
-								<div>
-									<div className="text-3xl">
-										<div className="bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent">
-											더 빠르고, 쉽게
-										</div>
-										<div className="hidden bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:block">
-											기업 코딩테스트를 준비하는 방법
-										</div>
-										<div className="block bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent sm:hidden">
-											기업 코딩테스트를
-										</div>
-										<div className="block bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:hidden">
-											준비하는 방법
+							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
+								<Container className="relative flex h-46 max-w-7xl justify-center">
+									<div className="z-30 flex flex-col items-center justify-center">
+										<div>
+											<div className="text-3xl">
+												<div className="bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent">
+													더 빠르고, 쉽게
+												</div>
+												<div className="hidden bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:block">
+													기업 코딩테스트를 준비하는 방법
+												</div>
+												<div className="block bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent sm:hidden">
+													기업 코딩테스트를
+												</div>
+												<div className="block bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:hidden">
+													준비하는 방법
+												</div>
+											</div>
+
+											<ClientSearchBox />
 										</div>
 									</div>
-
-									<ClientSearchBox />
-								</div>
+								</Container>
 							</div>
-						</Container>
+						</div>
+						<div className="hidden lg:block"></div>
+						<Image src="/icons/scroll.svg" alt="scroll" width={40} height={40} />
 					</div>
-				</div>
-				<div className="hidden lg:block"></div>
-			</div>
-		</>
+				</section>
+
+				<section className="flex h-full w-full items-center justify-center bg-orange-500">
+					<h2 className="text-4xl font-bold text-white">두 번째 섹션</h2>
+					<div className="py-16">
+						<div className="text-center text-white">2024 © solslab Corp.</div>
+					</div>
+				</section>
+			</FullPageScroll>
+		</div>
 	);
 }
