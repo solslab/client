@@ -31,15 +31,19 @@ const LogoCarousel: React.FC = () => {
 
 		responsive: [
 			{
-				breakpoint: 1024,
+				breakpoint: 768,
 				settings: {
-					slidesToShow: 3
+					slidesToShow: 3,
+					centerMode: true,
+					centerPadding: '25%'
 				}
 			},
 			{
-				breakpoint: 600,
+				breakpoint: 500,
 				settings: {
-					slidesToShow: 2
+					slidesToShow: 1,
+					centerMode: true,
+					centerPadding: '25%'
 				}
 			}
 		]
