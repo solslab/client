@@ -10,7 +10,8 @@ const logos = [
 	'/companyLogo/coupang.png',
 	'/companyLogo/kakao.png',
 	'/companyLogo/naver.png',
-	'/companyLogo/wanted.png'
+	'/companyLogo/wanted.png',
+	'/companyLogo/citi.png'
 ];
 
 const LogoCarousel: React.FC = () => {
@@ -24,6 +25,10 @@ const LogoCarousel: React.FC = () => {
 		autoplaySpeed: 2000,
 		pauseOnHover: true,
 		draggable: false,
+		centerMode: false,
+		variableWidth: true,
+		adaptiveHeight: true,
+
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -41,10 +46,10 @@ const LogoCarousel: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full">
+		<div className="w-full overflow-hidden">
 			<Slider {...settings}>
 				{logos.map((logo, index) => (
-					<div key={index} className="flex items-center justify-center">
+					<div key={index} className="px-2">
 						<div className="flex h-48 w-48 items-center justify-center rounded-4xl border-2">
 							<Image
 								src={logo}
