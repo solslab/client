@@ -54,7 +54,7 @@ const LogoCarousel: React.FC = () => {
 		<div className="w-full overflow-hidden">
 			<Slider {...settings}>
 				{randomCompany?.map((company, index) => (
-					<div key={index} className="px-2">
+					<div key={index} className="flex flex-col items-center justify-between px-2">
 						<Link
 							href={`/company/${company.company_id}`}
 							className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
@@ -67,6 +67,7 @@ const LogoCarousel: React.FC = () => {
 								objectFit="contain"
 							/>
 						</Link>
+						<p className="pt-[10px] text-center text-sm font-semibold">{company.company_name}</p>
 					</div>
 				))}
 			</Slider>
