@@ -65,11 +65,10 @@ export default function Home({
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 			<FullPageScroll>
-				<section className="flex h-full w-full items-center justify-center bg-white">
+				<section className="h-full w-full items-center justify-center bg-white">
 					<div className="flex flex-col items-center justify-between">
 						<div className="relative flex w-full items-center justify-center">
 							<Float />
-
 							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
 								<Container className="relative flex h-46 max-w-7xl justify-center">
 									<div className="z-30 flex flex-col items-center justify-center">
@@ -110,10 +109,10 @@ export default function Home({
 					<div />
 					<div>
 						<article className="flex flex-col gap-2 text-center">
-							<h2 className="bg-gradient-text-1 bg-clip-text text-2xl font-bold text-transparent">
+							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
 							</h2>
-							<span className="text-gray-80">
+							<span className="text-sm text-gray-80 md:text-base">
 								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
