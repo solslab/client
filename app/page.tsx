@@ -56,7 +56,6 @@ export default function Home({
 	};
 }) {
 	const query = searchParams?.query || '';
-
 	return (
 		<div className="h-screen">
 			<Script
