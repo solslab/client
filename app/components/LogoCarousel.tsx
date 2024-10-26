@@ -1,20 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
-const logos = [
-	'/companyLogo/baemin.png',
-	'/companyLogo/coupang.png',
-	'/companyLogo/kakao.png',
-	'/companyLogo/naver.png',
-	'/companyLogo/wanted.png',
-	'/companyLogo/citi.png'
-];
+import { fetchRandomCompany } from '../lib/data';
+import { CompanyQuery } from '../lib/definitions';
+import Link from 'next/link';
 
 const LogoCarousel: React.FC = () => {
+	const [randomCompany, setRandomCompany] = useState<CompanyQuery[] | null>(null);
+
+	useEffect(() => {
+		fetchRandomCompany().then(setRandomCompany);
+	}, []);
+
 	const settings = {
 		dots: false,
 		infinite: true,
@@ -52,17 +53,21 @@ const LogoCarousel: React.FC = () => {
 	return (
 		<div className="w-full overflow-hidden">
 			<Slider {...settings}>
-				{logos.map((logo, index) => (
-					<div key={index} className="px-2">
-						<div className="flex h-48 w-48 items-center justify-center rounded-4xl border-2">
+				{randomCompany?.map((company, index) => (
+					<div key={index} className="flex flex-col items-center justify-between px-2">
+						<Link
+							href={`/company/${company.company_id}`}
+							className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
+						>
 							<Image
-								src={logo}
+								src={company.company_logo}
 								alt={`Company logo ${index + 1}`}
-								width={150}
-								height={150}
+								width={100}
+								height={100}
 								objectFit="contain"
 							/>
-						</div>
+						</Link>
+						<p className="pt-[10px] text-center text-sm font-semibold">{company.company_name}</p>
 					</div>
 				))}
 			</Slider>

@@ -3,8 +3,31 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
 import { deleteToken, getToken, updateToken } from "./cookie";
-import { Company, CompanyOverviewData, CompanyPageResponse } from "./definitions";
+import { Company, CompanyOverviewData, CompanyPageResponse, CompanyQuery } from "./definitions";
 
+
+export const fetchRandomCompany = async():Promise<CompanyQuery[] | null> => {
+    try{
+        const response = await fetch(`${SPRING_URL}/company/home-random`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            next: {
+                revalidate: 60 * 60 * 3,
+            }
+        })
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('fetchRandomCompany중 오류 발생:', error);
+        return null;
+    }
+}
 
 export const fetchCompanyData = async (page: number, size: number): Promise<CompanyPageResponse | undefined> => {
     try {

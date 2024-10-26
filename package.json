@@ -12,6 +12,7 @@
     "@next/third-parties": "^14.2.13",
     "axios": "^1.7.3",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.11.10",
     "next": "15.0.0-canary.56",
     "next-auth": "^4.24.7",
     "preline": "^2.4.1",

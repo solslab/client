@@ -7,6 +7,7 @@ import Script from 'next/script';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import FadeIn from './motion/FadeIn';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -56,7 +57,6 @@ export default function Home({
 	};
 }) {
 	const query = searchParams?.query || '';
-
 	return (
 		<div className="h-screen">
 			<Script
@@ -65,15 +65,14 @@ export default function Home({
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 			<FullPageScroll>
-				<section className="flex h-full w-full items-center justify-center bg-white">
+				<section className="h-full w-full items-center justify-center bg-white">
 					<div className="flex flex-col items-center justify-between">
 						<div className="relative flex w-full items-center justify-center">
 							<Float />
-
 							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
-								<Container className="relative flex h-46 max-w-7xl justify-center">
-									<div className="z-30 flex flex-col items-center justify-center">
-										<div>
+								<FadeIn>
+									<Container className="relative flex h-46 max-w-7xl justify-center">
+										<div className="z-30 flex flex-col items-center justify-center">
 											<div className="text-3xl">
 												<div className="bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent">
 													더 빠르고, 쉽게
@@ -91,8 +90,8 @@ export default function Home({
 
 											<ClientSearchBox />
 										</div>
-									</div>
-								</Container>
+									</Container>
+								</FadeIn>
 							</div>
 						</div>
 						<div className="hidden lg:block"></div>
@@ -108,12 +107,12 @@ export default function Home({
 
 				<section className="flex h-full w-full flex-col items-center justify-between">
 					<div />
-					<div>
+					<FadeIn>
 						<article className="flex flex-col gap-2 text-center">
-							<h2 className="bg-gradient-text-1 bg-clip-text text-2xl font-bold text-transparent">
+							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
 							</h2>
-							<span className="text-gray-80">
+							<span className="text-sm text-gray-80 md:text-base">
 								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
@@ -126,8 +125,8 @@ export default function Home({
 								기업 전체 보기 →
 							</Link>
 						</div>
-					</div>
-					<div>
+					</FadeIn>
+					<FadeIn>
 						<div className="flex flex-col gap-5">
 							<h2 className="bg-gradient-text-1 bg-clip-text text-2xl font-bold text-transparent">
 								여러분의 후기를 들려주세요!
@@ -142,7 +141,7 @@ export default function Home({
 						<div className="py-16">
 							<div className="text-center text-black">2024 © solslab Corp.</div>
 						</div>
-					</div>
+					</FadeIn>
 				</section>
 			</FullPageScroll>
 		</div>
