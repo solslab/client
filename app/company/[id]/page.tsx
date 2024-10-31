@@ -41,16 +41,16 @@ export async function generateMetadata({
 	const metaTitle = companyData
 		? `${companyData && companyData.company_name} ${sectionLabel}`
 		: '몇솔';
-	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`
-	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도`
+	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`;
+	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도`;
 
 	return {
 		title: metaTitle,
-		description:metaDesc,
+		description: metaDesc,
 		keywords: metaKeyword,
 		openGraph: {
 			title: metaTitle,
-			description:metaDesc,
+			description: metaDesc,
 			images: [
 				{
 					url: 'https://sols.kr/og.png',
@@ -86,7 +86,7 @@ export default async function Page({
 	return (
 		<>
 			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
-			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 border-t-gray-30 bg-white py-10 md:bg-gray-5 md:py-16">
+			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 border-t-gray-30 bg-bg-base py-10 md:py-16">
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
@@ -99,7 +99,7 @@ export default async function Page({
 					</div>
 				</Container>
 			</div>
-			<div className="flex flex-col items-center justify-between border-b border-gray-30">
+			<div className="flex flex-col items-center justify-between border-b border-gray-30 bg-bg-base">
 				<Container className={'px-0'}>
 					<div className="flex h-12 w-full">
 						{menuList.map((menu) => (
@@ -137,13 +137,14 @@ export default async function Page({
 					</>
 				) : (
 					<Container className="rounded-md bg-white">
-						<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
+						{/* <div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
 							<div className="mb-4 text-center text-xl">오픈 준비중!</div>
 							<div className="mb-10 text-center text-xl">
 								정보 제공을 위해 후기를 모으고 있어요.
 							</div>
 							<TrLink company_id={company_id} />
-						</div>
+						</div> */}
+						<div className="pt-10"></div>
 					</Container>
 				)}
 			</div>
