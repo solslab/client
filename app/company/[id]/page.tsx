@@ -4,6 +4,7 @@ import SectionButton from '@/app/ui/company/sectionButton';
 import TestInfo from '@/app/ui/company/testInfo';
 import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
+import QuestionSpan from '@/app/ui/datalab/QuestionSpan';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
 import QuestionText from '@/app/ui/QuestionText';
 import { Metadata } from 'next';
@@ -145,7 +146,7 @@ export default async function Page({
 							</div>
 							<TrLink company_id={company_id} />
 						</div> */}
-						<div className="flex w-full flex-col gap-[10px] rounded-sm py-5">
+						<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
 							<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
 							<div className="flex items-center gap-2 py-3">
 								<QuestionText />
@@ -182,6 +183,51 @@ export default async function Page({
 								위 정보는 <span className="font-bold underline">solved.ac</span>
 								(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
 							</span>
+						</div>
+						{/*  */}
+						<div className="flex w-full items-center gap-5 rounded-sm py-10 pt-0">
+							<div className="flex w-2/3 flex-col gap-[10px]">
+								<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
+								<div className="flex h-[210px] flex-col items-center justify-center rounded-[10px] border-[1px] border-gray-40">
+									<div className="relative h-[3px] w-2/3 bg-main-light">
+										<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
+											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
+											???
+										</div>
+										<div className="absolute bottom-[12px] right-[10%] text-xs">
+											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
+											???
+										</div>
+									</div>
+
+									<QuestionSpan />
+								</div>
+							</div>
+
+							<div className="flex w-1/3 flex-col gap-[10px]">
+								<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
+								<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
+									{Array.from({ length: 7 }, (i) => i).map((element, idx) => {
+										return (
+											<div key={idx} className="flex items-center justify-between gap-3">
+												{idx % 2 === 0 ? (
+													<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
+														합격
+													</span>
+												) : (
+													<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
+														불합격
+													</span>
+												)}
+												<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
+													총 ?문제 / ?솔
+												</h4>
+												<span className="text-gray-80">[2024년]</span>
+											</div>
+										);
+									})}
+								</div>
+							</div>
 						</div>
 					</div>
 				)}
