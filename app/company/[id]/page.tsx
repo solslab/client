@@ -5,6 +5,7 @@ import TestInfo from '@/app/ui/company/testInfo';
 import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
+import QuestionText from '@/app/ui/QuestionText';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -136,7 +137,7 @@ export default async function Page({
 						</Container>
 					</>
 				) : (
-					<Container className="rounded-md bg-white">
+					<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
 						{/* <div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
 							<div className="mb-4 text-center text-xl">오픈 준비중!</div>
 							<div className="mb-10 text-center text-xl">
@@ -144,8 +145,45 @@ export default async function Page({
 							</div>
 							<TrLink company_id={company_id} />
 						</div> */}
-						<div className="pt-10"></div>
-					</Container>
+						<div className="flex w-full flex-col gap-[10px] rounded-sm py-5">
+							<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
+							<div className="flex items-center gap-2 py-3">
+								<QuestionText />
+								~
+								<QuestionText />
+								<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
+							</div>
+							<div className="flex w-full items-center gap-5">
+								<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
+									<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+										코딩테스트 후기 작성하고 모든 정보 열람하기!
+									</button>
+								</div>
+								<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
+									<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
+										응답자 수 / 합격자 수
+									</div>
+									<div className="text-left">??명 / ??명</div>
+									<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
+									<div className="text-left">
+										<QuestionText />
+									</div>
+									<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
+									<div className="text-left">
+										<QuestionText />
+									</div>
+									<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
+									<div className="text-left">
+										<QuestionText />
+									</div>
+								</div>
+							</div>
+							<span className="px-2 text-xs text-gray-70">
+								위 정보는 <span className="font-bold underline">solved.ac</span>
+								(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
+							</span>
+						</div>
+					</div>
 				)}
 			</div>
 			<FeedBackBtn />
