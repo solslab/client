@@ -199,6 +199,8 @@ export default function ProfileDropdown({
 										</div>
 									</Link>
 								))}
+								
+								<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
 								{links.map((link, index) => (
 									<Link
 										key={link.href + link.name}
@@ -214,7 +216,6 @@ export default function ProfileDropdown({
 										</div>
 									</Link>
 								))}
-								<div id="" className="my-2 h-0.25 w-full bg-gray-10"></div>
 								<button
 									className="px-6 py-4 text-base text-text-base"
 									role="logOut"
@@ -260,7 +261,7 @@ export default function ProfileDropdown({
 										</div>
 									</Link>
 								))}
-								<div id="" className="my-2 h-0.25 w-full bg-gray-10"></div>
+								<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
 								<Link href='/login'>
 								<button
 									className="px-6 w-full py-4 text-base text-text-base text-left"
