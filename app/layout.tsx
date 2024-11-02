@@ -26,16 +26,15 @@ export default function RootLayout({
 	return (
 		<html lang="kr" className={`${pretendard.variable}`}>
 			<link rel="icon" href="/favicon.png" sizes="any" />
-
 			<Script
 				strategy="afterInteractive"
 				src={`https://www.googletagmanager.com/gtm.js?id=GTM-57ML2L7S`}
 			/>
 			<GoogleTagManager gtmId="GTM-57ML2L7S" />
-			<body className={pretendard.className}>
-				<Topnav />
+			<body className={`${pretendard.className}`}>
 				<LastPathSetter />
-				<main className="">{children}</main>
+				<Topnav />
+				<main className="pt-16">{children}</main>
 				<footer className="py-16">
 					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
 				</footer>

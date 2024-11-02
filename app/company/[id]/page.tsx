@@ -6,6 +6,7 @@ import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 const menuList = [
@@ -41,16 +42,16 @@ export async function generateMetadata({
 	const metaTitle = companyData
 		? `${companyData && companyData.company_name} ${sectionLabel}`
 		: '몇솔';
-	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`
-	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도`
+	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`;
+	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도`;
 
 	return {
 		title: metaTitle,
-		description:metaDesc,
+		description: metaDesc,
 		keywords: metaKeyword,
 		openGraph: {
 			title: metaTitle,
-			description:metaDesc,
+			description: metaDesc,
 			images: [
 				{
 					url: 'https://sols.kr/og.png',
@@ -117,7 +118,12 @@ export default async function Page({
 								<div className="mb-8 flex w-full flex-col justify-center text-sm md:mb-0 md:w-1/2">
 									위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
 									채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수 있습니다.
-									<br /> 공식 뱃지가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
+									<div className="flex">
+										<div className='mr-1 flex justify-center items-center'>
+											<Image src={'/icons/verifyIcon.png'} width={16} height={16} alt="verifyed" />
+										</div>
+										가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
+									</div>
 								</div>
 								<div className="flex w-full justify-end md:w-1/2">
 									<div className="flex w-full justify-between md:w-auto md:flex-col md:justify-center">

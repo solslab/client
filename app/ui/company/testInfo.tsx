@@ -24,7 +24,7 @@ export default function TestInfo({
 						<div className="mb-4 flex w-full flex-row flex-wrap">
 							<div className="my-auto w-full text-base md:w-1/4">시기/직무구분</div>
 							<div className="mt-4 flex w-full md:mt-0 md:w-3/4 relative">
-								<PositionSelectBox positions={positions} selected={position_id} />
+								<PositionSelectBox positions={positions} selected={position_id} isOfficial={data.is_official}/>
 								{data.is_official ? <> <div className='flex sm:hidden absolute top-1/2 transform -translate-y-1/2 left-3'><Image src={'/icons/verifyIcon.png'} width={18} height={18} alt='verifyed'/></div><VerifyMark /></> : <></>}
 							</div>
 						</div>
