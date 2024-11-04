@@ -2,6 +2,7 @@ import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/data';
 import { Company, Position, TestData } from '@/app/lib/definitions';
 import SectionButton from '@/app/ui/company/sectionButton';
 import TestInfo from '@/app/ui/company/testInfo';
+import TierDistributionChart from '@/app/ui/company/TierDistributionChart';
 import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
 import QuestionSpan from '@/app/ui/datalab/QuestionSpan';
@@ -156,9 +157,10 @@ export default async function Page({
 							</div>
 							<div className="flex w-full items-center gap-5">
 								<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
-									<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+									{/* <button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
 										코딩테스트 후기 작성하고 모든 정보 열람하기!
-									</button>
+									</button> */}
+									<TierDistributionChart />
 								</div>
 								<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
 									<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
@@ -188,7 +190,8 @@ export default async function Page({
 						<div className="flex w-full items-center gap-5 rounded-sm py-10 pt-0">
 							<div className="flex w-2/3 flex-col gap-[10px]">
 								<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
-								<div className="flex h-[210px] flex-col items-center justify-center rounded-[10px] border-[1px] border-gray-40">
+								<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
+									{/* NOTE 리팩토링 조건부 */}
 									<div className="relative h-[3px] w-2/3 bg-main-light">
 										<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
 											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
@@ -199,7 +202,6 @@ export default async function Page({
 											???
 										</div>
 									</div>
-
 									<QuestionSpan />
 								</div>
 							</div>
