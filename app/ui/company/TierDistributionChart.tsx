@@ -24,11 +24,11 @@ const data = generateData();
 const generateColors = () => {
 	const baseColors = {
 		브론즈: ['#CD7F32', '#8B4513'],
-		실버: ['#C0C0C0', '#707070'],
+		실버: ['#dbe1e3', '#A5A9AB'],
 		골드: ['#FFD700', '#b99e16'],
-		플래티넘: ['#b3ffd3', '#2fd1ae'],
-		다이아: ['#ddf8fe', '#7bceff'],
-		루비: ['#9B111E', '#E0115F']
+		플래티넘: ['#abf5e1', '#2fd1ae'],
+		다이아: ['#bdeffa', '#7bceff'],
+		루비: ['#E0115F', '#9B111E']
 	};
 
 	const colors: ColorMap = {};
