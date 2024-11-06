@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.2.13",
+    "@nivo/bar": "^0.87.0",
     "axios": "^1.7.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.10",
     "next": "15.0.0-canary.56",
     "next-auth": "^4.24.7",
+    "nivo": "^0.31.0",
     "preline": "^2.4.1",
     "react": "19.0.0-rc-f38c22b244-20240704",
     "react-dom": "19.0.0-rc-f38c22b244-20240704",

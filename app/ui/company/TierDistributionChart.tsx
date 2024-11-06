@@ -1,0 +1,117 @@
+'use client';
+import { ResponsiveBar } from '@nivo/bar';
+
+const tiers = ['브론즈', '실버', '골드', '플래티넘', '다이아', '루비'];
+const ranks = ['5', '4', '3', '2', '1'];
+
+interface TierData {
+	tier: string;
+	[key: string]: string | number;
+}
+
+const generateData = () => {
+	return tiers.map((tier) => {
+		const tierData: TierData = { tier };
+		ranks.forEach((rank) => {
+			tierData[`${tier}${rank}`] = Math.floor(Math.random() * 10) + 1;
+		});
+		return tierData;
+	});
+};
+
+const data = generateData();
+
+const generateColors = () => {
+	const baseColors = {
+		브론즈: ['#CD7F32', '#8B4513'],
+		실버: ['#dbe1e3', '#A5A9AB'],
+		골드: ['#FFD700', '#b99e16'],
+		플래티넘: ['#abf5e1', '#2fd1ae'],
+		다이아: ['#bdeffa', '#7bceff'],
+		루비: ['#E0115F', '#9B111E']
+	};
+
+	const colors: ColorMap = {};
+	Object.entries(baseColors).forEach(([tier, [start, end]]) => {
+		ranks.forEach((rank, index) => {
+			const ratio = (ranks.length - 1 - index) / (ranks.length - 1);
+			const r = Math.round(
+				parseInt(start.slice(1, 3), 16) * (1 - ratio) + parseInt(end.slice(1, 3), 16) * ratio
+			);
+			const g = Math.round(
+				parseInt(start.slice(3, 5), 16) * (1 - ratio) + parseInt(end.slice(3, 5), 16) * ratio
+			);
+			const b = Math.round(
+				parseInt(start.slice(5, 7), 16) * (1 - ratio) + parseInt(end.slice(5, 7), 16) * ratio
+			);
+			colors[`${tier}${rank}`] =
+				`#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+		});
+	});
+	return colors;
+};
+
+interface ColorMap {
+	[key: string]: string;
+}
+
+const colors = generateColors();
+
+const TierDistributionChart = () => {
+	return (
+		<div style={{ height: '100%', width: '100%' }}>
+			<ResponsiveBar
+				data={data}
+				keys={tiers.flatMap((tier) => ranks.map((rank) => `${tier}${rank}`))}
+				indexBy="tier"
+				margin={{ top: 10, right: 10, bottom: 30, left: 50 }}
+				padding={0.2}
+				groupMode="stacked"
+				valueScale={{ type: 'linear' }}
+				colors={({ id }) => colors[id]}
+				borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
+				borderWidth={1}
+				borderRadius={1}
+				enableLabel={true}
+				label={(d) => String(d.value)}
+				labelSkipWidth={8}
+				labelSkipHeight={8}
+				labelTextColor="#ffffff"
+				theme={{
+					axis: {
+						ticks: {
+							line: {
+								stroke: '#666666'
+							},
+							text: {
+								fontFamily: 'Arial'
+							}
+						}
+					},
+					labels: {
+						text: {
+							fontSize: 8,
+							fontWeight: 'bold'
+						}
+					}
+				}}
+				axisBottom={{
+					tickSize: 5,
+					tickPadding: 5,
+					tickRotation: 0
+				}}
+				axisLeft={{
+					tickSize: 5,
+					tickPadding: 10,
+					tickRotation: 0,
+					tickValues: 5,
+					format: (value) => `${value}`
+				}}
+				gridYValues={5}
+				layers={['grid', 'axes', 'bars', 'markers', 'annotations']}
+				legends={[]}
+			/>
+		</div>
+	);
+};
+export default TierDistributionChart;
