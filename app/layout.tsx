@@ -6,6 +6,7 @@ import LastPathSetter from './ui/lastPathSetter';
 import PrelineScript from './ui/PrelineScript';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
+import Footer from './ui/Footer';
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -35,9 +36,7 @@ export default function RootLayout({
 				<LastPathSetter />
 				<Topnav />
 				<main className="pt-16">{children}</main>
-				<footer className="py-16">
-					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
-				</footer>
+				<Footer />
 			</body>
 			<GoogleAnalytics gaId="G-9PG6DER9G1" />
 			<PrelineScript />
