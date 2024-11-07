@@ -1,25 +1,32 @@
 'use client';
-import { ResponsiveBar } from '@nivo/bar';
+import { ResponsiveBar, BarLayer, ComputedBarDatum } from '@nivo/bar';
 
 const tiers = ['브론즈', '실버', '골드', '플래티넘', '다이아', '루비'];
 const ranks = ['5', '4', '3', '2', '1'];
 
 interface TierData {
 	tier: string;
+	total: number;
 	[key: string]: string | number;
 }
 
 const generateData = () => {
 	return tiers.map((tier) => {
-		const tierData: TierData = { tier };
+		const tierData: TierData = { tier, total: 0 };
+		let total = 0;
 		ranks.forEach((rank) => {
-			tierData[`${tier}${rank}`] = Math.floor(Math.random() * 10) + 1;
+			const value = Math.floor(Math.random() * 10) + 1;
+			tierData[`${tier}${rank}`] = value;
+			total += value;
 		});
+		tierData.total = total;
 		return tierData;
 	});
 };
 
 const data = generateData();
+
+const maxTotal = Math.max(...data.map((d) => d.total));
 
 const generateColors = () => {
 	const baseColors = {
@@ -44,8 +51,9 @@ const generateColors = () => {
 			const b = Math.round(
 				parseInt(start.slice(5, 7), 16) * (1 - ratio) + parseInt(end.slice(5, 7), 16) * ratio
 			);
-			colors[`${tier}${rank}`] =
-				`#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+			colors[`${tier}${rank}`] = `#${r.toString(16).padStart(2, '0')}${g
+				.toString(16)
+				.padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 		});
 	});
 	return colors;
@@ -58,25 +66,65 @@ interface ColorMap {
 const colors = generateColors();
 
 const TierDistributionChart = () => {
+	const CustomLayer: BarLayer<TierData> = ({ bars }) => {
+		interface TierBars {
+			[key: string]: Array<ComputedBarDatum<TierData>>;
+		}
+		const tierBars: TierBars = {};
+		bars.forEach((bar) => {
+			const tier = bar.data.indexValue;
+			if (!tierBars[tier]) {
+				tierBars[tier] = [];
+			}
+			tierBars[tier].push(bar);
+		});
+
+		return (
+			<g>
+				{Object.entries(tierBars).map(([tier, bars]) => {
+					// Find the topmost bar (smallest y value)
+					const topBar = bars.reduce((prevBar, currBar) =>
+						currBar.y < prevBar.y ? currBar : prevBar
+					);
+					const tierData = data.find((d) => d.tier === tier);
+					const total = tierData?.total ?? 0;
+					const x = topBar.x + topBar.width / 2;
+					const y = topBar.y - 5; // Adjust as needed
+					return (
+						<text
+							key={tier}
+							x={x}
+							y={y}
+							textAnchor="middle"
+							style={{
+								fill: '#000',
+								fontSize: 12,
+								fontWeight: 'bold'
+							}}
+						>
+							{total}
+						</text>
+					);
+				})}
+			</g>
+		);
+	};
+
 	return (
 		<div style={{ height: '100%', width: '100%' }}>
 			<ResponsiveBar
 				data={data}
 				keys={tiers.flatMap((tier) => ranks.map((rank) => `${tier}${rank}`))}
 				indexBy="tier"
-				margin={{ top: 10, right: 10, bottom: 30, left: 50 }}
+				margin={{ top: 40, right: 10, bottom: 30, left: 50 }}
 				padding={0.2}
 				groupMode="stacked"
-				valueScale={{ type: 'linear' }}
+				valueScale={{ type: 'linear', max: maxTotal * 1.2 }}
 				colors={({ id }) => colors[id]}
 				borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
 				borderWidth={1}
 				borderRadius={1}
-				enableLabel={true}
-				label={(d) => String(d.value)}
-				labelSkipWidth={8}
-				labelSkipHeight={8}
-				labelTextColor="#ffffff"
+				enableLabel={false}
 				theme={{
 					axis: {
 						ticks: {
@@ -107,8 +155,8 @@ const TierDistributionChart = () => {
 					tickValues: 5,
 					format: (value) => `${value}`
 				}}
-				gridYValues={5}
-				layers={['grid', 'axes', 'bars', 'markers', 'annotations']}
+				enableGridY={false}
+				layers={['grid', 'axes', 'bars', CustomLayer, 'markers', 'annotations']}
 				legends={[]}
 			/>
 		</div>

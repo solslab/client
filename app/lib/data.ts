@@ -3,7 +3,7 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { NEXT_URL, SPRING_URL } from "./constants";
 import { deleteToken, getToken, updateToken } from "./cookie";
-import { Company, CompanyOverviewData, CompanyPageResponse, CompanyQuery } from "./definitions";
+import { Company, CompanyOverviewData, CompanyPageResponse, CompanyQuery, DataLabDetail } from './definitions';
 
 
 export const fetchRandomCompany = async():Promise<CompanyQuery[] | null> => {
@@ -166,3 +166,32 @@ export const fetchProfile = async () => {
         // redirect('/login')
     }
 };
+
+
+export const fetchDataLabDetail = async (id:string):Promise<DataLabDetail[] | undefined> => {
+    try{
+        const response = await fetch(`${SPRING_URL}/datalab/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+        }
+        if(response.status === 404){
+            return undefined;
+        }
+        else if(response.status === 403){
+        }
+        
+
+        const data = await response.json();
+        return data;
+        
+    } catch (error) {
+        console.error('fetchDataLabDetail 중 오류 발생:', error);
+        return undefined;
+    }
+}
