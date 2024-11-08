@@ -133,7 +133,7 @@ export default function Home({
 							</h2>
 							<Link
 								className="rounded-[10px] border-2 border-main-base px-6 py-4 text-center font-bold text-main-base"
-								href="/review"
+								href="/testReview"
 							>
 								코딩테스트 후기 작성하기
 							</Link>

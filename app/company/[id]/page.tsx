@@ -2,12 +2,9 @@ import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/data';
 import { Company, Position, TestData } from '@/app/lib/definitions';
 import SectionButton from '@/app/ui/company/sectionButton';
 import TestInfo from '@/app/ui/company/testInfo';
-import TierDistributionChart from '@/app/ui/company/TierDistributionChart';
 import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
-import QuestionSpan from '@/app/ui/datalab/QuestionSpan';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
-import QuestionText from '@/app/ui/QuestionText';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -90,7 +87,7 @@ export default async function Page({
 	return (
 		<>
 			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
-			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 border-t-gray-30 bg-bg-base py-10 md:py-16">
+			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 border-t-gray-30 bg-white py-10 md:bg-gray-5 md:py-16">
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
@@ -103,7 +100,7 @@ export default async function Page({
 					</div>
 				</Container>
 			</div>
-			<div className="flex flex-col items-center justify-between border-b border-gray-30 bg-bg-base">
+			<div className="flex flex-col items-center justify-between border-b border-gray-30">
 				<Container className={'px-0'}>
 					<div className="flex h-12 w-full">
 						{menuList.map((menu) => (
@@ -145,99 +142,15 @@ export default async function Page({
 						</Container>
 					</>
 				) : (
-					<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
-						{/* <div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
+					<Container className="rounded-md bg-white">
+						<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
 							<div className="mb-4 text-center text-xl">오픈 준비중!</div>
 							<div className="mb-10 text-center text-xl">
 								정보 제공을 위해 후기를 모으고 있어요.
 							</div>
 							<TrLink company_id={company_id} />
-						</div> */}
-						<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
-							<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
-							<div className="flex items-center gap-2 py-3">
-								<QuestionText />
-								~
-								<QuestionText />
-								<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
-							</div>
-							<div className="flex w-full items-center gap-5">
-								<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
-									{/* <button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
-										코딩테스트 후기 작성하고 모든 정보 열람하기!
-									</button> */}
-									<TierDistributionChart />
-								</div>
-								<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
-									<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
-										응답자 수 / 합격자 수
-									</div>
-									<div className="text-left">??명 / ??명</div>
-									<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
-									<div className="text-left">
-										<QuestionText />
-									</div>
-									<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
-									<div className="text-left">
-										<QuestionText />
-									</div>
-									<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
-									<div className="text-left">
-										<QuestionText />
-									</div>
-								</div>
-							</div>
-							<span className="px-2 text-xs text-gray-70">
-								위 정보는 <span className="font-bold underline">solved.ac</span>
-								(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
-							</span>
 						</div>
-						{/*  */}
-						<div className="flex w-full items-center gap-5 rounded-sm py-10 pt-0">
-							<div className="flex w-2/3 flex-col gap-[10px]">
-								<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
-								<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
-									{/* NOTE 리팩토링 조건부 */}
-									<div className="relative h-[3px] w-2/3 bg-main-light">
-										<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
-											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-											???
-										</div>
-										<div className="absolute bottom-[12px] right-[10%] text-xs">
-											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-											???
-										</div>
-									</div>
-									<QuestionSpan />
-								</div>
-							</div>
-
-							<div className="flex w-1/3 flex-col gap-[10px]">
-								<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
-								<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
-									{Array.from({ length: 7 }, (i) => i).map((element, idx) => {
-										return (
-											<div key={idx} className="flex items-center justify-between gap-3">
-												{idx % 2 === 0 ? (
-													<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
-														합격
-													</span>
-												) : (
-													<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
-														불합격
-													</span>
-												)}
-												<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
-													총 ?문제 / ?솔
-												</h4>
-												<span className="text-gray-80">[2024년]</span>
-											</div>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-					</div>
+					</Container>
 				)}
 			</div>
 			<FeedBackBtn />
