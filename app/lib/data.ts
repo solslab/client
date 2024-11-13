@@ -167,31 +167,49 @@ export const fetchProfile = async () => {
     }
 };
 
+export const fetchDatalabData = async (id: string) => {
+    const headers: { 'Content-Type': string;'Cache-Control'?:string; 'Authorization'?: string } = {
+        'Content-Type': 'application/json' ,
+    };
+    const token = await getToken();
+    const value = token?.value ;
 
-export const fetchDataLabDetail = async (id:string):Promise<DataLabDetail[] | undefined> => {
-    try{
-        const response = await fetch(`${SPRING_URL}/datalab/${id}`, {
+    if(value){
+        headers['Authorization'] = `Bearer ${value}`; 
+    }
+    try {
+        const response = await fetch(`${SPRING_URL}/tab/datalab/${id}`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: headers,
         });
-
-        if (!response.ok) {
-            throw new Error(`${response.status}`);
+        if (response.status === 403) {
+            return {
+                success: 403,
+                message: '접근 권한이 없습니다.'
+            };
+        } else if (response.status === 404) {
+            return {
+                success: 404,
+                message: '데이터가 존재하지 않습니다.'
+            };
+        } else if (!response.ok) {
+            return {
+                success: 400,
+                message: `요청 처리 중 오류가 발생했습니다: ${response.status}`
+            };
         }
-        if(response.status === 404){
-            return undefined;
-        }
-        else if(response.status === 403){
-        }
-        
-
         const data = await response.json();
-        return data;
-        
+        return {
+            success: 200,
+            data: data
+        };
     } catch (error) {
-        console.error('fetchDataLabDetail 중 오류 발생:', error);
-        return undefined;
+        console.error('fetchDatalabData중 에러발생', error);
+        deleteToken();
+        return {
+            success: 400,
+            error: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+        };
     }
 }
+

@@ -1,4 +1,4 @@
-import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/data';
+import { fetchCompanyDetail, fetchDatalabData, fetchPositionData } from '@/app/lib/data';
 import { Company, Position, TestData } from '@/app/lib/definitions';
 import SectionButton from '@/app/ui/company/sectionButton';
 import TestInfo from '@/app/ui/company/testInfo';
@@ -86,6 +86,7 @@ export default async function Page({
 		notFound();
 	}
 	const data: TestData = await fetchPositionData(position_id);
+	const dataLabDetails = await fetchDatalabData(position_id);
 
 	return (
 		<>
@@ -122,7 +123,7 @@ export default async function Page({
 									위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
 									채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수 있습니다.
 									<div className="flex">
-										<div className='mr-1 flex justify-center items-center'>
+										<div className="mr-1 flex items-center justify-center">
 											<Image src={'/icons/verifyIcon.png'} width={16} height={16} alt="verifyed" />
 										</div>
 										가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
@@ -146,52 +147,61 @@ export default async function Page({
 					</>
 				) : (
 					<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
-						{/* <div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
-							<div className="mb-4 text-center text-xl">오픈 준비중!</div>
-							<div className="mb-10 text-center text-xl">
-								정보 제공을 위해 후기를 모으고 있어요.
-							</div>
-							<TrLink company_id={company_id} />
-						</div> */}
-						<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
-							<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
-							<div className="flex items-center gap-2 py-3">
-								<QuestionText />
-								~
-								<QuestionText />
-								<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
-							</div>
-							<div className="flex w-full items-center gap-5">
-								<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
-									{/* <button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
-										코딩테스트 후기 작성하고 모든 정보 열람하기!
-									</button> */}
-									<TierDistributionChart />
+						{dataLabDetails.success === 404 ? (
+							<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
+								<div className="mb-4 text-center text-xl">오픈 준비중!</div>
+								<div className="mb-10 text-center text-xl">
+									정보 제공을 위해 후기를 모으고 있어요.
 								</div>
-								<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
-									<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
-										응답자 수 / 합격자 수
+								<TrLink company_id={company_id} />
+							</div>
+						) : dataLabDetails.success === 403 ? (
+							<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
+								<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+									코딩테스트 후기 작성하고 모든 정보 열람하기!
+								</button>
+							</div>
+						) : (
+							<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
+								<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
+								<div className="flex items-center gap-2 py-3">
+									<QuestionText />
+									~
+									<QuestionText />
+									<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
+								</div>
+								<div className="flex w-full items-center gap-5">
+									<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
+										{/* <button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+											코딩테스트 후기 작성하고 모든 정보 열람하기!
+										</button> */}
+										<TierDistributionChart data={dataLabDetails.data || []} />
 									</div>
-									<div className="text-left">??명 / ??명</div>
-									<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
-									<div className="text-left">
-										<QuestionText />
-									</div>
-									<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
-									<div className="text-left">
-										<QuestionText />
-									</div>
-									<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
-									<div className="text-left">
-										<QuestionText />
+									<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
+										<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
+											응답자 수 / 합격자 수
+										</div>
+										<div className="text-left">??명 / ??명</div>
+										<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
+										<div className="text-left">
+											<QuestionText />
+										</div>
+										<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
+										<div className="text-left">
+											<QuestionText />
+										</div>
+										<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
+										<div className="text-left">
+											<QuestionText />
+										</div>
 									</div>
 								</div>
+								<span className="px-2 text-xs text-gray-70">
+									위 정보는 <span className="font-bold underline">solved.ac</span>
+									(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
+								</span>
 							</div>
-							<span className="px-2 text-xs text-gray-70">
-								위 정보는 <span className="font-bold underline">solved.ac</span>
-								(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
-							</span>
-						</div>
+						)}
 						{/*  */}
 						<div className="flex w-full items-center gap-5 rounded-sm py-10 pt-0">
 							<div className="flex w-2/3 flex-col gap-[10px]">

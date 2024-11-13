@@ -10,23 +10,43 @@ interface TierData {
 	[key: string]: string | number;
 }
 
-const generateData = () => {
+interface DataLabDetail {
+	member_tier: number;
+}
+
+interface Props {
+	data: DataLabDetail[];
+}
+
+const generateData = (dataLabDetails: DataLabDetail[]) => {
 	return tiers.map((tier) => {
 		const tierData: TierData = { tier, total: 0 };
 		let total = 0;
+
+		const tierToNumber: { [key: string]: number } = {
+			브론즈: 1,
+			실버: 2,
+			골드: 3,
+			플래티넘: 4,
+			다이아: 5,
+			루비: 6
+		};
+
 		ranks.forEach((rank) => {
-			const value = Math.floor(Math.random() * 10) + 1;
+			const value = dataLabDetails.filter(
+				(d) =>
+					Math.floor(d.member_tier / 5) + 1 === tierToNumber[tier] &&
+					(d.member_tier % 5 || 5) === parseInt(rank)
+			).length;
+
 			tierData[`${tier}${rank}`] = value;
 			total += value;
 		});
+
 		tierData.total = total;
 		return tierData;
 	});
 };
-
-const data = generateData();
-
-const maxTotal = Math.max(...data.map((d) => d.total));
 
 const generateColors = () => {
 	const baseColors = {
@@ -65,7 +85,10 @@ interface ColorMap {
 
 const colors = generateColors();
 
-const TierDistributionChart = () => {
+const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
+	const chartData = generateData(dataLabDetails);
+	const maxTotal = Math.max(...chartData.map((d) => d.total));
+
 	const CustomLayer: BarLayer<TierData> = ({ bars }) => {
 		interface TierBars {
 			[key: string]: Array<ComputedBarDatum<TierData>>;
@@ -86,7 +109,7 @@ const TierDistributionChart = () => {
 					const topBar = bars.reduce((prevBar, currBar) =>
 						currBar.y < prevBar.y ? currBar : prevBar
 					);
-					const tierData = data.find((d) => d.tier === tier);
+					const tierData = chartData.find((d) => d.tier === tier);
 					const total = tierData?.total ?? 0;
 					const x = topBar.x + topBar.width / 2;
 					const y = topBar.y - 5; // Adjust as needed
@@ -113,7 +136,7 @@ const TierDistributionChart = () => {
 	return (
 		<div style={{ height: '100%', width: '100%' }}>
 			<ResponsiveBar
-				data={data}
+				data={chartData}
 				keys={tiers.flatMap((tier) => ranks.map((rank) => `${tier}${rank}`))}
 				indexBy="tier"
 				margin={{ top: 40, right: 10, bottom: 30, left: 50 }}
