@@ -155,98 +155,98 @@ export default async function Page({
 								</div>
 								<TrLink company_id={company_id} />
 							</div>
-						) : dataLabDetails.success === 403 ? (
-							<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
-								<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
-									코딩테스트 후기 작성하고 모든 정보 열람하기!
-								</button>
-							</div>
 						) : (
-							<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
-								<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
-								<div className="flex items-center gap-2 py-3">
-									<QuestionText />
-									~
-									<QuestionText />
-									<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
-								</div>
-								<div className="flex w-full items-center gap-5">
-									<div className="flex h-[210px] w-2/3 items-center justify-center rounded-[10px] border-[1px] border-gray-40">
-										{/* <button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
-											코딩테스트 후기 작성하고 모든 정보 열람하기!
-										</button> */}
-										<TierDistributionChart data={dataLabDetails.data || []} />
+							<>
+								<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
+									<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
+									<div className="flex items-center gap-2 py-3">
+										<QuestionText />
+										~
+										<QuestionText />
+										<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
 									</div>
-									<div className="grid h-[210px] w-1/3 grid-cols-2 gap-5 p-5">
-										<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
-											응답자 수 / 합격자 수
+									<div className="flex w-full flex-col items-center gap-5 lg:flex-row">
+										<div className="flex h-[210px] w-full items-center justify-center rounded-[10px] border-[1px] border-gray-40 lg:w-2/3">
+											{dataLabDetails.success === 403 ? (
+												<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+													코딩테스트 후기 작성하고 모든 정보 열람하기!
+												</button>
+											) : (
+												<TierDistributionChart data={dataLabDetails.data || []} />
+											)}
 										</div>
-										<div className="text-left">??명 / ??명</div>
-										<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
-										<div className="text-left">
-											<QuestionText />
-										</div>
-										<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
-										<div className="text-left">
-											<QuestionText />
-										</div>
-										<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
-										<div className="text-left">
-											<QuestionText />
-										</div>
-									</div>
-								</div>
-								<span className="px-2 text-xs text-gray-70">
-									위 정보는 <span className="font-bold underline">solved.ac</span>
-									(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
-								</span>
-							</div>
-						)}
-						{/*  */}
-						<div className="flex w-full items-center gap-5 rounded-sm py-10 pt-0">
-							<div className="flex w-2/3 flex-col gap-[10px]">
-								<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
-								<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
-									{/* NOTE 리팩토링 조건부 */}
-									<div className="relative h-[3px] w-2/3 bg-main-light">
-										<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
-											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-											???
-										</div>
-										<div className="absolute bottom-[12px] right-[10%] text-xs">
-											<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-											???
-										</div>
-									</div>
-									<QuestionSpan />
-								</div>
-							</div>
-
-							<div className="flex w-1/3 flex-col gap-[10px]">
-								<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
-								<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
-									{Array.from({ length: 7 }, (i) => i).map((element, idx) => {
-										return (
-											<div key={idx} className="flex items-center justify-between gap-3">
-												{idx % 2 === 0 ? (
-													<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
-														합격
-													</span>
-												) : (
-													<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
-														불합격
-													</span>
-												)}
-												<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
-													총 ?문제 / ?솔
-												</h4>
-												<span className="text-gray-80">[2024년]</span>
+										<div className="grid h-[210px] w-full grid-cols-2 gap-5 p-5 lg:w-1/3">
+											<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
+												응답자/합격자 수
 											</div>
-										);
-									})}
+											<div className="text-left">??명 / ??명</div>
+											<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
+											<div className="text-left">
+												<QuestionText />
+											</div>
+											<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
+											<div className="text-left">
+												<QuestionText />
+											</div>
+											<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
+											<div className="text-left">
+												<QuestionText />
+											</div>
+										</div>
+									</div>
+									<span className="px-2 text-xs text-gray-70">
+										위 정보는 <span className="font-bold underline">solved.ac</span>
+										(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
+									</span>
 								</div>
-							</div>
-						</div>
+
+								<div className="flex w-full flex-col items-center gap-5 rounded-sm py-10 pt-0 lg:flex-row">
+									<div className="flex w-full flex-col gap-[10px] lg:w-2/3">
+										<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
+										<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
+											{dataLabDetails.success === 403 ? (
+												<>
+													<div className="relative h-[3px] w-2/3 bg-main-light">
+														<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
+															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
+															???
+														</div>
+														<div className="absolute bottom-[12px] right-[10%] text-xs">
+															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
+															???
+														</div>
+													</div>
+													<QuestionSpan />
+												</>
+											) : (
+												<TierDistributionChart data={dataLabDetails.data || []} />
+											)}
+										</div>
+									</div>
+
+									<div className="flex w-full flex-col gap-[10px] lg:w-1/3">
+										<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
+										<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
+											{Array.from({ length: 7 }, (_, idx) => (
+												<div key={idx} className="flex items-center justify-between gap-3">
+													{idx % 2 === 0 ? (
+														<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
+															합격
+														</span>
+													) : (
+														<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
+															불합격
+														</span>
+													)}
+													<h4 className="flex-shrink-0 whitespace-nowrap font-bold">?문제/?솔</h4>
+													<span className="text-gray-80">[2024]</span>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				)}
 			</div>
