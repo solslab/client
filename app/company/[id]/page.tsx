@@ -225,11 +225,11 @@ export default async function Page({
 										</div>
 										<div className="grid h-[210px] w-full grid-cols-2 gap-5 p-5 lg:w-1/3">
 											<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
-												응답자/합격자 수
+												합격자/응답자 수
 											</div>
 											<div className="text-left">
 												{tierStats
-													? `${tierStats.totalResponses}명 / ${tierStats.passCount}명`
+													? `${tierStats.passCount}명 / ${tierStats.totalResponses}명`
 													: '??명 / ??명'}
 											</div>
 											<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
@@ -279,21 +279,42 @@ export default async function Page({
 									<div className="flex w-full flex-col gap-[10px] lg:w-1/3">
 										<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
 										<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
-											{Array.from({ length: 7 }, (_, idx) => (
-												<div key={idx} className="flex items-center justify-between gap-3">
-													{idx % 2 === 0 ? (
-														<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
-															합격
-														</span>
-													) : (
-														<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
-															불합격
-														</span>
-													)}
-													<h4 className="flex-shrink-0 whitespace-nowrap font-bold">?문제/?솔</h4>
-													<span className="text-gray-80">[2024]</span>
-												</div>
-											))}
+											{dataLabDetails.data
+												? dataLabDetails.data.map((item, idx) => (
+														<div key={idx} className="flex items-center justify-between gap-3">
+															{item.tr_pass_status === '합격' ? (
+																<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
+																	합격
+																</span>
+															) : (
+																<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
+																	불합격
+																</span>
+															)}
+															<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
+																{item.tr_solved_num}솔/{item.tr_problem_num}문제
+															</h4>
+															<span className="text-gray-80">[{item.tr_year}]</span>
+														</div>
+													))
+												: // 데이터가 없을 경우 기존 더미 데이터 표시
+													Array.from({ length: 7 }, (_, idx) => (
+														<div key={idx} className="flex items-center justify-between gap-3">
+															{idx % 2 === 0 ? (
+																<span className="w-[60px] rounded-[10px] bg-main-base px-2 py-1 text-center text-sm font-bold text-white">
+																	합격
+																</span>
+															) : (
+																<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
+																	불합격
+																</span>
+															)}
+															<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
+																?솔/?문제
+															</h4>
+															<span className="text-gray-80">[2024]</span>
+														</div>
+													))}
 										</div>
 									</div>
 								</div>
