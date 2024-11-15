@@ -4,6 +4,7 @@ import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import { BsThreeDots } from 'react-icons/bs';
 import { PaginationButtons } from '@/app/ui/paging/Pagination';
 import { Metadata } from 'next';
+import ScrollToTop from '@/app/ui/ScrollToTop';
 
 const PAGE_SIZE = 10;
 
@@ -69,6 +70,7 @@ export default async function Page({
 
 	return (
 		<Container>
+			<ScrollToTop />
 			<div className="flex flex-col gap-[10px] py-5 md:gap-5">
 				{companies.map((company) => (
 					<CompanyOverviewCard key={company.company_id} companyData={company} />

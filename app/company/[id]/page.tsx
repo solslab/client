@@ -86,7 +86,7 @@ export default async function Page({
 		notFound();
 	}
 	const data: TestData = await fetchPositionData(position_id);
-	const dataLabDetails = await fetchDatalabData(position_id);
+	const dataLabDetails = await fetchDatalabData(company_id);
 
 	return (
 		<>

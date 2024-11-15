@@ -183,13 +183,14 @@ export const fetchDatalabData = async (id: string) => {
             headers: headers,
         });
         if (response.status === 403) {
+            console.log(response)
             return {
                 success: 403,
                 message: '접근 권한이 없습니다.'
             };
         } else if (response.status === 404) {
             return {
-                success: 403,
+                success: 404,
                 message: '데이터가 존재하지 않습니다.'
             };
         } else if (!response.ok) {
