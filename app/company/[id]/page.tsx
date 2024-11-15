@@ -88,6 +88,54 @@ export default async function Page({
 	const data: TestData = await fetchPositionData(position_id);
 	const dataLabDetails = await fetchDatalabData(company_id);
 
+	function calculateTierStats(data: DataItem[]) {
+		if (!data || data.length === 0) return null;
+
+		// 합격자 데이터만 필터링
+		const passedData = data.filter((item) => item.tr_pass_status === '합격');
+		if (passedData.length === 0) return null;
+
+		// 티어 정보 계산
+		const tiers = passedData.map((item) => item.member_tier);
+
+		return {
+			minTier: Math.min(...tiers),
+			maxTier: Math.max(...tiers),
+			avgTier: Math.round(tiers.reduce((sum, tier) => sum + tier, 0) / tiers.length),
+			mostFrequentRange: calculateMostFrequentRange(tiers),
+			totalResponses: data.length,
+			passCount: passedData.length
+		};
+	}
+
+	// 가장 많은 분포의 티어 범위 계산
+	function calculateMostFrequentRange(tiers: number[]) {
+		// 3티어 구간으로 나누어 빈도 계산
+		const ranges: Record<string, number> = {};
+
+		tiers.forEach((tier) => {
+			// 구간 시작점 (3티어 단위)
+			const rangeStart = Math.floor((tier - 1) / 3) * 3 + 1;
+			const rangeEnd = rangeStart + 2;
+			const range = `${rangeStart}-${rangeEnd}`;
+
+			ranges[range] = (ranges[range] || 0) + 1;
+		});
+
+		// 가장 빈도가 높은 구간 찾기
+		const mostFrequent = Object.entries(ranges)
+			.sort((a, b) => b[1] - a[1])[0][0]
+			.split('-')
+			.map(Number);
+
+		return {
+			start: mostFrequent[0],
+			end: mostFrequent[1]
+		};
+	}
+
+	const tierStats = dataLabDetails.data ? calculateTierStats(dataLabDetails.data) : null;
+
 	return (
 		<>
 			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
@@ -160,9 +208,9 @@ export default async function Page({
 								<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
 									<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>
 									<div className="flex items-center gap-2 py-3">
-										<QuestionText />
+										<QuestionText type="tier" value={tierStats?.mostFrequentRange.start} />
 										~
-										<QuestionText />
+										<QuestionText type="tier" value={tierStats?.mostFrequentRange.end} />
 										<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
 									</div>
 									<div className="flex w-full flex-col items-center gap-5 lg:flex-row">
@@ -179,18 +227,22 @@ export default async function Page({
 											<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
 												응답자/합격자 수
 											</div>
-											<div className="text-left">??명 / ??명</div>
+											<div className="text-left">
+												{tierStats
+													? `${tierStats.totalResponses}명 / ${tierStats.passCount}명`
+													: '??명 / ??명'}
+											</div>
 											<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
 											<div className="text-left">
-												<QuestionText />
+												<QuestionText type="tier" value={tierStats?.avgTier} />
 											</div>
 											<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
 											<div className="text-left">
-												<QuestionText />
+												<QuestionText type="tier" value={tierStats?.minTier} />
 											</div>
 											<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
 											<div className="text-left">
-												<QuestionText />
+												<QuestionText type="tier" value={tierStats?.maxTier} />
 											</div>
 										</div>
 									</div>
@@ -216,7 +268,7 @@ export default async function Page({
 															???
 														</div>
 													</div>
-													<QuestionSpan />
+													<QuestionSpan data={dataLabDetails.data} />
 												</>
 											) : (
 												<TierDistributionChart data={dataLabDetails.data || []} />

@@ -12,6 +12,7 @@ interface TierData {
 
 interface DataLabDetail {
 	member_tier: number;
+	tr_pass_status: string;
 }
 
 interface Props {
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const generateData = (dataLabDetails: DataLabDetail[]) => {
+	const passedData = dataLabDetails.filter((item) => item.tr_pass_status === '합격');
+
 	return tiers.map((tier) => {
 		const tierData: TierData = { tier, total: 0 };
 		let total = 0;
@@ -33,7 +36,7 @@ const generateData = (dataLabDetails: DataLabDetail[]) => {
 		};
 
 		ranks.forEach((rank) => {
-			const value = dataLabDetails.filter(
+			const value = passedData.filter(
 				(d) =>
 					Math.floor(d.member_tier / 5) + 1 === tierToNumber[tier] &&
 					(d.member_tier % 5 || 5) === parseInt(rank)

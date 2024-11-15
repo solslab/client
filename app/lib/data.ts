@@ -200,6 +200,7 @@ export const fetchDatalabData = async (id: string) => {
             };
         }
         const data : DataLabDetail[] = await response.json();
+        console.log(data)
         return {
             success: 200,
             data: data
