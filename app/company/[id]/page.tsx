@@ -136,6 +136,31 @@ export default async function Page({
 
 	const tierStats = dataLabDetails.data ? calculateTierStats(dataLabDetails.data) : null;
 
+	// 문제 해결 수 통계 계산 함수 추가
+	function calculateProblemStats(data: DataItem[]) {
+		if (!data || data.length === 0) return null;
+
+		const passedData = data.filter((item) => item.tr_pass_status === '합격');
+		if (passedData.length === 0) return null;
+
+		// 문제 해결 수 계산
+		const avgSolved = Math.round(
+			passedData.reduce((sum, item) => sum + item.tr_solved_num, 0) / passedData.length
+		);
+
+		// 평균 문제 수
+		const avgTotal = Math.round(
+			passedData.reduce((sum, item) => sum + item.tr_problem_num, 0) / passedData.length
+		);
+
+		return {
+			avgSolved,
+			avgTotal
+		};
+	}
+
+	const problemStats = dataLabDetails.data ? calculateProblemStats(dataLabDetails.data) : null;
+
 	return (
 		<>
 			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
@@ -255,23 +280,30 @@ export default async function Page({
 								<div className="flex w-full flex-col items-center gap-5 rounded-sm py-10 pt-0 lg:flex-row">
 									<div className="flex w-full flex-col gap-[10px] lg:w-2/3">
 										<h1 className="text-lg font-bold text-text-base">평균 합격자 문제 해결 수</h1>
+
 										<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
 											{dataLabDetails.success === 403 ? (
-												<>
+												<button className="rounded-[10px] border-[2px] border-main-base px-7 py-4 font-bold text-main-base">
+													코딩테스트 후기 작성하고 모든 정보 열람하기!
+												</button>
+											) : (
+												<div className="flex flex-col items-center gap-8">
 													<div className="relative h-[3px] w-2/3 bg-main-light">
 														<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
 															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-															???
+															{problemStats ? `${problemStats.avgSolved}문제` : '???'}
 														</div>
 														<div className="absolute bottom-[12px] right-[10%] text-xs">
 															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
-															???
+															{problemStats ? `${problemStats.avgTotal}문제` : '???'}
 														</div>
 													</div>
-													<QuestionSpan data={dataLabDetails.data} />
-												</>
-											) : (
-												<TierDistributionChart data={dataLabDetails.data || []} />
+													<div className="text-center text-sm text-gray-70">
+														{tierStats && problemStats
+															? `${tierStats.passCount}명의 합격자가 평균 ${problemStats.avgTotal}문제 중 ${problemStats.avgSolved}문제를 해결했습니다`
+															: '???명의 합격자가 평균 ?문제 중 ?문제를 해결했습니다'}
+													</div>
+												</div>
 											)}
 										</div>
 									</div>
