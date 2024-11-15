@@ -1,5 +1,5 @@
 import { fetchCompanyDetail, fetchDatalabData, fetchPositionData } from '@/app/lib/data';
-import { Company, Position, TestData } from '@/app/lib/definitions';
+import { Company, DataItem, Position, TestData } from '@/app/lib/definitions';
 import SectionButton from '@/app/ui/company/sectionButton';
 import TestInfo from '@/app/ui/company/testInfo';
 import TierDistributionChart from '@/app/ui/company/TierDistributionChart';
@@ -91,11 +91,9 @@ export default async function Page({
 	function calculateTierStats(data: DataItem[]) {
 		if (!data || data.length === 0) return null;
 
-		// 합격자 데이터만 필터링
 		const passedData = data.filter((item) => item.tr_pass_status === '합격');
 		if (passedData.length === 0) return null;
 
-		// 티어 정보 계산
 		const tiers = passedData.map((item) => item.member_tier);
 
 		return {
@@ -108,13 +106,10 @@ export default async function Page({
 		};
 	}
 
-	// 가장 많은 분포의 티어 범위 계산
 	function calculateMostFrequentRange(tiers: number[]) {
-		// 3티어 구간으로 나누어 빈도 계산
 		const ranges: Record<string, number> = {};
 
 		tiers.forEach((tier) => {
-			// 구간 시작점 (3티어 단위)
 			const rangeStart = Math.floor((tier - 1) / 3) * 3 + 1;
 			const rangeEnd = rangeStart + 2;
 			const range = `${rangeStart}-${rangeEnd}`;
@@ -122,7 +117,6 @@ export default async function Page({
 			ranges[range] = (ranges[range] || 0) + 1;
 		});
 
-		// 가장 빈도가 높은 구간 찾기
 		const mostFrequent = Object.entries(ranges)
 			.sort((a, b) => b[1] - a[1])[0][0]
 			.split('-')
@@ -136,19 +130,16 @@ export default async function Page({
 
 	const tierStats = dataLabDetails.data ? calculateTierStats(dataLabDetails.data) : null;
 
-	// 문제 해결 수 통계 계산 함수 추가
 	function calculateProblemStats(data: DataItem[]) {
 		if (!data || data.length === 0) return null;
 
 		const passedData = data.filter((item) => item.tr_pass_status === '합격');
 		if (passedData.length === 0) return null;
 
-		// 문제 해결 수 계산
 		const avgSolved = Math.round(
 			passedData.reduce((sum, item) => sum + item.tr_solved_num, 0) / passedData.length
 		);
 
-		// 평균 문제 수
 		const avgTotal = Math.round(
 			passedData.reduce((sum, item) => sum + item.tr_problem_num, 0) / passedData.length
 		);
