@@ -170,7 +170,7 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 					}
 				}}
 				axisBottom={{
-					tickSize: 5,
+					tickSize: 0, // Updated line
 					tickPadding: 5,
 					tickRotation: 0
 				}}
@@ -182,6 +182,7 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 					format: (value) => `${value}`
 				}}
 				enableGridY={false}
+				enableGridX={false}
 				layers={['grid', 'axes', 'bars', CustomLayer, 'markers', 'annotations']}
 				legends={[]}
 			/>
