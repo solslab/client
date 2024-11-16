@@ -227,7 +227,9 @@ export default async function Page({
 										<QuestionText type="tier" value={tierStats?.mostFrequentRange.start} />
 										~
 										<QuestionText type="tier" value={tierStats?.mostFrequentRange.end} />
-										<span className="text-text-base">사이의 지원자가 많이 합격했어요!</span>
+										<span className="text-xs text-text-base md:text-[14px]">
+											사이의 지원자가 많이 합격했어요!
+										</span>
 									</div>
 									<div className="flex w-full flex-col items-center gap-5 lg:flex-row">
 										<div className="flex h-[210px] w-full items-center justify-center rounded-[10px] border-[1px] border-gray-40 lg:w-2/3">
@@ -278,21 +280,41 @@ export default async function Page({
 													코딩테스트 후기 작성하고 모든 정보 열람하기!
 												</button>
 											) : (
-												<div className="flex flex-col items-center gap-8">
-													<div className="relative h-[3px] w-2/3 bg-main-light">
-														<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs">
+												<div className="flex w-3/4 flex-col items-center gap-8">
+													<div className="relative h-[3px] w-full rounded-full bg-main-light md:h-[6px]">
+														<div className="absolute bottom-[12px] left-1/2 -translate-x-1/2 text-xs md:bottom-[16px]">
 															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
 															{problemStats ? `${problemStats.avgSolved}문제` : '???'}
 														</div>
-														<div className="absolute bottom-[12px] right-[10%] text-xs">
+														<div className="absolute bottom-[12px] right-[10%] text-xs md:bottom-[16px]">
 															<div className="absolute left-1/2 top-[15px] h-[11px] w-[2px] -translate-x-1/2 bg-main-base"></div>
 															{problemStats ? `${problemStats.avgTotal}문제` : '???'}
 														</div>
 													</div>
-													<div className="text-center text-sm text-gray-70">
-														{tierStats && problemStats
-															? `${tierStats.passCount}명의 합격자가 평균 ${problemStats.avgTotal}문제 중 ${problemStats.avgSolved}문제를 해결했습니다`
-															: '???명의 합격자가 평균 ?문제 중 ?문제를 해결했습니다'}
+													<div className="text-center text-xs text-gray-90 md:text-sm">
+														{tierStats && problemStats ? (
+															<>
+																<span className="font-bold text-main-base">
+																	{tierStats.passCount}명
+																</span>
+																의 합격자가 평균{' '}
+																<span className="font-bold text-main-base">
+																	{problemStats.avgTotal}문제
+																</span>{' '}
+																중{' '}
+																<span className="font-bold text-main-base">
+																	{problemStats.avgSolved}문제
+																</span>
+																를 해결했습니다
+															</>
+														) : (
+															<>
+																<span className="font-bold text-main-base">???명</span>의 합격자가
+																평균 <span className="font-bold text-main-base">?문제</span> 중{' '}
+																<span className="font-bold text-main-base">?문제</span>를
+																해결했습니다
+															</>
+														)}
 													</div>
 												</div>
 											)}
@@ -301,7 +323,7 @@ export default async function Page({
 
 									<div className="flex w-full flex-col gap-[10px] lg:w-1/3">
 										<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
-										<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6">
+										<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6 scrollbar-hide">
 											{dataLabDetails.data
 												? dataLabDetails.data.map((item, idx) => (
 														<div key={idx} className="flex items-center justify-between gap-3">
@@ -310,11 +332,11 @@ export default async function Page({
 																	합격
 																</span>
 															) : (
-																<span className="w-[60px] rounded-[10px] bg-text-base px-2 py-1 text-center text-sm font-bold text-white">
+																<span className="w-[60px] rounded-[10px] bg-gray-80 px-2 py-1 text-center text-sm font-bold text-white">
 																	불합격
 																</span>
 															)}
-															<h4 className="flex-shrink-0 whitespace-nowrap font-bold">
+															<h4 className="flex-shrink-0 whitespace-nowrap font-bold text-gray-80">
 																{item.tr_solved_num}솔/{item.tr_problem_num}문제
 															</h4>
 															<span className="text-gray-80">[{item.tr_year}]</span>

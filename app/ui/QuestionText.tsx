@@ -20,7 +20,7 @@ function QuestionText({ type = 'tier', value }: QuestionTextProps) {
 	const displayText = type === 'tier' ? getTierText(value as number) : value?.toString() || '???';
 
 	return (
-		<span className="w-fit rounded-[10px] bg-main-light px-2 py-1 text-[14px] font-bold text-main-base">
+		<span className="w-fit whitespace-nowrap rounded-[10px] bg-main-light px-2 py-1 text-[12px] font-bold text-main-base md:text-[14px]">
 			{displayText}
 		</span>
 	);
