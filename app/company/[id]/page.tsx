@@ -242,23 +242,29 @@ export default async function Page({
 											)}
 										</div>
 										<div className="grid h-[210px] w-full grid-cols-2 gap-5 p-5 lg:w-1/3">
-											<div className="flex-shrink-0 whitespace-nowrap text-left font-bold">
+											<div className="flex-shrink-0 whitespace-nowrap text-left font-bold text-text-base">
 												합격자/응답자 수
 											</div>
-											<div className="text-left">
+											<div className="text-left text-text-base">
 												{tierStats
 													? `${tierStats.passCount}명 / ${tierStats.totalResponses}명`
 													: '??명 / ??명'}
 											</div>
-											<div className="whitespace-nowrap text-left font-bold">합격자 평균 티어</div>
+											<div className="whitespace-nowrap text-left font-bold text-text-base">
+												합격자 평균 티어
+											</div>
 											<div className="text-left">
 												<QuestionText type="tier" value={tierStats?.avgTier} />
 											</div>
-											<div className="whitespace-nowrap text-left font-bold">최저 합격자 티어</div>
+											<div className="whitespace-nowrap text-left font-bold text-text-base">
+												최저 합격자 티어
+											</div>
 											<div className="text-left">
 												<QuestionText type="tier" value={tierStats?.minTier} />
 											</div>
-											<div className="whitespace-nowrap text-left font-bold">최고 합격자 티어</div>
+											<div className="whitespace-nowrap text-left font-bold text-text-base">
+												최고 합격자 티어
+											</div>
 											<div className="text-left">
 												<QuestionText type="tier" value={tierStats?.maxTier} />
 											</div>
