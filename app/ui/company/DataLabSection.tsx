@@ -47,11 +47,9 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 		if (passedData.length === 0) return null;
 
 		const tiers = passedData.map((item) => item.member_tier);
-		console.log('Passed Data Tiers:', tiers);
 
 		const minTier = Math.min(...tiers);
 		const maxTier = Math.max(...tiers);
-		console.log('Min Tier:', minTier, 'Max Tier:', maxTier);
 
 		const convertTierToNumber = (tier: number) => {
 			const division = Math.ceil(tier / 5);
@@ -136,36 +134,38 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 				</div>
 			) : (
 				<>
-					<div className="mb-8 flex flex-wrap gap-4">
-						<div className="flex items-center gap-2">
-							<label className="text-sm font-medium text-gray-70">연도:</label>
-							<select
-								className="rounded-md border border-gray-40 px-3 py-2 text-sm"
-								value={selectedYear}
-								onChange={(e) => setSelectedYear(e.target.value)}
-							>
-								{filterOptions.years.map((year) => (
-									<option key={year} value={year}>
-										{year}
-									</option>
-								))}
-							</select>
+					{dataLabDetails.success !== 403 && (
+						<div className="mb-8 flex flex-wrap gap-4">
+							<div className="flex items-center gap-2">
+								<label className="text-sm font-medium text-gray-70">연도:</label>
+								<select
+									className="rounded-md border border-gray-40 px-3 py-2 text-sm"
+									value={selectedYear}
+									onChange={(e) => setSelectedYear(e.target.value)}
+								>
+									{filterOptions.years.map((year) => (
+										<option key={year} value={year}>
+											{year}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className="flex items-center gap-2">
+								<label className="text-sm font-medium text-gray-70">경력:</label>
+								<select
+									className="rounded-md border border-gray-40 px-3 py-2 text-sm"
+									value={selectedCareer}
+									onChange={(e) => setSelectedCareer(e.target.value)}
+								>
+									{filterOptions.careers.map((career) => (
+										<option key={career} value={career}>
+											{career}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
-						<div className="flex items-center gap-2">
-							<label className="text-sm font-medium text-gray-70">경력:</label>
-							<select
-								className="rounded-md border border-gray-40 px-3 py-2 text-sm"
-								value={selectedCareer}
-								onChange={(e) => setSelectedCareer(e.target.value)}
-							>
-								{filterOptions.careers.map((career) => (
-									<option key={career} value={career}>
-										{career}
-									</option>
-								))}
-							</select>
-						</div>
-					</div>
+					)}
 
 					<div className="flex w-full flex-col gap-[10px] rounded-sm py-10 pt-0">
 						<h1 className="text-lg font-bold text-text-base">합격자 티어 분포</h1>

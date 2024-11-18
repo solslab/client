@@ -143,14 +143,7 @@ export default async function Page({
 						</Container>
 					</>
 				) : (
-					<DataLabSection
-						dataLabDetails={
-							'data' in dataLabDetails && dataLabDetails.data
-								? dataLabDetails
-								: { success: 1, data: [] }
-						}
-						company_id={company_id}
-					/>
+					<DataLabSection dataLabDetails={dataLabDetails} company_id={company_id} />
 				)}
 			</div>
 			<FeedBackBtn />

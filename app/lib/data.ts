@@ -190,7 +190,7 @@ export const fetchDatalabData = async (id: string) => {
             };
         } else if (response.status === 404) {
             return {
-                success: 404,
+                success: 403,
                 message: '데이터가 존재하지 않습니다.'
             };
         } else if (!response.ok) {
