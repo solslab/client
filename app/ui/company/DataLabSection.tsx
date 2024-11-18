@@ -10,7 +10,9 @@ import Link from 'next/link';
 type DataLabSectionProps = {
 	dataLabDetails: {
 		success: number;
-		data: DataItem[];
+		message?: string;
+		data?: DataItem[];
+		error?: string;
 	};
 	company_id: string;
 };
