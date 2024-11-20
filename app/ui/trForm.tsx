@@ -113,7 +113,7 @@ export default function TrForm({company_id}:{company_id:string|undefined}) {
 					</TrFormRow>
 					<TrFormRow
 						label={'푼 문제 수'}
-						error={state.errors?.tr_solve_num && state.errors.tr_solve_num}
+						error={state.errors?.tr_solved_num && state.errors.tr_solved_num}
 					>
 						{' '}
 						<Select name="tr_solved_num" id="tr_solved_num" required={true}>

@@ -269,7 +269,7 @@ export type TestReviewState = {
         tr_position?: string[];
         tr_career?: string[];
         tr_problem_num?: string[];
-        tr_solve_num?: string[];
+        tr_solved_num?: string[];
         tr_pass_status?: string[];
         tr_problem_type?: string[];
         tr_comment?: string[];
@@ -297,7 +297,7 @@ const TestReviewFormSchema = z.object({
     tr_problem_num: z.coerce.number({
         invalid_type_error: '총 문제수를 입력해주세요.',
     }).min(1, '총 문제수를 입력해주세요.').max(30,'총 문제 수는 30이하여야 합니다.'),
-    tr_solve_num: z.coerce.number({
+    tr_solved_num: z.coerce.number({
         invalid_type_error: '푼 문제수를 입력해주세요.',
     }).min(0, '푼 문제수를 입력해주세요.').max(30,'푼 문제 수는 30이하여야 합니다.'),
     tr_pass_status: z.string({

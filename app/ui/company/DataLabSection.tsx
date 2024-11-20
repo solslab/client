@@ -6,6 +6,7 @@ import TierDistributionChart from '@/app/ui/company/TierDistributionChart';
 import TrLink from '@/app/ui/company/trLink';
 import QuestionText from '@/app/ui/QuestionText';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import Link from 'next/link';
 
 type DataLabSectionProps = {
 	dataLabDetails: {
@@ -248,7 +249,7 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 							</div>
 						</div>
 						<span className="px-2 text-xs text-gray-70">
-							위 정보는 <span className="font-bold underline">solved.ac</span>
+							위 정보는 <a target="_blank" href={'https://solved.ac/'} className="font-bold underline">solved.ac</a>
 							(솔브드)의 유저 티어 시스템을 기반으로 제공됩니다.
 						</span>
 					</div>
@@ -303,7 +304,7 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 
 						<div className="flex w-full flex-col gap-[10px] lg:w-1/3">
 							<h1 className="text-lg font-bold text-text-base">모든 응답</h1>
-							<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-text-base p-5 px-6 scrollbar-hide">
+							<div className="flex h-[210px] flex-col items-stretch justify-start gap-5 overflow-scroll rounded-[10px] border-[1px] border-gray-40 p-5 px-6 scrollbar-hide">
 								{dataLabDetails.data
 									? dataLabDetails.data.map((item, idx) => (
 											<div key={idx} className="flex items-center justify-between gap-3">
@@ -317,7 +318,7 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 													</span>
 												)}
 												<h4 className="flex-shrink-0 whitespace-nowrap font-bold text-gray-80">
-													{item.tr_solved_num}솔/{item.tr_problem_num}문제
+													총 {item.tr_problem_num}문제 / {item.tr_solved_num}솔
 												</h4>
 												<span className="text-gray-80">[{item.tr_year}]</span>
 											</div>
@@ -333,7 +334,7 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 														불합격
 													</span>
 												)}
-												<h4 className="flex-shrink-0 whitespace-nowrap font-bold">?솔/?문제</h4>
+												<h4 className="flex-shrink-0 whitespace-nowrap font-bold text-text-base">총 ?문제 / ?솔</h4>
 												<span className="text-gray-80">[2024]</span>
 											</div>
 										))}
