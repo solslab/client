@@ -2,7 +2,7 @@
 import { ResponsiveBar, BarLayer, ComputedBarDatum } from '@nivo/bar';
 
 const tiers = ['브론즈', '실버', '골드', '플래티넘', '다이아', '루비'];
-const ranks = ['5', '4', '3', '2', '1'];
+const ranks = ['1', '2', '3', '4', '5'];
 
 interface TierData {
 	tier: string;
@@ -36,11 +36,11 @@ const generateData = (dataLabDetails: DataLabDetail[]) => {
 		};
 
 		ranks.forEach((rank) => {
-			const value = passedData.filter(
-				(d) =>
-					Math.floor(d.member_tier / 5) + 1 === tierToNumber[tier] &&
-					(d.member_tier % 5 || 5) === parseInt(rank)
-			).length;
+			const value = passedData.filter((d) => {
+				const calculatedTier = Math.floor((d.member_tier - 1) / 5) + 1;
+				const calculatedRank = 5 - (d.member_tier % 5 || 5) + 1; // 랭크 순서를 반대로
+				return calculatedTier === tierToNumber[tier] && calculatedRank === parseInt(rank);
+			}).length;
 
 			tierData[`${tier}${rank}`] = value;
 			total += value;
@@ -89,6 +89,7 @@ interface ColorMap {
 const colors = generateColors();
 
 const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
+	console.log('dataLabDetails', dataLabDetails);
 	const chartData = generateData(dataLabDetails);
 	const maxTotal = Math.max(...chartData.map((d) => d.total));
 
@@ -108,14 +109,13 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 		return (
 			<g>
 				{Object.entries(tierBars).map(([tier, bars]) => {
-					// Find the topmost bar (smallest y value)
 					const topBar = bars.reduce((prevBar, currBar) =>
 						currBar.y < prevBar.y ? currBar : prevBar
 					);
 					const tierData = chartData.find((d) => d.tier === tier);
 					const total = tierData?.total ?? 0;
 					const x = topBar.x + topBar.width / 2;
-					const y = topBar.y - 5; // Adjust as needed
+					const y = topBar.y - 5;
 					return (
 						<text
 							key={tier}
@@ -170,7 +170,7 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 					}
 				}}
 				axisBottom={{
-					tickSize: 0, // Updated line
+					tickSize: 0,
 					tickPadding: 5,
 					tickRotation: 0
 				}}
