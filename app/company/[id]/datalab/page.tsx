@@ -5,7 +5,6 @@ import DataLabSection from '@/app/ui/company/DataLabSection';
 import Container from '@/app/ui/container';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
