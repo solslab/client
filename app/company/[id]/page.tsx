@@ -89,7 +89,7 @@ export default async function Page({
 								<div className="mr-1 flex items-center justify-center">
 									<Image src={'/icons/verifyIcon.png'} width={16} height={16} alt="verified" />
 								</div>
-								가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
+								뱃지가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
 							</div>
 						</div>
 						<div className="flex w-full justify-end md:w-1/2">

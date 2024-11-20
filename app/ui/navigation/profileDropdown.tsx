@@ -181,7 +181,7 @@ export default function ProfileDropdown({
 									<div className="text-xl text-text-base">{userName}</div>
 								</div>
 							</div>
-							<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
+
 							
 							<div>
 							{menus.map((link, index) => (
