@@ -101,7 +101,6 @@ export const fetchPositionData = async (id: string) => {
         'Content-Type': 'application/json' ,
         'Cache-Control': 'no-cache'
     };
-    console.log('fetch~~')
     const token = await getToken();
     const value = token?.value ;
     if(value){

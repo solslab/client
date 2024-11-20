@@ -324,13 +324,12 @@ export async function createTestReview(prevState: TestReviewState, formData: For
         tr_position: formData.get('tr_position'),
         tr_career: formData.get('tr_career'),
         tr_problem_num: formData.get('tr_problem_num'),
-        tr_solve_num: formData.get('tr_solve_num'),
+        tr_solved_num: formData.get('tr_solved_num'),
         tr_pass_status: formData.get('tr_pass_status'),
         tr_problem_type: formData.get('tr_problem_type'),
         tr_comment: formData.get('tr_comment')
     });
     if (!validatedFields.success) {
-
         return {
             errors: validatedFields.error.flatten().fieldErrors,
             message: '잘못된 필드가 있습니다.',
@@ -344,6 +343,7 @@ export async function createTestReview(prevState: TestReviewState, formData: For
         redirect('/login')
     }
     try {
+        console.log(JSON.stringify(validatedFields.data),'@@@@')
         const response = await fetch(`${SPRING_URL}/tr`, {
             method: 'POST',
             headers: {

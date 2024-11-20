@@ -1,5 +1,5 @@
 'use client';
-import { startTransition, useActionState, useState } from 'react';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import { PASS_STATUS, PROBLEM_TYPE, TR_CAREER } from '../lib/constants';
 import Input from '../ui/input';
 import LanguageToggleButton from './profile/languageToggleButton';
@@ -11,6 +11,7 @@ import TrFormRow from './testReview/trFormRow';
 import TrSearchBox from './testReview/trSearchbox';
 import BasicAlert from './basicAlert';
 import { redirectToPrev } from '../lib/cookie';
+import NaturalNumberInput from './naturalNumberInput';
 const years: number[] = [];
 for (let i = 2024; i >= 2000; i--) {
 	years.push(i);
@@ -20,6 +21,14 @@ export default function TrForm({company_id}:{company_id:string|undefined}) {
 	const [problems, setProblems] = useState<Set<string>>(new Set());
 	const [value, setValue] = useState('');
     const [companyId,setCompanyId] = useState(company_id)
+	const [totalProblem,setTotalProblem] = useState(0);
+	const [solvedProblem,setSolvedProblem] = useState<number[]>([]);
+	const handleSolvedProblem = (endNumber: number): void => {
+		const length = Math.floor(endNumber * 2) + 1; 
+		setSolvedProblem( Array.from({ length }, (_, index) => index * 0.5));
+	  };
+
+	 
 	const addProblem = (problem: string) => {
 		const newSet = new Set(problems);
 		newSet.add(problem);
@@ -47,6 +56,10 @@ export default function TrForm({company_id}:{company_id:string|undefined}) {
 			formAction(formData);
 		});
 	};
+
+	useEffect(()=>{
+		handleSolvedProblem(totalProblem)
+	 },[totalProblem]) 
 	return (
 		<>
 		<form onSubmit={handleSubmit}>
@@ -96,14 +109,18 @@ export default function TrForm({company_id}:{company_id:string|undefined}) {
 						error={state.errors?.tr_problem_num && state.errors.tr_problem_num}
 					>
 						{' '}
-						<Input name="tr_problem_num" id="tr_problem_num" type={'number'} required={true} />
+						<NaturalNumberInput name="tr_problem_num" id="tr_problem_num" required={true} callBack={setTotalProblem}/>
 					</TrFormRow>
 					<TrFormRow
 						label={'푼 문제 수'}
 						error={state.errors?.tr_solve_num && state.errors.tr_solve_num}
 					>
 						{' '}
-						<Input name="tr_solve_num" id="tr_solve_num" type={'number'} required={true} />
+						<Select name="tr_solved_num" id="tr_solved_num" required={true}>
+							{solvedProblem.map((el) => (
+								<option key={el}>{el}</option>
+							))}
+						</Select>
 					</TrFormRow>
 					<TrFormRow label={'합격 여부'}>
 						{' '}
