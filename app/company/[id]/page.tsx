@@ -73,7 +73,7 @@ export default async function Page({
 					</div>
 				</Container>
 			</div>
-			<div className="flex flex-col items-center justify-between border-b border-gray-30 bg-bg-base">
+			<div className="flex flex-col items-center justify-between border-b border-gray-30">
 				<Container className={'px-0'}>
 					<CompanyMenu company_id={company_id} currentPage="testInfo" />
 				</Container>
