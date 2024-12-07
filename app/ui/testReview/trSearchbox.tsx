@@ -74,7 +74,7 @@ export default function TrSearchBox({
 						className={clsx(
 							`shadow-customShadow" block h-9 w-full rounded-lg border border-gray-50 bg-gray-5 py-1 pl-4 pr-8 text-sm focus:outline-none`,
 							{
-								'rounded-b-none rounded-t-2.5xl border-b-0 bg-white outline-none': query.length > 0
+								'rounded-b-none rounded-t-lg border-b-0 bg-white outline-none': query.length > 0
 							}
 						)}
 						type="text"
@@ -91,12 +91,12 @@ export default function TrSearchBox({
 					/>
 				</div>
 				<div>
-					<div className="absolute w-full max-w-80">
+					<div className="absolute w-full max-w-80 rounded-b-lg">
 						<div
 							className={clsx(
 								`mx-auto w-full overflow-hidden overflow-y-scroll bg-white scrollbar-hide`,
 								{
-									'rounded-b-2.5xl border-x border-b border-x-gray-50 border-b-gray-50':
+									'rounded-b-lg border-x border-b border-x-gray-50 border-b-gray-50':
 										query.length > 0
 								}
 							)}
@@ -111,7 +111,7 @@ export default function TrSearchBox({
 											setCompanyId(el.company_id);
 											clearFeild();
 										}}
-										className="px-4 py-2 text-sm hover:bg-gray-100"
+										className="px-4 py-2 text-sm hover:bg-gray-100 "
 									>
 										{el.company_name}
 									</div>
