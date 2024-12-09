@@ -34,9 +34,6 @@ export const SKILLS = [
   };
 
   export const PLATFORMLIST = [
-    { platform: "사용 안함", level: [{
-      label:'사용 안함',value:0
-    }], code: "NONE" },
     {
       platform: "solved.ac",
       level: [

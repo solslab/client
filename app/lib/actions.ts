@@ -343,7 +343,6 @@ export async function createTestReview(prevState: TestReviewState, formData: For
         redirect('/login')
     }
     try {
-        console.log(JSON.stringify(validatedFields.data),'@@@@')
         const response = await fetch(`${SPRING_URL}/tr`, {
             method: 'POST',
             headers: {

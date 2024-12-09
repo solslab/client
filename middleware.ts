@@ -10,7 +10,6 @@ export default async function middleware(request: NextRequest) {
     const requestUrl = request.nextUrl.href;
     const pathName = request.nextUrl.pathname;
     const token = await tokenTest();
-    console.log(token,'토큰!')
     const lastPathCookie = await getLastRoute();
     const lastPath = lastPathCookie?.value || '/';
     let response;
@@ -65,10 +64,9 @@ export default async function middleware(request: NextRequest) {
                   });
             }
             if (pathName.startsWith('/profiles/additional')) {
-                const infoChecked: boolean = await infoCheck();
-
-                if (infoChecked)
-                    response = NextResponse.redirect(NEXT_URL + lastPath);
+                    response = NextResponse.redirect((NEXT_URL + lastPath),{
+                        status: 308
+            })
             }
 
         }
