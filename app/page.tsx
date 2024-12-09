@@ -105,8 +105,8 @@ export default function Home({
 					</div>
 				</section>
 
-				<section className="flex h-full w-full flex-col items-center justify-between">
-					<article className="flex flex-col gap-2 pt-16 text-center">
+				<section className="flex h-full w-full pt-16 flex-col items-center justify-between">
+					<article className="flex flex-col gap-2 pt-16  text-center ">
 						<h2 className="bg-gradient-text-1 bg-clip-text text-lg font-bold text-transparent md:text-2xl">
 							이 기업 코딩테스트, 내가 합격할 수 있을까?
 						</h2>
@@ -130,7 +130,7 @@ export default function Home({
 							</h2>
 							<Link
 								className="rounded-[10px] border-2 border-main-base px-3 py-2 text-center font-bold text-main-base md:px-6 md:py-4"
-								href="/review"
+								href="/testReview"
 							>
 								코딩테스트 후기 작성하기
 							</Link>

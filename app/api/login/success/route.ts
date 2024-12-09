@@ -16,9 +16,6 @@ export async function GET(request:Request) {
             expires:getDateOneMonthLater()
           });
     }
-    if(!infoTest){
-        redirect('/profiles/additional')
-    }
     if(prevPath){
         redirect(prevPath.value)
     }

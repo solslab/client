@@ -5,7 +5,7 @@ import Link from 'next/link';
 export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverviewData }) {
 	return (
 		<Link
-			href={`/company/${companyData.company_id}?section=companyInfo`}
+			href={`/company/${companyData.company_id}`}
 			className="hover-effect flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5"
 		>
 			<div className="flex items-center gap-[14px]">

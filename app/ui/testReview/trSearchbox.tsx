@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchCompanyData, fetchCompanyDetail, fetchFilteredCompanys } from '@/app/lib/data';
+import { fetchCompanyData, fetchCompanyDetail, fetchFiltereAllCompanys, fetchFilteredCompanys } from '@/app/lib/data';
 import { CompanyQuery } from '@/app/lib/definitions';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -24,6 +24,7 @@ export default function TrSearchBox({
 		setQuery('');
 		setCompanyList([]);
 	};
+	console.log(companyList,'@@@')
 
 	useEffect(() => {
 		if (value == '') {
@@ -42,8 +43,13 @@ export default function TrSearchBox({
 	}, [value]);
 	useEffect(() => {
 		const fetchQuery = async () => {
-			const data = await fetchFilteredCompanys(query);
-			setCompanyList(data);
+			try{
+				const data = await fetchFiltereAllCompanys(query);
+				setCompanyList(data);
+			}
+			catch(error){
+				console.error('기업 쿼리중에 문제 발생.')
+			}
 		};
 		if (query != '') {
 			fetchQuery();
@@ -101,7 +107,7 @@ export default function TrSearchBox({
 								}
 							)}
 						>
-							{companyList.length > 0 ? (
+							{companyList?.length > 0 ? (
 								companyList.map((el: CompanyQuery) => (
 									<div
 										key={el.company_id}
