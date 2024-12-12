@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 const LogoCarousel: React.FC = () => {
 	const [randomCompany, setRandomCompany] = useState<CompanyQuery[] | null>(null);
+	console.log(randomCompany,)
 
 	useEffect(() => {
 		fetchRandomCompany().then(setRandomCompany);
@@ -60,7 +61,7 @@ const LogoCarousel: React.FC = () => {
 							className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
 						>
 							<Image
-								src={company.company_logo}
+								src={company.company_logo?company.company_logo:'/companyLogo/default_company_logo.png'}
 								alt={`Company logo ${index + 1}`}
 								width={100}
 								height={100}

@@ -81,7 +81,7 @@ export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 									<div className="mx-auto max-h-56 w-full overflow-y-scroll bg-white scrollbar-hide shadow-customShadow">
 										{companyList &&
 											companyList.map((el: CompanyQuery) => (
-												<Link href={`/company/${el.company_id}?section=companyInfo`} key={el.company_id}>
+												<Link href={`/company/${el.company_id}`} key={el.company_id}>
 													<div
 														onClick={()=>{
 															clearFeild();
