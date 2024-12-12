@@ -11,7 +11,7 @@ export default async function SearchDropDown({ query }: { query: string }) {
       {   result&&
         result.map((el:CompanyQuery)=>
             <Link
-            href={`/company/${el.company_id}?section=companyInfo`}
+            href={`/company/${el.company_id}`}
             key={el.company_id}
 
       >
