@@ -142,7 +142,6 @@ export default function Page() {
                     </option>
                   ))}
                 </select>
-                {platform != 0 && (
                   <select
                     value={level}
                     onChange={(e) => setLevel(Number(e.target.value))}
@@ -154,7 +153,6 @@ export default function Page() {
                       </option>
                     ))}
                   </select>
-                )}
               </div>
               <div className="flex justify-center mt-10">
                 <PrevButton onClick={() => setStep(step - 1)} />

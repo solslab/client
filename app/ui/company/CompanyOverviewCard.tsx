@@ -10,7 +10,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 		>
 			<div className="flex items-center gap-[14px]">
 				<Image
-					src={companyData.company_logo}
+					src={companyData.company_logo?companyData.company_logo:'/companyLogo/default_company_logo.png'}
 					alt={companyData.company_name}
 					width={50}
 					height={50}

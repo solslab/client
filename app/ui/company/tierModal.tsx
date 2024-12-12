@@ -58,7 +58,6 @@ export default function TierModal({
 								</option>
 							))}
 						</select>
-						{platform != 0 && (
 							<select
 								value={level}
 								onChange={(e) => setLevel(Number(e.target.value))}
@@ -70,7 +69,6 @@ export default function TierModal({
 									</option>
 								))}
 							</select>
-						)}
 					</div>
 				</div>
 				<button type="submit" className="h-10 w-24 rounded-2xl bg-main-base font-bold text-white">

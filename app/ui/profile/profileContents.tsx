@@ -18,7 +18,6 @@ export default  function ProfileContents() {
 useEffect(()=>{
     const fetchProfileData =async()=>{
         const data = await fetchProfile();
-        console.log(data)
         const platformAndLabelData = findPlatformAndLabel(
             data.al_platform,
             data.member_tier
@@ -72,10 +71,12 @@ useEffect(()=>{
         선호 언어
       </div>
       <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
-        {profileData?.prefer_languages &&
+        {profileData?.prefer_languages ?
           profileData?.prefer_languages.map((language) => (
             <LanguageBox key={language} language={language} />
-          ))}
+          ))
+        :
+        <p>-</p>}
       </div>
     </div>
     <div className="text-base py-4 flex flex-wrap w-full">
@@ -83,10 +84,12 @@ useEffect(()=>{
         취업 희망 분야
       </div>
       <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
-        {profileData?.prefer_industries &&
+        {profileData?.prefer_industries ?
           profileData.prefer_industries.map((industry) => (
             <FieldBox key={industry} feild={industry} />
-          ))}
+          ))
+        :
+        <p>-</p>}
       </div>
     </div>
   </div>

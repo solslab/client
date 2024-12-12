@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 const LogoCarousel: React.FC = () => {
 	const [randomCompany, setRandomCompany] = useState<CompanyQuery[] | null>(null);
-	console.log(randomCompany,)
 
 	useEffect(() => {
 		fetchRandomCompany().then(setRandomCompany);
