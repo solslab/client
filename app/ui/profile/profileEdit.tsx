@@ -121,7 +121,6 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
               </select>
             </div>
 
-            {platform != 0 && (
               <div className="mt-4 w-full max-w-80">
                 <select
                   id="member_tier"
@@ -136,7 +135,6 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
                   ))}
                 </select>
               </div>
-            )}
           </div>
         </div>
         <div className="flex w-full flex-wrap py-4 text-base">

@@ -89,7 +89,6 @@ interface ColorMap {
 const colors = generateColors();
 
 const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
-	console.log('dataLabDetails', dataLabDetails);
 	const chartData = generateData(dataLabDetails);
 	const maxTotal = Math.max(...chartData.map((d) => d.total));
 

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import FadeIn from './motion/FadeIn';
+import IndexTrLink from './ui/main/IndexTrLink';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -128,12 +129,7 @@ export default function Home({
 							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
 								여러분의 후기를 들려주세요!
 							</h2>
-							<Link
-								className="rounded-[10px] border-2 border-main-base px-3 py-2 text-center font-bold text-main-base md:px-6 md:py-4"
-								href="/testReview"
-							>
-								코딩테스트 후기 작성하기
-							</Link>
+							<IndexTrLink/>
 						</div>
 						<div className="py-16">
 							<div className="text-center text-black">2024 © solslab Corp.</div>

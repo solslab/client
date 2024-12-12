@@ -252,7 +252,7 @@ export async function createSuggestion(prevState: SuggestionState, formData: For
         }
 
     } catch (error) {
-        console.log('createSuggestion중 오류발생',error)
+        console.error('createSuggestion중 오류발생',error)
         return {
             submitted: true,
             fullfilled: false

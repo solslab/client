@@ -68,7 +68,7 @@ export async function tokenTest() {
         return data;
     }
     catch (error) {
-        console.log('tokenTest중 오류발생',error)
+        console.error('tokenTest중 오류발생',error)
         return false
     }
 }

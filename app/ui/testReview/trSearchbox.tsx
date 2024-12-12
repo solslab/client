@@ -24,7 +24,6 @@ export default function TrSearchBox({
 		setQuery('');
 		setCompanyList([]);
 	};
-	console.log(companyList,'@@@')
 
 	useEffect(() => {
 		if (value == '') {

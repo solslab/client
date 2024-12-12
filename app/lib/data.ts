@@ -204,7 +204,6 @@ export const fetchDatalabData = async (id: string) => {
             headers: headers,
         });
         if (response.status === 403) {
-            console.log(response)
             return {
                 success: 403,
                 message: '접근 권한이 없습니다.'
@@ -221,7 +220,6 @@ export const fetchDatalabData = async (id: string) => {
             };
         }
         const data : DataLabDetail[] = await response.json();
-        console.log(data)
         return {
             success: 200,
             data: data
