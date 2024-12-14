@@ -20,6 +20,7 @@ export interface Company {
     industry_type: string[];
     company_logo: string;
     positions:Position[];
+    public:boolean;
 }
 export interface CompanyQuery {
     company_id:string;

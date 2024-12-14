@@ -42,6 +42,7 @@ export default function ClientSearchBox() {
 			fetchQuery();
 		}
 	}, [query]);
+	console.log(companyList,'@@')
 
 	return (
 		<div className="relative z-20 hidden sm:block">
@@ -85,7 +86,7 @@ export default function ClientSearchBox() {
 									<div className="rounded- flex px-4 py-4 hover:bg-gray-100">
 										<div
 											className="mr-4 h-12 w-12 rounded-lg border border-gray-20 bg-cover bg-center bg-no-repeat"
-											style={{ backgroundImage: ` url(${el.company_logo})` }}
+											style={{ backgroundImage:el.company_logo?'url('+el.company_logo+')':'url(/companyLogo/default_company_logo.png)' }}
 										/>
 										<div className="flex flex-col justify-center text-lg">{el.company_name}</div>
 									</div>
