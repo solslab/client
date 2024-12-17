@@ -1,7 +1,9 @@
 import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/data';
 import { Company, Position, TestData } from '@/app/lib/definitions';
 import CompanyMenu from '@/app/ui/company/CompanyMenu';
+import SuggestionLink from '@/app/ui/company/suggestionLink';
 import TestInfo from '@/app/ui/company/testInfo';
+import TrLink from '@/app/ui/company/trLink';
 import Container from '@/app/ui/container';
 import FeedBackBtn from '@/app/ui/feedBackBtn';
 import { Metadata } from 'next';
@@ -47,15 +49,20 @@ export default async function Page({
 }) {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
-	if (!companyData) {
+	console.log(companyData)
+	if (!companyData?.public) {
 		notFound();
 	}
 	const positions: Position[] = companyData.positions;
 	const position_id = searchParams.position || positions[0]?.position_id;
+	let data: TestData|undefined ;
 	if (!position_id) {
-		notFound();
+		data = undefined
 	}
-	const data: TestData = await fetchPositionData(position_id);
+	else{
+		data= await fetchPositionData(position_id);
+	}
+
 
 	return (
 		<>
@@ -64,7 +71,7 @@ export default async function Page({
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
-						style={{ backgroundImage: `url(${companyData.company_logo})` }}
+						style={{ backgroundImage:companyData.company_logo? `url(${companyData.company_logo})`:'url(/companyLogo/default_company_logo.png)',backgroundColor:'#F0F1F2' }}
 					/>
 					<div className="flex flex-row items-center font-bold text-title-black">
 						<div className="pt-[0.625rem] text-xl md:pt-0 md:text-2xl">
@@ -79,6 +86,8 @@ export default async function Page({
 				</Container>
 			</div>
 			<div className="md:my-12">
+				{data?
+				<>
 				<TestInfo positions={positions} position_id={position_id} data={data} />
 				<Container>
 					<div className="flex w-full flex-wrap justify-between py-7 text-gray-70">
@@ -107,6 +116,19 @@ export default async function Page({
 						</div>
 					</div>
 				</Container>
+				</>
+				:
+				<>
+				<Container className="rounded-md bg-white">
+						<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base text-sm font-semibold">
+							<div className="mb-4 text-center ">이 기업에 대한 정보가 아직 없어요 😢</div>
+							<div className="mb-10 text-center">
+							{companyData.company_name}의 코딩테스트 응시 환경을 공유해주세요!
+							</div>
+							<SuggestionLink company_id={company_id} company_name={companyData.company_name}/>
+						</div>
+					</Container></>
+				}
 			</div>
 			<FeedBackBtn />
 		</>

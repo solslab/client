@@ -6,11 +6,15 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 	return (
 		<Link
 			href={`/company/${companyData.company_id}`}
-			className="hover-effect flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm md:gap-5 md:p-5"
+			className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm hover-effect md:gap-5 md:p-5"
 		>
 			<div className="flex items-center gap-[14px]">
 				<Image
-					src={companyData.company_logo?companyData.company_logo:'/companyLogo/default_company_logo.png'}
+					src={
+						companyData.company_logo
+							? companyData.company_logo
+							: '/companyLogo/default_company_logo.png'
+					}
 					alt={companyData.company_name}
 					width={50}
 					height={50}
@@ -19,14 +23,18 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 				<h2>{companyData.company_name}</h2>
 			</div>
 			<div className="flex flex-row gap-2">
-				{companyData.industry_type.map((industry) => (
-					<div
-						className="rounded-xl border-[1px] border-gray-50 bg-white px-3 py-1 text-xs text-text-base"
-						key={industry}
-					>
-						{industry}
-					</div>
-				))}
+				{companyData.industry_type.length>0 ? (
+					companyData.industry_type.map((industry) => (
+						<div
+							className="rounded-xl border-[1px] border-gray-50 bg-white px-3 py-1 text-xs text-text-base"
+							key={industry}
+						>
+							{industry}
+						</div>
+					))
+				) : (
+					<div style={{ height: 26, }}></div>
+				)}
 			</div>
 		</Link>
 	);

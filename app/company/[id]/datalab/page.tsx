@@ -49,7 +49,7 @@ export default async function DataLabPage({ params }: { params: { id: string } }
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
-						style={{ backgroundImage: `url(${companyData.company_logo})` }}
+						style={{  backgroundImage:companyData.company_logo? `url(${companyData.company_logo})`:'url(/companyLogo/default_company_logo.png)',backgroundColor:'#F0F1F2'}}
 					/>
 					<div className="flex flex-row items-center font-bold text-title-black">
 						<div className="pt-[0.625rem] text-xl md:pt-0 md:text-2xl">
