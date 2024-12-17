@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation';
 
 export default function Footer() {
 	const pathname = usePathname();
-	const bgClass = pathname.startsWith('/company') ? 'bg-bg-base' : 'bg-transparent';
+	const shouldHideFooter = pathname.startsWith('/company') || pathname.startsWith('/admin');
+	const bgClass = shouldHideFooter ? 'hidden' : 'bg-transparent';
 
 	return (
 		<footer className={`${bgClass} py-16`}>
