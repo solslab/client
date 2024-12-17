@@ -4,12 +4,16 @@ import { usePathname } from 'next/navigation';
 
 export default function Footer() {
 	const pathname = usePathname();
-	const shouldHideFooter = pathname.startsWith('/company') || pathname.startsWith('/admin');
-	const bgClass = shouldHideFooter ? 'hidden' : 'bg-transparent';
+	const bgClass = pathname.startsWith('/company') ? 'bg-bg-base' : 'bg-transparent';
+	const isAdminPage = pathname.startsWith('/admin');
 
 	return (
-		<footer className={`${bgClass} py-16`}>
-			<div className="text-center text-gray-500">2024 © solslab Corp.</div>
-		</footer>
+		<>
+			{!isAdminPage && (
+				<footer className={`${bgClass} py-16`}>
+					<div className="text-center text-gray-500">2024 © solslab Corp.</div>
+				</footer>
+			)}
+		</>
 	);
 }

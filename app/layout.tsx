@@ -7,6 +7,7 @@ import PrelineScript from './ui/PrelineScript';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
 import Footer from './ui/Footer';
+import ConditionalLayout from './conditional-layout';
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -35,7 +36,7 @@ export default function RootLayout({
 			<body className={`${pretendard.className}`}>
 				<LastPathSetter />
 				<Topnav />
-				<main className="pt-16">{children}</main>
+				<ConditionalLayout>{children}</ConditionalLayout>
 				<Footer />
 			</body>
 			<GoogleAnalytics gaId="G-9PG6DER9G1" />
