@@ -8,12 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function CompanyDetailPage({
 	children,
@@ -40,11 +35,11 @@ export default function CompanyDetailPage({
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<main className="mx-auto w-full p-4">
+			<main className="w-full">
 				<SidebarTrigger />
 				{children}
 				{companyDetail && (
-					<Card className="mx-auto w-9/12 p-4">
+					<Card className="mx-auto mt-16 w-9/12 p-4">
 						<CardHeader className="flex items-center">
 							<div className="ml-auto flex gap-2">
 								<Button
@@ -67,36 +62,47 @@ export default function CompanyDetailPage({
 								</Button>
 							</div>
 						</CardHeader>
-						<CardTitle className="pl-12 mb-4">기업 상세정보</CardTitle>
+						<CardTitle className="mb-4 pl-12">기업 상세정보</CardTitle>
 						<CardContent className="flex w-full">
 							<div className="jusitfy-center flex w-1/2 pt-8">
-								<div className="mx-auto flex flex-col gap-4">
+								<div className="mx-auto flex min-w-16 flex-col gap-4">
 									<p>기업 이름</p>
 									<p>업종</p>
 									<p>검색어</p>
 								</div>
-								<div className="mx-auto flex flex-col gap-4">
+								<div className="mx-auto flex max-w-72 flex-col gap-4">
 									<div>{companyDetail.company_name}</div>
-									<div>{companyDetail.industry_type.join(', ')}</div>
-									<div>{companyDetail.search_terms.join(', ')}</div>
+									<div>
+										{companyDetail.industry_type.length > 0
+											? companyDetail.industry_type.join(', ')
+											: '-'}
+									</div>
+									<div>
+										{companyDetail.search_terms.length > 0
+											? companyDetail.search_terms.join(', ')
+											: '-'}
+									</div>
 								</div>
 							</div>
 							<div className="w-1/2">
 								<img
-									src={companyDetail.company_logo}
+									src={companyDetail.company_logo || '/companyLogo/default_company_logo.png'}
 									alt="Company Logo"
 									className="mx-auto mt-4 w-48 rounded-xl border-2 border-solid"
 								/>
 								<div className="mt-4 flex justify-center gap-4">
-									<Button
-										variant="outline"
-										onClick={() => {
-											// 삭제 버튼 로직
-											alert('삭제 버튼이 클릭되었습니다.');
-										}}
-									>
-										삭제
-									</Button>
+									{companyDetail.company_logo && (
+										<Button
+											variant="outline"
+											onClick={() => {
+												// 삭제 버튼 로직
+												alert('삭제 버튼이 클릭되었습니다.');
+											}}
+										>
+											삭제
+										</Button>
+									)}
+
 									<Button
 										variant="secondary"
 										onClick={() => {
@@ -111,19 +117,22 @@ export default function CompanyDetailPage({
 						</CardContent>
 						<CardContent className="mt-16 flex w-full flex-col">
 							<CardTitle className="p-4">코딩테스트 정보 목록</CardTitle>
-							<div className="w-full p-4 flex flex-col gap-2">
+							<div className="flex w-full flex-col gap-2 p-4">
+								<Button className="mb-2 w-full" variant="outline">
+									새로 추가하기
+								</Button>
 								{companyDetail.positions.map((position, index) => (
 									<Button
 										key={index}
-										className="w-full mb-2"
+										className="mb-2 w-full"
 										onClick={() => {
 											alert(`Position clicked: ${position.position_name}`);
 										}}
 									>
-								{position.position_name}
-								</Button>
-							))}
-						</div>
+										{position.position_name}
+									</Button>
+								))}
+							</div>
 						</CardContent>
 					</Card>
 				)}
