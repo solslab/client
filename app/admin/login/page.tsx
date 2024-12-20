@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { loginAdmin } from '@/app/lib/data';
+import { loginAdmin } from '@/app/lib/data-admin';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -14,7 +14,7 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { access } from 'fs';
+
 
 export default function LoginForm() {
 	const [email, setEmail] = useState('');
@@ -31,10 +31,10 @@ export default function LoginForm() {
 		if (responseData.status === 200) {
 			// 로그인 성공
 			const token = responseData.data.accessToken;
-			localStorage.setIem('solslab-accessToken', token);
+			localStorage.setItem('solslab-accessToken', token);
 			router.push('/admin');
 		} else {
-			// 로그인 실패 - 에러 메시지 설정
+			// 로그인 실패
 			setError(responseData.message || '로그인에 실패했습니다.');
 		}
 	};

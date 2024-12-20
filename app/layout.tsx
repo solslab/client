@@ -36,7 +36,8 @@ export default function RootLayout({
 			<body className={`${pretendard.className}`}>
 				<LastPathSetter />
 				<Topnav />
-				<ConditionalLayout>{children}</ConditionalLayout>
+				<ConditionalLayout></ConditionalLayout>
+				<main>{children}</main>
 				<Footer />
 			</body>
 			<GoogleAnalytics gaId="G-9PG6DER9G1" />

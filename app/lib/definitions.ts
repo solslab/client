@@ -16,11 +16,12 @@ export interface UserUpdateField {
 };
 
 export interface Company {
-    company_name: string;
-    industry_type: string[];
-    company_logo: string;
-    positions:Position[];
-    public:boolean;
+	 company_name: string;
+	 industry_type: string[];
+	 company_logo: string;
+	 positions: Position[];
+	 search_terms: string[];
+
 }
 export interface CompanyQuery {
     company_id:string;
@@ -60,7 +61,7 @@ export interface TestData {
   }
 
   export interface CompanyOverviewData {
-      company_id: string;
+    company_id: string;
     company_name: string;
     company_logo: string;
     industry_type: string[];

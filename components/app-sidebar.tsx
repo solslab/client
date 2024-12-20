@@ -24,17 +24,17 @@ const items = [
 	},
 	{
 		title: '코딩테스트 리뷰 관리',
-		url: '#',
+		url: '/admin/testReview',
 		icon: Pencil
 	},
 	{
 		title: '정보수정요청 관리',
-		url: '#',
+		url: '/admin/suggestion',
 		icon: FileQuestion
 	},
 	{
 		title: '피드백 관리',
-		url: '#',
+		url: '/admin/feedback',
 		icon: Star
 	}
 ];
