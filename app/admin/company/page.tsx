@@ -18,12 +18,15 @@ import { fetchCompanyData, fetchFilteredCompanys } from '@/app/lib/data';
 import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';
+import CreateCompanyModal from '../components/create-company';
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();
 	const [searchResults, setSearchResults] = useState<CompanyQuery[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -42,10 +45,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				setSearchResults(filteredData || []);
 				setCurrentPage(1);
 			} else {
-				setSearchResults([]); 
-				setCurrentPage(1); 
+				setSearchResults([]);
+				setCurrentPage(1);
 			}
-		}, 300);
+		}, 200);
 
 		return () => clearTimeout(handler);
 	}, [searchQuery]);
@@ -65,11 +68,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 							onChange={(e) => setSearchQuery(e.target.value)}
 							className="ml-auto mr-2 w-72"
 						/>
+						{/* 기업 추가 버튼 */}
 						<Button
 							variant="ghost"
-							onClick={() => {
-								alert('기업 추가 버튼 클릭');
-							}}
+							onClick={() => setIsModalOpen(true)} // 모달 열기
 							className="p-0"
 							style={{ width: '40px', height: '40px' }}
 						>
@@ -143,6 +145,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						</Pagination>
 					)}
 				</div>
+				{/* 모달 컴포넌트 */}
+				{isModalOpen && (
+					<CreateCompanyModal
+						onClose={() => setIsModalOpen(false)} // 모달 닫기
+					/>
+				)}
 			</main>
 		</SidebarProvider>
 	);

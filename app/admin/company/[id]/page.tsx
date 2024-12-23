@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import UpdateCompanyModal from '../../components/update-company';
 
 export default function CompanyDetailPage({
 	children,
@@ -18,6 +19,7 @@ export default function CompanyDetailPage({
 	params: { id: string };
 }) {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
+	const [isCompanyUpdateModalOpen, setIsCompanyUpdateModalOpen] = useState(false);
 
 	const companyId = params.id;
 
@@ -45,9 +47,7 @@ export default function CompanyDetailPage({
 								<Button
 									variant="ghost"
 									size="sm"
-									onClick={() => {
-										alert('수정 버튼 클릭');
-									}}
+									onClick={() => setIsCompanyUpdateModalOpen(true)} // 모달 열기
 								>
 									<FileEdit size={16} />
 								</Button>
@@ -69,6 +69,7 @@ export default function CompanyDetailPage({
 									<p>기업 이름</p>
 									<p>업종</p>
 									<p>검색어</p>
+									<p>공개 여부</p>
 								</div>
 								<div className="mx-auto flex max-w-72 flex-col gap-4">
 									<div>{companyDetail.company_name}</div>
@@ -82,6 +83,7 @@ export default function CompanyDetailPage({
 											? companyDetail.search_terms.join(', ')
 											: '-'}
 									</div>
+									<div>{companyDetail.public ? '공개' : '비공개'}</div>
 								</div>
 							</div>
 							<div className="w-1/2">
@@ -106,7 +108,6 @@ export default function CompanyDetailPage({
 									<Button
 										variant="secondary"
 										onClick={() => {
-											// 수정 버튼 로직
 											alert('수정 버튼이 클릭되었습니다.');
 										}}
 									>
@@ -135,6 +136,13 @@ export default function CompanyDetailPage({
 							</div>
 						</CardContent>
 					</Card>
+				)}
+				{/* 모달 컴포넌트 */}
+				{isCompanyUpdateModalOpen && companyDetail && (
+					<UpdateCompanyModal
+						companyDetail={companyDetail} // companyDetail 전달
+						onClose={() => setIsCompanyUpdateModalOpen(false)} // 모달 닫기
+					/>
 				)}
 			</main>
 		</SidebarProvider>

@@ -21,8 +21,9 @@ export interface Company {
 	 company_logo: string;
 	 positions: Position[];
 	 search_terms: string[];
-
+   public: boolean;
 }
+
 export interface CompanyQuery {
     company_id:string;
     company_name: string;
