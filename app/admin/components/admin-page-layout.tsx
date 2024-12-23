@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-const ConditionalLayout = () => {
+const AdminPageLayout = () => {
     const pathname = usePathname();
     const mainClass = pathname.startsWith('/admin') ? '' : 'pt-16';
 
@@ -11,4 +11,4 @@ const ConditionalLayout = () => {
     );
 };
 
-export default ConditionalLayout;
+export default AdminPageLayout;
