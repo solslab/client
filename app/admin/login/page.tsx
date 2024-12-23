@@ -22,22 +22,36 @@ export default function LoginForm() {
 	const [error, setError] = useState('');
 	const router = useRouter();
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault(); // 기본 동작 방지
-		setError(''); // 기존 에러 초기화
+	 const handleSubmit = async (e: React.FormEvent) => {
+			e.preventDefault();
+			setError('');
 
-		const responseData = await loginAdmin(email, password);
+			try {
+				const responseData = await loginAdmin(email, password);
 
-		if (responseData.status === 200) {
-			// 로그인 성공
-			const token = responseData.data.accessToken;
-			localStorage.setItem('solslab-accessToken', token);
-			router.push('/admin');
-		} else {
-			// 로그인 실패
-			setError(responseData.message || '로그인에 실패했습니다.');
-		}
-	};
+				if (responseData.status === 200) {
+					const token = responseData.data.accessToken;
+					const cookieResponse = await fetch('/admin/api/login', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ token })
+					});
+
+					if (!cookieResponse.ok) {
+						throw new Error('쿠키 설정에 실패했습니다');
+					}
+
+					router.push('/admin');
+				} else {
+					setError(responseData.message || '로그인에 실패했습니다.');
+				}
+			} catch (err) {
+				setError('로그인 처리 중 오류가 발생했습니다.');
+				console.error('Login error:', err);
+			}
+		};
 
 	return (
 		<div
