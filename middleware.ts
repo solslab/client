@@ -7,112 +7,127 @@ import { getDateOneMonthLater } from './app/lib/utils';
 
 
 export default async function middleware(request: NextRequest) {
-    const requestUrl = request.nextUrl.href;
-    const pathName = request.nextUrl.pathname;
-    const token = await tokenTest();
-    const lastPathCookie = await getLastRoute();
-    const lastPath = lastPathCookie?.value || '/';
-    let response;
-    if (pathName.includes('suggestion')) {
-        if (token) {
-            response = NextResponse.next();
+	const requestUrl = request.nextUrl.href;
+	const pathName = request.nextUrl.pathname;
 
-            if (token.new_token) {
-                const clearToken = token.new_token.replace('Bearer ', '');
-                response.cookies.set("sols-accessToken", clearToken,{
-                    httpOnly: true,
-                    secure:true,
-                    expires:getDateOneMonthLater()
-                  });
-            }
-        }
-        else {
-            response = NextResponse.redirect(NEXT_URL + '/login');
-            response.cookies.delete("sols-accessToken")
-        }
-        return response;
-    }
-    else if (pathName.startsWith('/company')) {
-        if (token) {
-            if (token.new_token) {
-                response = NextResponse.next();
-                const clearToken = token.new_token.replace('Bearer ', '');
-                response.cookies.set("sols-accessToken", clearToken,{
-                    httpOnly: true,
-                    secure:true,
-                    expires:getDateOneMonthLater()
-                  });
-            }
-        }
-        else if (token == false) {
-            response = NextResponse.redirect(requestUrl);
-            response.cookies.delete("sols-accessToken")
-        }
-        return response;
-    }
-    else if (pathName.startsWith('/profiles')) {
+	let token;
+	if (pathName.startsWith('/admin')) {
+		token = await tokenTest('ADMIN');
+	} else token = await tokenTest('USER');
 
-        if (token) {
-            response = NextResponse.next();
+	const lastPathCookie = await getLastRoute();
+	const lastPath = lastPathCookie?.value || '/';
+	let response;
 
-            if (token.new_token) {
-                const clearToken = token.new_token.replace('Bearer ', '');
-                response.cookies.set("sols-accessToken", clearToken,{
-                    httpOnly: true,
-                    secure:true,
-                    expires:getDateOneMonthLater()
-                  });
-            }
-            if (pathName.startsWith('/profiles/additional')) {
-                    response = NextResponse.redirect((NEXT_URL + lastPath),{
-                        status: 308
-            })
-            }
+	// 관리자 경로 처리
+	if (pathName.startsWith('/admin')) {
+		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+			return NextResponse.next();
+		}
+		else if (token && token.role === 'ADMIN') {
+			response = NextResponse.next();
 
-        }
-        else {
-            response = NextResponse.redirect(NEXT_URL + '/login');
-            response.cookies.delete("sols-accessToken")
-        }
-        return response;
-    }
-    else if(pathName.startsWith('/login')) {
+			if (token.new_token) {
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('solslab-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/admin/login');
+			response.cookies.delete('solslab-accessToken');
+		}
 
-        if (token) {
-            response = NextResponse.redirect(NEXT_URL + lastPath);
-            return response
-        }
-        else {
-            response = NextResponse.next()
-            response.cookies.delete("sols-accessToken")
-        }
-        return response;
-    }
-    else{
-        if (token) {
-            response = NextResponse.next();
+		return response;
+	}
 
-            if (token.new_token) {
-                const clearToken = token.new_token.replace('Bearer ', '');
-                response.cookies.set("sols-accessToken", clearToken,{
-                    httpOnly: true,
-                    secure:true,
-                    expires:getDateOneMonthLater()
-                  });
-            }
-        }
-        else {
-            response = NextResponse.redirect(NEXT_URL + '/login');
-            response.cookies.delete("sols-accessToken")
-        }
-        return response;
-    }
+	if (pathName.includes('suggestion')) {
+		if (token) {
+			response = NextResponse.next();
 
+			if (token.new_token) {
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('sols-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/login');
+			response.cookies.delete('sols-accessToken');
+		}
+		return response;
+	} else if (pathName.startsWith('/company')) {
+		if (token) {
+			if (token.new_token) {
+				response = NextResponse.next();
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('sols-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+		} else if (token == false) {
+			response = NextResponse.redirect(requestUrl);
+			response.cookies.delete('sols-accessToken');
+		}
+		return response;
+	} else if (pathName.startsWith('/profiles')) {
+		if (token) {
+			response = NextResponse.next();
 
+			if (token.new_token) {
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('sols-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+			if (pathName.startsWith('/profiles/additional')) {
+				response = NextResponse.redirect(NEXT_URL + lastPath, {
+					status: 308
+				});
+			}
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/login');
+			response.cookies.delete('sols-accessToken');
+		}
+		return response;
+	} else if (pathName.startsWith('/login')) {
+		if (token) {
+			response = NextResponse.redirect(NEXT_URL + lastPath);
+			return response;
+		} else {
+			response = NextResponse.next();
+			response.cookies.delete('sols-accessToken');
+		}
+		return response;
+	} else {
+		if (token) {
+			response = NextResponse.next();
 
+			if (token.new_token) {
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('sols-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/login');
+			response.cookies.delete('sols-accessToken');
+		}
+		return response;
+	}
 }
 export const config = {
-    matcher: ['/company/:id*', '/profiles/:path*','/testReview','/login']
+    matcher: ['/admin/:path*', '/company/:id*', '/profiles/:path*','/testReview','/login']
 };
 
 
