@@ -182,3 +182,56 @@ export const updateCompany = async (companyId: string, companyData: any) => {
 		};
 	}
 };
+
+export const uploadCompanyLogo = async (companyId: string, logoFile: File) => {
+	try {
+		const token = await getAdminToken();
+
+		const formData = new FormData();
+		formData.append('file', logoFile);
+		formData.append('fileName', logoFile.name);
+
+		const response = await fetch(`${SPRING_URL}/company/${companyId}/logo`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			},
+			body: formData
+		});
+
+		if (response.status === 200) {
+			const responseData = await response.json();
+			return {
+				status: 200,
+				message: '로고 등록/변경이 완료되었습니다.',
+				data: responseData
+			};
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else if (response.status === 404) {
+			return {
+				status: 404,
+				message: '존재하지 않는 기업 ID입니다.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('로고 등록/변경 중 에러 발생:', error);
+		return {
+			status: 500,
+			message: '로고 등록/변경 중 알 수 없는 오류가 발생했습니다.'
+		};
+	}
+};
+

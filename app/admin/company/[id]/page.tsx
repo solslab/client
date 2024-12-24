@@ -10,7 +10,7 @@ import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import UpdateCompanyModal from '../../components/update-company';
-import { deleteCompany } from '@/app/lib/data-admin';
+import { deleteCompany, uploadCompanyLogo } from '@/app/lib/data-admin';
 import { useRouter } from 'next/navigation';
 import {
 	AlertDialog,
@@ -37,18 +37,19 @@ export default function CompanyDetailPage({
 	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 	const [alertMessage, setAlertMessage] = useState('');
 	const [isDeleted, setIsDeleted] = useState(false);
+	const [newLogoFile, setNewLogoFile] = useState<File | null>(null);
 
 	const companyId = params.id;
 	const router = useRouter();
-	
-    const fetchData = async () => {
+
+	const fetchData = async () => {
 		if (companyId) {
 			const companyData = await fetchCompanyDetail(companyId);
 			setCompanyDetail(companyData);
 		}
 	};
 	useEffect(() => {
-		 fetchData();
+		fetchData();
 	}, [companyId]);
 
 	const handleClose = () => {
@@ -57,25 +58,43 @@ export default function CompanyDetailPage({
 		} else if (isDeleted) {
 			router.push('/admin/company');
 		}
+		setAlertMessage('');
 	};
 
 	const handleDeleteCompany = async () => {
-			setAlertMessage('');
+		setAlertMessage('');
+		try {
+			const response = await deleteCompany(companyId);
+			if (response.status == 204) {
+				setAlertMessage(response.message);
+				setIsDeleted(true);
+			} else {
+				setAlertMessage(response.message);
+				if (response.status === 401) {
+					setRedirectLoginAfterClose(true);
+				}
+			}
+		} catch (error) {
+			setAlertMessage('기업 삭제 실패. 다시 시도해주세요.');
+		}
+	};
+
+	// 파일 선택 핸들러
+	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files) {
 			try {
-				const response = await deleteCompany(companyId);
-				if (response.status == 204) {
-					setAlertMessage(response.message);
-					setIsDeleted(true);
+				const response = await uploadCompanyLogo(companyId, event.target.files[0]);
+				if (response.status === 200) {
+					setAlertMessage('로고가 성공적으로 업데이트되었습니다.');
+					fetchData();
 				} else {
-					setAlertMessage(response.message);
-					if (response.status === 401) {
-						 setRedirectLoginAfterClose(true);
-					}
+					setAlertMessage(response.message || '로고 업로드 실패');
 				}
 			} catch (error) {
-				setAlertMessage('기업 삭제 실패. 다시 시도해주세요.');
+				setAlertMessage('로고 업로드 중 오류가 발생했습니다.');
 			}
-		};
+		}
+	};
 
 	return (
 		<SidebarProvider>
@@ -150,11 +169,20 @@ export default function CompanyDetailPage({
 									<Button
 										variant="secondary"
 										onClick={() => {
-											alert('수정 버튼이 클릭되었습니다.');
+											document.getElementById('logo-upload')?.click();
 										}}
 									>
-										수정
+										{companyDetail.company_logo ? '수정' : '사진 등록'}
 									</Button>
+
+									{/* 파일 input 숨기기 */}
+									<input
+										id="logo-upload"
+										type="file"
+										accept="image/*"
+										className="hidden"
+										onChange={handleFileChange}
+									/>
 								</div>
 							</div>
 						</CardContent>
@@ -185,7 +213,7 @@ export default function CompanyDetailPage({
 						companyDetail={companyDetail}
 						onClose={() => setIsCompanyUpdateModalOpen(false)}
 						onSuccess={() => {
-							fetchData(); // 'fetchData' 이름을 찾을 수 없습니다.ts(2304)
+							fetchData();
 							setIsCompanyUpdateModalOpen(false);
 						}}
 					/>
