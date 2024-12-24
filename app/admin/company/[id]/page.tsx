@@ -79,7 +79,7 @@ export default function CompanyDetailPage({
 											: '-'}
 									</div>
 									<div>
-										{companyDetail.search_terms.length > 0
+										{companyDetail.search_terms.length == 1 && companyDetail.search_terms[0] == '[""]'
 											? companyDetail.search_terms.join(', ')
 											: '-'}
 									</div>

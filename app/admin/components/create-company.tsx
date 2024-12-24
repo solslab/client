@@ -9,6 +9,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
+import { createCompany } from '@/app/lib/data-admin';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { useRouter } from 'next/navigation';
+import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -29,23 +41,50 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 	const [selectedIndustryTypes, setSelectedIndustryTypes] = useState<IndustryType[]>([]);
 	const [searchTerms, setSearchTerms] = useState('');
 	const [isPublic, setIsPublic] = useState<boolean>(true);
+	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
+	const [alertMessage, setAlertMessage] = useState('');
+	const [companyId, setCompanyId] = useState<string | null>(null);
 
-	const handleSave = () => {
-		console.log('기업명:', companyName);
-		console.log('산업분야:', selectedIndustryTypes);
-		console.log('검색어:', searchTerms);
-		console.log('공개여부: ', isPublic);
-		onClose();
+	const router = useRouter();
+
+	const handleClose = () => {
+    if (redirectLoginAfterClose) {
+		router.push('/admin/login');
+	} else if (companyId) {
+		router.push(`/admin/company/${companyId}`); // companyId를 이용한 라우팅
+	}
+  }
+
+	const handleSave = async () => {
+		setAlertMessage('');
+		try {
+			const companyData = {
+				company_name: companyName,
+				industry_type: selectedIndustryTypes,
+				search_terms: searchTerms.split(',').map((term) => term.trim()),
+				is_public: isPublic
+			};
+			const response = await createCompany(companyData);
+			if (response.company_id) {
+				setAlertMessage('기업 생성이 완료되었습니다.');
+				setCompanyId(response.company_id);
+			} else {
+				setAlertMessage(response.message);
+				if (response.status === 401) {
+					 setRedirectLoginAfterClose(true);
+				}
+			}
+		} catch (error) {
+			setAlertMessage('기업 생성 실패. 다시 시도해주세요.');
+		}
 	};
 
-	// 산업 타입 선택 및 해제
 	const handleIndustryTypeSelect = (type: IndustryType) => {
 		setSelectedIndustryTypes((prev) =>
 			prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]
 		);
 	};
 
-	// 검색어 입력값 변경 함수
 	const handleSearchTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerms(e.target.value);
 	};
@@ -141,6 +180,32 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 					</Button>
 				</DialogFooter>
 			</DialogContent>
+			{alertMessage && (
+				<AlertDialog
+					defaultOpen
+					onOpenChange={(open) => {
+						if (!open) {
+							handleClose();
+						}
+					}}
+				>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle></AlertDialogTitle>
+							<AlertDialogDescription>{alertMessage}</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel
+								onClick={() => {
+									handleClose();
+								}}
+							>
+								Close
+							</AlertDialogCancel>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			)}
 		</Dialog>
 	);
 }

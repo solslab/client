@@ -39,6 +39,10 @@ export async function deleteToken() {
     cookies().delete('sols-accessToken')
 }
 
+export async function deleteAdminToken() {
+	cookies().delete('solslab-accessToken');
+}
+
 export async function redirectToPrev() {
 
     const pathCookie = await getLastRoute();
