@@ -40,16 +40,15 @@ export default function CompanyDetailPage({
 
 	const companyId = params.id;
 	const router = useRouter();
-
+	
+    const fetchData = async () => {
+		if (companyId) {
+			const companyData = await fetchCompanyDetail(companyId);
+			setCompanyDetail(companyData);
+		}
+	};
 	useEffect(() => {
-		const fetchData = async () => {
-			if (companyId) {
-				const companyData = await fetchCompanyDetail(companyId);
-				setCompanyDetail(companyData);
-			}
-		};
-
-		fetchData();
+		 fetchData();
 	}, [companyId]);
 
 	const handleClose = () => {
@@ -123,10 +122,9 @@ export default function CompanyDetailPage({
 											: '-'}
 									</div>
 									<div>
-										{companyDetail.search_terms.length == 1 &&
-										companyDetail.search_terms[0] == '[""]'
-											? companyDetail.search_terms.join(', ')
-											: '-'}
+										{companyDetail.search_terms.length == 1 && companyDetail.search_terms[0] === ''
+											? '-'
+											: companyDetail.search_terms.join(', ')}
 									</div>
 									<div>{companyDetail.public ? '공개' : '비공개'}</div>
 								</div>
@@ -181,11 +179,15 @@ export default function CompanyDetailPage({
 						</CardContent>
 					</Card>
 				)}
-				{/* 모달 컴포넌트 */}
 				{isCompanyUpdateModalOpen && companyDetail && (
 					<UpdateCompanyModal
-						companyDetail={companyDetail} // companyDetail 전달
-						onClose={() => setIsCompanyUpdateModalOpen(false)} // 모달 닫기
+						companyId={companyId}
+						companyDetail={companyDetail}
+						onClose={() => setIsCompanyUpdateModalOpen(false)}
+						onSuccess={() => {
+							fetchData(); // 'fetchData' 이름을 찾을 수 없습니다.ts(2304)
+							setIsCompanyUpdateModalOpen(false);
+						}}
 					/>
 				)}
 				{isDeleteConfirmOpen && (

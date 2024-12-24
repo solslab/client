@@ -10,6 +10,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Company } from '@/app/lib/definitions';
+import { updateCompany } from '@/app/lib/data-admin';
+import {
+	AlertDialog,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle
+} from '@/components/ui/alert-dialog';
+import { useRouter } from 'next/navigation';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -27,34 +38,61 @@ type IndustryType =
 
 
 type UpdateCompanyModalProps = {
-	companyDetail: Company; // companyDetail 타입 정의
+	companyId: string;
+	companyDetail: Company;
 	onClose: () => void;
+	onSuccess?: () => void;
 };
 
-export default function UpdateCompanyModal({ companyDetail, onClose }: UpdateCompanyModalProps) {
+export default function UpdateCompanyModal({ companyId, companyDetail, onClose, onSuccess }: UpdateCompanyModalProps) {
 	const [companyName, setCompanyName] = useState(companyDetail.company_name);
 	const [selectedIndustryTypes, setSelectedIndustryTypes] = useState<string[]>(
 		companyDetail.industry_type
 	);
+	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
+	const [alertMessage, setAlertMessage] = useState('');
 	const [searchTerms, setSearchTerms] = useState(companyDetail.search_terms.join(', '));
 	const [isPublic, setIsPublic] = useState<boolean>(companyDetail.public);
 
-	const handleSave = () => {
-		console.log('기업명:', companyName);
-		console.log('산업분야:', selectedIndustryTypes);
-		console.log('검색어:', searchTerms);
-		console.log('공개여부: ', isPublic);
-		onClose();
+	const router = useRouter();
+
+	const handleClose = () => {
+		if (redirectLoginAfterClose) {
+			router.push('/admin/login');
+		} else if (alertMessage === '기업 수정이 완료되었습니다.') {
+			onSuccess?.();
+		}
+	}
+
+	const handleSave = async () => {
+		setAlertMessage('');
+		try {
+			const companyData = {
+				company_name: companyName,
+				industry_type: selectedIndustryTypes,
+				search_terms: searchTerms.split(',').map((term) => term.trim()),
+				is_public: isPublic
+			};
+			const response = await updateCompany(companyId, companyData);
+			if (response.status === 200) {
+				setAlertMessage('기업 수정이 완료되었습니다.');
+			} else {
+				setAlertMessage(response.message);
+				if (response.status === 401) {
+					 setRedirectLoginAfterClose(true);
+				}
+			}
+		} catch (error) {
+			setAlertMessage('기업 수정 실패. 다시 시도해주세요.');
+		}
 	};
 
-	// 산업 타입 선택 및 해제
 	const handleIndustryTypeSelect = (type: IndustryType) => {
 		setSelectedIndustryTypes((prev) =>
 			prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]
 		);
 	};
 
-	// 검색어 입력값 변경 함수
 	const handleSearchTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerms(e.target.value);
 	};
@@ -150,6 +188,32 @@ export default function UpdateCompanyModal({ companyDetail, onClose }: UpdateCom
 					</Button>
 				</DialogFooter>
 			</DialogContent>
+			{alertMessage && (
+				<AlertDialog
+					defaultOpen
+					onOpenChange={(open) => {
+						if (!open) {
+							handleClose();
+						}
+					}}
+				>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle></AlertDialogTitle>
+							<AlertDialogDescription>{alertMessage}</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel
+								onClick={() => {
+									handleClose();
+								}}
+							>
+								Close
+							</AlertDialogCancel>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			)}
 		</Dialog>
 	);
 }

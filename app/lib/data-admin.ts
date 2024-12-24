@@ -119,8 +119,54 @@ export const deleteCompany = async (companyId: string) => {
 				deleteAdminToken();
 			}
 			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message
+			};
+		}
+	} catch (error) {
+		return {
+			status: 500,
+			message: '기업 생성 중 에러 발생: ' + (error instanceof Error ? error.message : String(error))
+		};
+	}
+};
+
+export const updateCompany = async (companyId: string, companyData: any) => {
+	try {
+		const token = await getAdminToken();
+
+		const response = await fetch(`${SPRING_URL}/company/${companyId}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token?.value}`
+			},
+			body: JSON.stringify(companyData)
+		});
+
+		if (response.status === 200) {
+			return {
+				status: 200,
+				message: '기업 수정이 완료되었습니다.'
+			};
+		} else if (response.status === 404) {
+			return {
 				status: 404,
 				message: '존재하지 않는 기업 ID 입니다.'
+			};
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
 			};
 		} else {
 			const errorData = await response.json();
