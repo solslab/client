@@ -235,3 +235,47 @@ export const uploadCompanyLogo = async (companyId: string, logoFile: File) => {
 	}
 };
 
+export const deleteCompanyLogo = async (companyId: string) => {
+	try {
+		const token = await getAdminToken();
+
+		const response = await fetch(`${SPRING_URL}/company/${companyId}/logo`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+
+		if (response.status === 204) {
+			return {
+				status: 204,
+				message: '로고 삭제가 완료되었습니다.'
+			};
+		} else if (response.status === 404) {
+			return {
+				status: 404,
+				message: '존재하지 않는 기업 ID입니다.'
+			};
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('로고 삭제 중 오류 발생:', error);
+		return {
+			status: 500,
+			message: '로고 삭제 중 알 수 없는 오류가 발생했습니다.'
+		};
+	}
+};

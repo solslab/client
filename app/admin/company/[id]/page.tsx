@@ -10,7 +10,7 @@ import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import UpdateCompanyModal from '../../components/update-company';
-import { deleteCompany, uploadCompanyLogo } from '@/app/lib/data-admin';
+import { deleteCompany, uploadCompanyLogo, deleteCompanyLogo } from '@/app/lib/data-admin';
 import { useRouter } from 'next/navigation';
 import {
 	AlertDialog,
@@ -79,7 +79,7 @@ export default function CompanyDetailPage({
 		}
 	};
 
-	// 파일 선택 핸들러
+
 	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			try {
@@ -93,6 +93,24 @@ export default function CompanyDetailPage({
 			} catch (error) {
 				setAlertMessage('로고 업로드 중 오류가 발생했습니다.');
 			}
+		}
+	};
+
+	const handleDeleteLogo = async () => {
+		setAlertMessage('');
+		try {
+			const response = await deleteCompanyLogo(companyId);
+			if (response.status === 204) {
+				setAlertMessage('로고 삭제가 완료되었습니다.');
+				fetchData();
+			} else {
+				setAlertMessage(response.message);
+				if (response.status === 401) {
+					setRedirectLoginAfterClose(true);
+				}
+			}
+		} catch (error) {
+			setAlertMessage('로고 삭제 실패. 다시 시도해주세요.');
 		}
 	};
 
@@ -159,7 +177,7 @@ export default function CompanyDetailPage({
 										<Button
 											variant="outline"
 											onClick={() => {
-												alert('삭제 버튼이 클릭되었습니다.');
+												handleDeleteLogo();
 											}}
 										>
 											삭제
