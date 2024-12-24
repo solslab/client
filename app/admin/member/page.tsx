@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
 import {
 	Table,
 	TableBody,
@@ -41,7 +41,7 @@ const datas = [
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<SidebarProvider>
-			<AppSidebar />
+			<AdminSidebar />
 			<main className="w-full">
 				<SidebarTrigger />
 				{children}

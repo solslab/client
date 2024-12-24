@@ -181,10 +181,10 @@ export default function UpdateCompanyModal({ companyId, companyDetail, onClose, 
 				</div>
 				<DialogFooter>
 					<Button variant="outline" onClick={onClose}>
-						Cancel
+						취소
 					</Button>
 					<Button type="button" onClick={handleSave} disabled={!companyName}>
-						Save
+						저장
 					</Button>
 				</DialogFooter>
 			</DialogContent>
@@ -208,7 +208,7 @@ export default function UpdateCompanyModal({ companyId, companyDetail, onClose, 
 									handleClose();
 								}}
 							>
-								Close
+								확인
 							</AlertDialogCancel>
 						</AlertDialogFooter>
 					</AlertDialogContent>

@@ -172,10 +172,10 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 				</div>
 				<DialogFooter>
 					<Button variant="outline" onClick={onClose}>
-						Cancel
+						취소
 					</Button>
 					<Button type="button" onClick={handleSave} disabled={!companyName}>
-						Save
+						저장
 					</Button>
 				</DialogFooter>
 			</DialogContent>
@@ -199,7 +199,7 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 									handleClose();
 								}}
 							>
-								Close
+								확인
 							</AlertDialogCancel>
 						</AlertDialogFooter>
 					</AlertDialogContent>

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/pagination';
 
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 	return (
 		<SidebarProvider>
-			<AppSidebar />
+			<AdminSidebar />
 			<main className="mx-auto w-full">
 				<SidebarTrigger />
 				{children}

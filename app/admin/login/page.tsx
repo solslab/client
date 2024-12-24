@@ -99,7 +99,7 @@ export default function LoginForm() {
 							<AlertDialogDescription>{error}</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
-							<AlertDialogAction onClick={() => setError('')}>Close</AlertDialogAction>
+							<AlertDialogAction onClick={() => setError('')}>확인</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>
 				</AlertDialog>

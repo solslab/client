@@ -3,7 +3,7 @@
 
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { FileEdit, LucideTrash } from 'lucide-react';
-import { AppSidebar } from '@/components/app-sidebar';
+import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { fetchCompanyDetail } from '@/app/lib/data';
@@ -116,7 +116,7 @@ export default function CompanyDetailPage({
 
 	return (
 		<SidebarProvider>
-			<AppSidebar />
+			<AdminSidebar />
 			<main className="w-full">
 				<SidebarTrigger />
 				{children}
@@ -205,15 +205,17 @@ export default function CompanyDetailPage({
 							</div>
 						</CardContent>
 						<CardContent className="mt-16 flex w-full flex-col">
-							<CardTitle className="p-4">코딩테스트 정보 목록</CardTitle>
+							<CardTitle className="p-4">
+								코딩테스트 정보 목록  ({companyDetail.positions.length})
+							</CardTitle>
 							<div className="flex w-full flex-col gap-2 p-4">
-								<Button className="mb-2 w-full" variant="outline">
+								<Button className="mb-2 w-full p-5" variant="outline">
 									새로 추가하기
 								</Button>
 								{companyDetail.positions.map((position, index) => (
 									<Button
 										key={index}
-										className="mb-2 w-full"
+										className="mb-2 w-full p-5"
 										onClick={() => {
 											alert(`Position clicked: ${position.position_name}`);
 										}}
@@ -259,10 +261,10 @@ export default function CompanyDetailPage({
 										setIsDeleteConfirmOpen(false);
 									}}
 								>
-									Delete
+									삭제
 								</AlertDialogAction>
 								<AlertDialogCancel onClick={() => setIsDeleteConfirmOpen(false)}>
-									Close
+									취소
 								</AlertDialogCancel>
 							</AlertDialogFooter>
 						</AlertDialogContent>
@@ -288,7 +290,7 @@ export default function CompanyDetailPage({
 										handleClose();
 									}}
 								>
-									Close
+									확인
 								</AlertDialogCancel>
 							</AlertDialogFooter>
 						</AlertDialogContent>
