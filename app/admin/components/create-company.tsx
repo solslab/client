@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { createCompany } from '@/app/lib/data-admin';
 import {
 	AlertDialog,
-	AlertDialogAction,
+	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
 	AlertDialogFooter,
@@ -20,7 +20,6 @@ import {
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
-import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -48,12 +47,12 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 	const router = useRouter();
 
 	const handleClose = () => {
-    if (redirectLoginAfterClose) {
-		router.push('/admin/login');
-	} else if (companyId) {
-		router.push(`/admin/company/${companyId}`); // companyId를 이용한 라우팅
-	}
-  }
+    	if (redirectLoginAfterClose) {
+			router.push('/admin/login');
+		} else if (companyId) {
+			router.push(`/admin/company/${companyId}`); // companyId를 이용한 라우팅
+		}
+  	}
 
 	const handleSave = async () => {
 		setAlertMessage('');

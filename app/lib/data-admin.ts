@@ -92,3 +92,47 @@ export const createCompany = async (companyData: any) => {
 		console.error('기업 생성 중 에러 발생:', error);
 	}
 };
+
+export const deleteCompany = async (companyId: string) => {
+	try {
+		const token = await getAdminToken();
+
+		const response = await fetch(`${SPRING_URL}/company/${companyId}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+
+		if (response.status === 204) {
+			return {
+				status: 204,
+				message: '기업 삭제가 완료되었습니다.'
+			};
+		} else if (response.status === 404) {
+			return {
+				status: 404,
+				message: '존재하지 않는 기업 ID 입니다.'
+			};
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 404,
+				message: '존재하지 않는 기업 ID 입니다.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message
+			};
+		}
+	} catch (error) {
+		return {
+			status: 500, // 상태 코드 500을 사용하는 것이 더 명확합니다.
+			message: '기업 생성 중 에러 발생: ' + (error instanceof Error ? error.message : String(error))
+		};
+	}
+};

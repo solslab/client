@@ -10,6 +10,19 @@ import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import UpdateCompanyModal from '../../components/update-company';
+import { deleteCompany } from '@/app/lib/data-admin';
+import { useRouter } from 'next/navigation';
+import {
+	AlertDialog,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogAction
+} from '@/components/ui/alert-dialog';
+
 
 export default function CompanyDetailPage({
 	children,
@@ -20,8 +33,13 @@ export default function CompanyDetailPage({
 }) {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
 	const [isCompanyUpdateModalOpen, setIsCompanyUpdateModalOpen] = useState(false);
+	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
+	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+	const [alertMessage, setAlertMessage] = useState('');
+	const [isDeleted, setIsDeleted] = useState(false);
 
 	const companyId = params.id;
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -33,6 +51,32 @@ export default function CompanyDetailPage({
 
 		fetchData();
 	}, [companyId]);
+
+	const handleClose = () => {
+		if (redirectLoginAfterClose) {
+			router.push('/admin/login');
+		} else if (isDeleted) {
+			router.push('/admin/company');
+		}
+	};
+
+	const handleDeleteCompany = async () => {
+			setAlertMessage('');
+			try {
+				const response = await deleteCompany(companyId);
+				if (response.status == 204) {
+					setAlertMessage(response.message);
+					setIsDeleted(true);
+				} else {
+					setAlertMessage(response.message);
+					if (response.status === 401) {
+						 setRedirectLoginAfterClose(true);
+					}
+				}
+			} catch (error) {
+				setAlertMessage('기업 삭제 실패. 다시 시도해주세요.');
+			}
+		};
 
 	return (
 		<SidebarProvider>
@@ -55,7 +99,7 @@ export default function CompanyDetailPage({
 									variant="ghost"
 									size="sm"
 									onClick={() => {
-										alert('삭제 버튼 클릭');
+										setIsDeleteConfirmOpen(true);
 									}}
 								>
 									<LucideTrash size={16} />
@@ -79,7 +123,8 @@ export default function CompanyDetailPage({
 											: '-'}
 									</div>
 									<div>
-										{companyDetail.search_terms.length == 1 && companyDetail.search_terms[0] == '[""]'
+										{companyDetail.search_terms.length == 1 &&
+										companyDetail.search_terms[0] == '[""]'
 											? companyDetail.search_terms.join(', ')
 											: '-'}
 									</div>
@@ -97,7 +142,6 @@ export default function CompanyDetailPage({
 										<Button
 											variant="outline"
 											onClick={() => {
-												// 삭제 버튼 로직
 												alert('삭제 버튼이 클릭되었습니다.');
 											}}
 										>
@@ -143,6 +187,64 @@ export default function CompanyDetailPage({
 						companyDetail={companyDetail} // companyDetail 전달
 						onClose={() => setIsCompanyUpdateModalOpen(false)} // 모달 닫기
 					/>
+				)}
+				{isDeleteConfirmOpen && (
+					<AlertDialog
+						defaultOpen
+						onOpenChange={(open) => {
+							if (!open) {
+								setIsDeleteConfirmOpen(false);
+							}
+						}}
+					>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>기업 삭제</AlertDialogTitle>
+								<AlertDialogDescription>
+									정말로 삭제하시겠습니까? 복구할 수 없습니다.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogAction
+									onClick={() => {
+										handleDeleteCompany();
+										setIsDeleteConfirmOpen(false);
+									}}
+								>
+									Delete
+								</AlertDialogAction>
+								<AlertDialogCancel onClick={() => setIsDeleteConfirmOpen(false)}>
+									Close
+								</AlertDialogCancel>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				)}
+				{alertMessage && (
+					<AlertDialog
+						defaultOpen
+						onOpenChange={(open) => {
+							if (!open) {
+								handleClose();
+							}
+						}}
+					>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle></AlertDialogTitle>
+								<AlertDialogDescription>{alertMessage}</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel
+									onClick={() => {
+										handleClose();
+									}}
+								>
+									Close
+								</AlertDialogCancel>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				)}
 			</main>
 		</SidebarProvider>
