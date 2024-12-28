@@ -15,11 +15,11 @@ import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
-import { fetchCompanyData, fetchFilteredCompanys } from '@/app/lib/data';
+import { getAllPrivateCompanyData, searchPrivateCompanies } from '@/app/lib/data-admin';
 import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';
-import CreateCompanyModal from '../components/create-company';
+import CreateCompanyModal from '../../components/create-company';
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetchCompanyData(currentPage, 10);
+			const data = await getAllPrivateCompanyData(currentPage, 10);
 			setCompanies(data);
 		};
 
@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		const handler = setTimeout(async () => {
 			if (searchQuery) {
-				const filteredData = await fetchFilteredCompanys(searchQuery);
+				const filteredData = await searchPrivateCompanies(searchQuery);
 				setSearchResults(filteredData || []);
 				setCurrentPage(1);
 			} else {
@@ -64,7 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					<div className="mb-4 flex items-center justify-between px-6">
 						{/* B: 목록의 총 개수를 표시하는 텍스트 */}
 						<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
-							공개 기업 목록 ({companies?.total_elements || 0})
+							비공개 기업 목록 ({companies?.total_elements || 0})
 						</span>
 
 						{/* A: 검색 입력 + 기업 추가 버튼 */}
@@ -93,7 +93,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 									variant="outline"
 									className="mx-auto my-2 flex h-16 w-10/12 justify-start"
 									key={company.company_id}
-									onClick={() => router.push(`company/${company.company_id}`)}
+									onClick={() => router.push(`${company.company_id}`)}
 								>
 									<img
 										src={company.company_logo || '/companyLogo/default_company_logo.png'}
@@ -108,7 +108,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 									variant="outline"
 									className="mx-auto my-2 flex h-16 w-10/12 justify-start"
 									key={company.company_id}
-									onClick={() => router.push(`company/${company.company_id}`)}
+									onClick={() => router.push(`${company.company_id}`)}
 								>
 									<img
 										src={company.company_logo || '/companyLogo/default_company_logo.png'}

@@ -56,7 +56,12 @@ export default function CompanyDetailPage({
 		if (redirectLoginAfterClose) {
 			router.push('/admin/login');
 		} else if (isDeleted) {
-			router.push('/admin/company');
+			if (companyDetail?.public) {
+				router.push('/admin/company');
+			}
+			else if (!companyDetail?.public){
+				router.push('/admin/company/private');
+			}
 		}
 		setAlertMessage('');
 	};

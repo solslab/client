@@ -46,7 +46,7 @@ export function AdminSidebar() {
 								</SidebarMenuSubItem>
 								<SidebarMenuSubItem>
 									<SidebarMenuSubButton asChild>
-										<a href="/admin/private-company">
+										<a href="/admin/company/private">
 											<span>비공개 기업 관리</span>
 										</a>
 									</SidebarMenuSubButton>

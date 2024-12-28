@@ -279,3 +279,52 @@ export const deleteCompanyLogo = async (companyId: string) => {
 		};
 	}
 };
+
+export const getAllPrivateCompanyData = async (
+	page: number,
+	size: number
+): Promise<CompanyPageResponse | undefined> => {
+	try {
+		const token = await getAdminToken();
+		const response = await fetch(`${SPRING_URL}/company/private?page=${page}&size=${size}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+			// next: {
+			// 	revalidate: 60 * 60 * 3,
+			// }
+		});
+
+		if (!response.ok) {
+			throw new Error(`오류 발생: ${response.status}`);
+		}
+
+		const data: CompanyPageResponse = await response.json();
+		return data;
+	} catch (error) {
+		console.error('fetchCompanyData중 오류 발생:', error);
+		return undefined;
+	}
+};
+
+export const searchPrivateCompanies = async (query: string) => {
+	try {
+		const token = await getAdminToken();
+		const response = await fetch(`${SPRING_URL}/company/search-private?q=${query}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+
+		if (!response.ok) {
+			throw new Error(`오류 발생: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('fetchFilteredCompanys중 오류 발생:', error);
+	}
+};

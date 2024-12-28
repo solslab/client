@@ -1,6 +1,6 @@
 'use client'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 	return (
 		<SidebarProvider>
-			<AppSidebar />
+			<AdminSidebar />
 			<main>
 				<SidebarTrigger />
 				{children}
