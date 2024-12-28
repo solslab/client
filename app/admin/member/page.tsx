@@ -1,70 +1,178 @@
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
+'use client'
+
+import { useEffect, useState } from 'react';
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
-	TableFooter,
 	TableHead,
 	TableHeader,
 	TableRow
 } from '@/components/ui/table';
-
-const datas = [
-	{
-		name: '한규정',
-		email: 'resres@sfdsaf.com',
-		social_type: 'KAKAO',
-		created_date: '2024-09-19'
-	},
-	{
-		name: '이승주',
-		email: 'lee@example.com',
-		social_type: 'Google',
-		created_date: '2024-10-10'
-	},
-	{
-		name: '김민태',
-		email: 'min@example.com',
-		social_type: 'Facebook',
-		created_date: '2024-08-15'
-	},
-	{
-		name: '황수민',
-		email: 'sumin@example.com',
-		social_type: 'KAKAO',
-		created_date: '2024-07-05'
-	}
-];
+import {
+	Pagination,
+	PaginationItem,
+	PaginationContent,
+	PaginationNext,
+	PaginationPrevious,
+	PaginationEllipsis,
+	PaginationLink
+} from '@/components/ui/pagination';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AdminSidebar } from '@/app/admin/components/admin-sidebar';
+import { getAllMembers } from '@/app/lib/data-admin';
+import { AllMemberPage } from '@/app/lib/definitions';
+import MemberDetailModal from '@/app/admin/components/member-detail';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+	const [members, setMembers] = useState<AllMemberPage['members']>([]);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(0);
+	const [totalElements, setTotalElements] = useState(0);
+	const [selectedMemberKey, setSelectedMemberKey] = useState<string | null>(null);
+
+	useEffect(() => {
+		// 데이터 로드
+		const fetchMembers = async () => {
+			const response = await getAllMembers(currentPage, 20);
+			if (response) {
+				setMembers(response.members);
+				setTotalPages(response.total_pages);
+				setTotalElements(response.total_elements);
+			}
+		};
+
+		fetchMembers();
+	}, [currentPage]);
+
+	const handleRowClick = (memberKey: string) => {
+		setSelectedMemberKey(memberKey);
+	};
+
+	const handleCloseModal = () => {
+		setSelectedMemberKey(null);
+	};
+
 	return (
 		<SidebarProvider>
 			<AdminSidebar />
-			<main className="w-full">
+			<main className="mx-auto w-full">
 				<SidebarTrigger />
 				{children}
-				<Table className="mx-auto w-3/4">
-					<TableHeader>
-						<TableRow>
-							<TableHead>이름</TableHead>
-							<TableHead>이메일</TableHead>
-							<TableHead>가입 방식</TableHead>
-							<TableHead>가입날짜</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{datas.map((data) => (
-							<TableRow key={data.email}>
-								<TableCell className="font-medium">{data.name}</TableCell>
-								<TableCell>{data.email}</TableCell>
-								<TableCell>{data.social_type}</TableCell>
-								<TableCell>{data.created_date}</TableCell>
+				{selectedMemberKey && (
+					<MemberDetailModal memberKey={selectedMemberKey} onClose={handleCloseModal} />
+				)}
+				<div className="container mx-auto">
+					<div className="mb-4 flex h-10 items-center px-6">
+						<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
+							회원 목록 ({totalElements})
+						</span>
+					</div>
+					<Table className="mx-auto w-10/12 border">
+						<TableHeader>
+							<TableRow>
+								<TableHead>이름</TableHead>
+								<TableHead>이메일</TableHead>
+								<TableHead>가입 방식</TableHead>
+								<TableHead>가입날짜</TableHead>
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+						</TableHeader>
+						<TableBody>
+							{members.map((member) => (
+								<TableRow
+									key={member.member_key}
+									onClick={() => handleRowClick(member.member_key)}
+									className="cursor-pointer hover:bg-gray-100"
+								>
+									<TableCell className="font-medium">{member.name}</TableCell>
+									<TableCell>{member.email}</TableCell>
+									<TableCell>{member.social_type}</TableCell>
+									<TableCell>{member.created_date}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+					<Pagination className="mt-4">
+						<PaginationContent>
+							<PaginationItem>
+								<PaginationPrevious
+									href="#"
+									onClick={() => setCurrentPage(currentPage - 1)}
+									className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+								/>
+							</PaginationItem>
+							{(() => {
+								const range = 2;
+								const pages = [];
+
+								if (1 < currentPage - range) {
+									pages.push(
+										<PaginationItem key={1}>
+											<PaginationLink
+												href="#"
+												isActive={currentPage === 1}
+												onClick={() => setCurrentPage(1)}
+											>
+												1
+											</PaginationLink>
+										</PaginationItem>
+									);
+									pages.push(
+										<PaginationItem key="ellipsis-start">
+											<PaginationEllipsis />
+										</PaginationItem>
+									);
+								}
+
+								for (
+									let page = Math.max(1, currentPage - range);
+									page <= Math.min(totalPages, currentPage + range);
+									page++
+								) {
+									pages.push(
+										<PaginationItem key={page}>
+											<PaginationLink
+												href="#"
+												isActive={currentPage === page}
+												onClick={() => setCurrentPage(page)}
+											>
+												{page}
+											</PaginationLink>
+										</PaginationItem>
+									);
+								}
+
+								if (totalPages > currentPage + range) {
+									pages.push(
+										<PaginationItem key="ellipsis-end">
+											<PaginationEllipsis />
+										</PaginationItem>
+									);
+									pages.push(
+										<PaginationItem key={totalPages}>
+											<PaginationLink
+												href="#"
+												isActive={currentPage === totalPages}
+												onClick={() => setCurrentPage(totalPages)}
+											>
+												{totalPages}
+											</PaginationLink>
+										</PaginationItem>
+									);
+								}
+
+								return pages;
+							})()}
+							<PaginationItem>
+								<PaginationNext
+									href="#"
+									onClick={() => setCurrentPage(currentPage + 1)}
+									className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+								/>
+							</PaginationItem>
+						</PaginationContent>
+					</Pagination>
+				</div>
 			</main>
 		</SidebarProvider>
 	);

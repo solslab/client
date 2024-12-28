@@ -37,7 +37,6 @@ export default function CompanyDetailPage({
 	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 	const [alertMessage, setAlertMessage] = useState('');
 	const [isDeleted, setIsDeleted] = useState(false);
-	const [newLogoFile, setNewLogoFile] = useState<File | null>(null);
 
 	const companyId = params.id;
 	const router = useRouter();
