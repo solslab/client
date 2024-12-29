@@ -19,7 +19,12 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
-	const host = request.headers.get('host');
+	const { hostname } = request.nextUrl;
+
+	if (hostname.startsWith('admin.')) {
+		// 'admin.' 서브도메인에서 /admin 경로로 라우팅
+		request.nextUrl.pathname = '/admin' + request.nextUrl.pathname;
+	}
 
 	if (pathName.startsWith('/admin')) {
 		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
