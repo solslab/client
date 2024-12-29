@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { tokenTest } from './app/lib/auth';
 import { infoCheck } from './app/lib/actions';
 import { getLastRoute } from './app/lib/cookie';
-import { NEXT_URL } from './app/lib/constants';
+import { ADMIN_URL, NEXT_URL } from './app/lib/constants';
 import { getDateOneMonthLater } from './app/lib/utils';
 
 
@@ -19,28 +19,52 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
-	// 관리자 경로 처리
-	if (pathName.startsWith('/admin')) {
-		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+	const host = request.headers.get('host');
+
+	if (host === 'admin.sols.kr') {
+		// 프로덕션 환경 관리자 인가처리
+		if (pathName === '/login' || pathName === '/api/admin') {
 			return NextResponse.next();
 		}
 		else if (token && token.role === 'ADMIN') {
 			response = NextResponse.next();
-
 			if (token.new_token) {
-				const clearToken = token.new_token.replace('Bearer ', '');
-				response.cookies.set('solslab-accessToken', clearToken, {
-					httpOnly: true,
-					secure: true,
-					expires: getDateOneMonthLater()
-				});
+					const clearToken = token.new_token.replace('Bearer ', '');
+					response.cookies.set('solslab-accessToken', clearToken, {
+						httpOnly: true,
+						secure: true,
+						expires: getDateOneMonthLater()
+					});
 			}
-		} else {
-			response = NextResponse.redirect(NEXT_URL + '/admin/login');
-			response.cookies.delete('solslab-accessToken');
+			else {
+				response = NextResponse.redirect(ADMIN_URL + '/login');
+				response.cookies.delete('solslab-accessToken');
+			}
+			return response;
 		}
+	} else {
+		// 개발환경 관리자 인가처리
+		if (pathName.startsWith('/admin')) {
+			if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+				return NextResponse.next();
+			} else if (token && token.role === 'ADMIN') {
+				response = NextResponse.next();
 
-		return response;
+				if (token.new_token) {
+					const clearToken = token.new_token.replace('Bearer ', '');
+					response.cookies.set('solslab-accessToken', clearToken, {
+						httpOnly: true,
+						secure: true,
+						expires: getDateOneMonthLater()
+					});
+				}
+			} else {
+				response = NextResponse.redirect(NEXT_URL + '/admin/login');
+				response.cookies.delete('solslab-accessToken');
+			}
+
+			return response;
+		}
 	}
 
 	if (pathName.includes('suggestion')) {
