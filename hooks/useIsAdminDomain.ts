@@ -7,6 +7,7 @@ export const useIsAdminDomain = () => {
 
 	useEffect(() => {
 		const hostname = window.location.hostname;
+        console.log(hostname);
 		setIsAdminDomain(hostname.startsWith('admin.'));
 	}, []);
 

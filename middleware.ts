@@ -1,17 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 import { tokenTest } from './app/lib/auth';
 import { infoCheck } from './app/lib/actions';
 import { getLastRoute } from './app/lib/cookie';
 import { ADMIN_URL, NEXT_URL } from './app/lib/constants';
 import { getDateOneMonthLater } from './app/lib/utils';
 
-
 export default async function middleware(request: NextRequest) {
 	const requestUrl = request.nextUrl.href;
 	const pathName = request.nextUrl.pathname;
 
+	const url = request.nextUrl.clone();
+	const hostname = request.headers.get('host');
+	// console.log(hostname);
+
 	let token;
-	if (pathName.startsWith('/admin')) {
+	if (pathName.startsWith('/admin') || hostname === ADMIN_URL) {
 		token = await tokenTest('ADMIN');
 	} else token = await tokenTest('USER');
 
@@ -19,11 +22,8 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
-	const url = request.nextUrl.clone();
-	const hostname = request.headers.get('host');
-	console.log(hostname);
-
-	if (hostname && hostname === ADMIN_URL) {  // 서브도메인 처리
+	if (hostname && hostname === ADMIN_URL) {
+		// 서브도메인 처리
 		url.pathname = `/admin${url.pathname}`;
 		return NextResponse.rewrite(url);
 	}
@@ -190,6 +190,3 @@ export const config = {
 		'/company/:path*'
 	]
 };
-
-
-
