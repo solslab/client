@@ -10,6 +10,7 @@ import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import UpdateCompanyModal from '../../components/update-company';
+import TestInfoModal from '../../components/test-info';
 import { deleteCompany, uploadCompanyLogo, deleteCompanyLogo } from '@/app/lib/data-admin';
 import { useRouter } from 'next/navigation';
 import {
@@ -33,6 +34,7 @@ export default function CompanyDetailPage({
 }) {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
 	const [isCompanyUpdateModalOpen, setIsCompanyUpdateModalOpen] = useState(false);
+	const [testInfoId, setTestInfoId] = useState('');
 	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
 	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 	const [alertMessage, setAlertMessage] = useState('');
@@ -51,7 +53,7 @@ export default function CompanyDetailPage({
 		fetchData();
 	}, [companyId]);
 
-	const handleClose = () => {
+	const handleAlertClose = () => {
 		if (redirectLoginAfterClose) {
 			router.push('/admin/login');
 		} else if (isDeleted) {
@@ -210,7 +212,7 @@ export default function CompanyDetailPage({
 						</CardContent>
 						<CardContent className="mt-16 flex w-full flex-col">
 							<CardTitle className="p-4">
-								코딩테스트 정보 목록  ({companyDetail.positions.length})
+								코딩테스트 정보 목록 ({companyDetail.positions.length})
 							</CardTitle>
 							<div className="flex w-full flex-col gap-2 p-4">
 								<Button className="mb-2 w-full p-5" variant="outline">
@@ -221,7 +223,8 @@ export default function CompanyDetailPage({
 										key={index}
 										className="mb-2 w-full p-5"
 										onClick={() => {
-											alert(`Position clicked: ${position.position_name}`);
+											setTestInfoId(position.position_id);
+											// alert(`Position clicked: ${position.position_name}`);
 										}}
 									>
 										{position.position_name}
@@ -240,6 +243,16 @@ export default function CompanyDetailPage({
 							fetchData();
 							setIsCompanyUpdateModalOpen(false);
 						}}
+					/>
+				)}
+				{testInfoId && (
+					<TestInfoModal
+						testInfoId={testInfoId}
+						onClose={() => setTestInfoId('')}
+						// onSuccess={() => {
+						// 	fetchData();
+						// 	setTestInfoId('');
+						// }}
 					/>
 				)}
 				{isDeleteConfirmOpen && (
@@ -279,7 +292,7 @@ export default function CompanyDetailPage({
 						defaultOpen
 						onOpenChange={(open) => {
 							if (!open) {
-								handleClose();
+								handleAlertClose();
 							}
 						}}
 					>
@@ -291,7 +304,7 @@ export default function CompanyDetailPage({
 							<AlertDialogFooter>
 								<AlertDialogCancel
 									onClick={() => {
-										handleClose();
+										handleAlertClose();
 									}}
 								>
 									확인
