@@ -21,15 +21,9 @@ export default async function middleware(request: NextRequest) {
 
 	const url = request.nextUrl.clone();
 	const hostname = request.headers.get('host'); // 요청된 호스트 이름 가져오기
-	if (pathName.startsWith('/admin')) {
-		console.log(pathName)
-		url.pathname = `${url.pathname}/private`;
-		return NextResponse.rewrite(url); // 절대 URL을 전달
-	}
-	console.log(hostname);
+
 	// 'admin.' 서브도메인 처리
 	if (hostname && hostname.startsWith('admin.')) {
-		// 경로를 /admin으로 리다이렉트
 		url.pathname = `/admin${url.pathname}`;
 		return NextResponse.rewrite(url); // 내부적으로 라우팅 경로 변경
 	}
