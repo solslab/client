@@ -19,34 +19,42 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
-	const { hostname } = request.nextUrl;
-
-	if (hostname.startsWith('admin.')) {
-		// 'admin.' 서브도메인에서 /admin 경로로 라우팅
-		request.nextUrl.pathname = '/admin' + request.nextUrl.pathname;
+	const url = request.nextUrl.clone();
+	const hostname = request.headers.get('host'); // 요청된 호스트 이름 가져오기
+	if (pathName.startsWith('/admin')) {
+		console.log(pathName)
+		url.pathname = `${url.pathname}/private`;
+		return NextResponse.rewrite(url); // 절대 URL을 전달
+	}
+	console.log(hostname);
+	// 'admin.' 서브도메인 처리
+	if (hostname && hostname.startsWith('admin.')) {
+		// 경로를 /admin으로 리다이렉트
+		url.pathname = `/admin${url.pathname}`;
+		return NextResponse.rewrite(url); // 내부적으로 라우팅 경로 변경
 	}
 
-	// if (pathName.startsWith('/admin')) {
-	// 	if (pathName === '/admin/login' || pathName === '/admin/api/login') {
-	// 		return NextResponse.next();
-	// 	} else if (token && token.role === 'ADMIN') {
-	// 		response = NextResponse.next();
+	if (pathName.startsWith('/admin')) {
+		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+			return NextResponse.next();
+		} else if (token && token.role === 'ADMIN') {
+			response = NextResponse.next();
 
-	// 		if (token.new_token) {
-	// 			const clearToken = token.new_token.replace('Bearer ', '');
-	// 			response.cookies.set('solslab-accessToken', clearToken, {
-	// 				httpOnly: true,
-	// 				secure: true,
-	// 				expires: getDateOneMonthLater()
-	// 			});
-	// 		}
-	// 	} else {
-	// 		response = NextResponse.redirect(NEXT_URL + '/admin/login');
-	// 		response.cookies.delete('solslab-accessToken');
-	// 	}
+			if (token.new_token) {
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('solslab-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
+			}
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/admin/login');
+			response.cookies.delete('solslab-accessToken');
+		}
 
-	// 	return response;
-	// }
+		return response;
+	}
 
 	// if (host === 'admin.sols.kr') {
 	// 	// 프로덕션 환경 관리자 인가처리
