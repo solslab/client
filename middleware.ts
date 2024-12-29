@@ -153,7 +153,6 @@ export default async function middleware(request: NextRequest) {
 }
 export const config = {
 	matcher: [
-		'/',
 		'/admin/:path*',
 		'/company/:id*',
 		'/profiles/:path*',
