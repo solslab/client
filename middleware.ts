@@ -21,6 +21,8 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
+	console.log(hostname)
+
 	// 배포환경 관리자 인가처리
 	if (hostname && hostname === ADMIN_URL) {
 		url.pathname = `/admin${url.pathname}`; // 서브도메인 처리
@@ -60,7 +62,7 @@ export default async function middleware(request: NextRequest) {
 				});
 			}
 		} else {
-			response = NextResponse.redirect(NEXT_URL + '/login');
+			response = NextResponse.redirect(NEXT_URL + '/admin/login');
 			response.cookies.delete('solslab-accessToken');
 		}
 		return response;
