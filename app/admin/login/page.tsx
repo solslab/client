@@ -15,6 +15,7 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 
 export default function LoginForm() {
@@ -22,6 +23,7 @@ export default function LoginForm() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const router = useRouter();
+	const basePath = useIsAdminDomain() ? '' : '/admin';
 
 	 const handleSubmit = async (e: React.FormEvent) => {
 			e.preventDefault();
@@ -43,7 +45,7 @@ export default function LoginForm() {
 						throw new Error('쿠키 설정에 실패했습니다');
 					}
 
-					router.push('/');
+					router.push(`${basePath}/`);
 				} else {
 					setError(responseData.message || '로그인에 실패했습니다.');
 				}

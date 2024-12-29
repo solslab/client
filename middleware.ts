@@ -21,8 +21,6 @@ export default async function middleware(request: NextRequest) {
 	const lastPath = lastPathCookie?.value || '/';
 	let response;
 
-	console.log(hostname)
-
 	// 배포환경 관리자 인가처리
 	if (hostname && hostname === ADMIN_URL) {
 		url.pathname = `/admin${url.pathname}`; // 서브도메인 처리
@@ -46,7 +44,7 @@ export default async function middleware(request: NextRequest) {
 		return response;
 	}
 
-	// 개발환경 관리자 인가처리
+	// 개발환경 관리자 인가처리 - 배포환경에서는 Nginx로 403 처리
 	if (pathName.startsWith('/admin')) {
 		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
 			return NextResponse.next();
@@ -133,32 +131,45 @@ export default async function middleware(request: NextRequest) {
 		}
 		return response;
 	} else {
-		if (token) {
-			response = NextResponse.next();
-
-			if (token.new_token) {
-				const clearToken = token.new_token.replace('Bearer ', '');
-				response.cookies.set('sols-accessToken', clearToken, {
-					httpOnly: true,
-					secure: true,
-					expires: getDateOneMonthLater()
-				});
-			}
-		} else {
-			response = NextResponse.redirect(NEXT_URL + '/login');
-			response.cookies.delete('sols-accessToken');
+		// 이외의 경우 모두 통과
+		response = NextResponse.next();
+		if (token && token.new_token) {
+			const clearToken = token.new_token.replace('Bearer ', '');
+			response.cookies.set('sols-accessToken', clearToken, {
+				httpOnly: true,
+				secure: true,
+				expires: getDateOneMonthLater()
+			});
 		}
 		return response;
+
+		// if (token) {
+		// 	response = NextResponse.next();
+
+		// 	if (token.new_token) {
+		// 		const clearToken = token.new_token.replace('Bearer ', '');
+		// 		response.cookies.set('sols-accessToken', clearToken, {
+		// 			httpOnly: true,
+		// 			secure: true,
+		// 			expires: getDateOneMonthLater()
+		// 		});
+		// 	}
+		// } else {
+		// 	response = NextResponse.redirect(NEXT_URL + '/login');
+		// 	response.cookies.delete('sols-accessToken');
+		// }
+		// return response;
 	}
 }
-export const config = {
-	matcher: [
-		'/admin/:path*',
-		'/company/:id*',
-		'/profiles/:path*',
-		'/testReview',
-		'/login',
-		'/member/:path*',
-		'/company/:path*'
-	]
-};
+
+// export const config = {
+// 	matcher: [
+// 		'/admin/:path*',
+// 		'/company/:id*',
+// 		'/profiles/:path*',
+// 		'/testReview',
+// 		'/login',
+// 		'/member/:path*',
+// 		'/company/:path*'
+// 	]
+// };

@@ -5,8 +5,9 @@ import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 export default function Footer() {
 	const pathname = usePathname();
+	const isAdminDomain = useIsAdminDomain();
 	const bgClass = pathname.startsWith('/company') ? 'bg-bg-base' : 'bg-transparent';
-	const isAdminPage = pathname.startsWith('/admin') || useIsAdminDomain;
+	const isAdminPage = pathname.startsWith('/admin') || isAdminDomain;
 
 	return (
 		<>

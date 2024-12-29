@@ -8,7 +8,8 @@ import { usePathname } from 'next/navigation';
 import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 export default function Topnav() {
-	const isAdminPage = usePathname().startsWith('/admin') || useIsAdminDomain;
+	const isAdminDomain = useIsAdminDomain();
+	const isAdminPage = usePathname().startsWith('/admin') || isAdminDomain;
 
 	return (
 		<>
