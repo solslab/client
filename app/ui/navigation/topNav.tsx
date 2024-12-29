@@ -5,9 +5,10 @@ import Link from 'next/link';
 import NavBtn from './navBtn';
 import InteractiveLink from './InteractiveLink';
 import { usePathname } from 'next/navigation';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 export default function Topnav() {
-	const isAdminPage = usePathname().startsWith('/admin');
+	const isAdminPage = usePathname().startsWith('/admin') || useIsAdminDomain;
 
 	return (
 		<>

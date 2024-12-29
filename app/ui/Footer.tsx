@@ -1,11 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 export default function Footer() {
 	const pathname = usePathname();
 	const bgClass = pathname.startsWith('/company') ? 'bg-bg-base' : 'bg-transparent';
-	const isAdminPage = pathname.startsWith('/admin');
+	const isAdminPage = pathname.startsWith('/admin') || useIsAdminDomain;
 
 	return (
 		<>
