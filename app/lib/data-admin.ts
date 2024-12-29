@@ -370,7 +370,6 @@ export const getMemberDetails = async (memberKey: string): Promise<any> => {
 				Authorization: `Bearer ${token?.value}`
 			}
 		});
-		console.log(response);
 		if (response.ok) {
 			const data: User = await response.json();
 			return data;

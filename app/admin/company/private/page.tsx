@@ -56,12 +56,9 @@ export default function PrivateCompanyOverviewPage() {
 		<>
 			<div className="flex flex-col">
 				<div className="mb-4 flex items-center justify-between px-6">
-					{/* B: 목록의 총 개수를 표시하는 텍스트 */}
 					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
 						비공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
-
-					{/* A: 검색 입력 + 기업 추가 버튼 */}
 					<div className="flex items-center" style={{ marginRight: '3%' }}>
 						<Input
 							type="text"
@@ -80,7 +77,6 @@ export default function PrivateCompanyOverviewPage() {
 						</Button>
 					</div>
 				</div>
-
 				{searchResults.length > 0
 					? searchResults.map((company) => (
 							<Button

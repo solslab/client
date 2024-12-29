@@ -29,7 +29,6 @@ const MemberDetailModal = ({ memberKey, onClose }: MemberDetailProps) => {
 		fetchMemberDetails();
 	}, [memberKey]);
 
-	// member가 없으면 모달을 렌더링하지 않음
 	if (!member) return null;
 
 	return (

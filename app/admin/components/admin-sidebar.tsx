@@ -13,7 +13,10 @@ import {
 	SidebarMenuSubButton
 } from '@/components/ui/sidebar';
 
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+
 export function AdminSidebar() {
+	const basePath = useIsAdminDomain() ? '' : '/admin';
 	return (
 		<Sidebar>
 			<SidebarContent>
@@ -23,7 +26,7 @@ export function AdminSidebar() {
 						{/* 회원 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href="/admin/member">
+								<a href={`${basePath}/member`}>
 									<User />
 									<span>회원 관리</span>
 								</a>
@@ -39,14 +42,14 @@ export function AdminSidebar() {
 							<SidebarMenuSub>
 								<SidebarMenuSubItem>
 									<SidebarMenuSubButton asChild>
-										<a href="/admin/company">
+										<a href={`${basePath}/company`}>
 											<span>공개 기업 관리</span>
 										</a>
 									</SidebarMenuSubButton>
 								</SidebarMenuSubItem>
 								<SidebarMenuSubItem>
 									<SidebarMenuSubButton asChild>
-										<a href="/admin/company/private">
+										<a href={`${basePath}/company/private`}>
 											<span>비공개 기업 관리</span>
 										</a>
 									</SidebarMenuSubButton>
@@ -57,7 +60,7 @@ export function AdminSidebar() {
 						{/* 코딩테스트 리뷰 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href="/admin/testReview">
+								<a href={`${basePath}/review`}>
 									<Pencil />
 									<span>코딩테스트 리뷰 관리</span>
 								</a>
@@ -67,7 +70,7 @@ export function AdminSidebar() {
 						{/* 정보수정요청 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href="/admin/suggestion">
+								<a href={`${basePath}/suggestion`}>
 									<FileQuestion />
 									<span>정보수정요청 관리</span>
 								</a>
@@ -77,7 +80,7 @@ export function AdminSidebar() {
 						{/* 피드백 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href="/admin/feedback">
+								<a href={`${basePath}/feedback`}>
 									<Star />
 									<span>피드백 관리</span>
 								</a>

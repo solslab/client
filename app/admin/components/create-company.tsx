@@ -20,6 +20,7 @@ import {
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -45,12 +46,13 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 	const [companyId, setCompanyId] = useState<string | null>(null);
 
 	const router = useRouter();
+	const basePath = useIsAdminDomain() ? '' : '/admin';
 
 	const handleClose = () => {
     	if (redirectLoginAfterClose) {
-			router.push('/admin/login');
+			router.push(`${basePath}/login`);
 		} else if (companyId) {
-			router.push(`/admin/company/${companyId}`); // companyId를 이용한 라우팅
+			router.push(`${basePath}/company/${companyId}`); // companyId를 이용한 라우팅
 		}
   	}
 

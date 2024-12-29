@@ -20,6 +20,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogAction
 } from '@/components/ui/alert-dialog';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 
 export default function CompanyDetailPage() {
@@ -32,6 +33,7 @@ export default function CompanyDetailPage() {
 	const [isDeleted, setIsDeleted] = useState(false);
 
 	const router = useRouter();
+	const basePath = useIsAdminDomain() ? '' : '/admin';
 	const { id } = useParams();
 	const companyId = Array.isArray(id) ? id[0] : id;
 
@@ -47,12 +49,12 @@ export default function CompanyDetailPage() {
 
 	const handleAlertClose = () => {
 		if (redirectLoginAfterClose) {
-			router.push('/admin/login');
+			router.push(`${basePath}/login`);
 		} else if (isDeleted) {
 			if (companyDetail?.public) {
-				router.push('/admin/company');
+				router.push(`${basePath}/company`);
 			} else if (!companyDetail?.public) {
-				router.push('/admin/company/private');
+				router.push(`${basePath}/company/private`);
 			}
 		}
 		setAlertMessage('');

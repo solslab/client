@@ -21,6 +21,7 @@ import {
 	AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
+import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -55,10 +56,11 @@ export default function UpdateCompanyModal({ companyId, companyDetail, onClose, 
 	const [isPublic, setIsPublic] = useState<boolean>(companyDetail.public);
 
 	const router = useRouter();
-
+	const basePath = useIsAdminDomain() ? '' : '/admin';
+	
 	const handleClose = () => {
 		if (redirectLoginAfterClose) {
-			router.push('/admin/login');
+			router.push(`${basePath}/login`);
 		} else if (alertMessage === '기업 수정이 완료되었습니다.') {
 			onSuccess?.();
 		}

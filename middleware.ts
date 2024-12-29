@@ -38,7 +38,7 @@ export default async function middleware(request: NextRequest) {
 				});
 			}
 		} else {
-			response = NextResponse.redirect('https://'+ ADMIN_URL + '/login');
+			response = NextResponse.redirect('https://' + ADMIN_URL + '/login');
 			response.cookies.delete('solslab-accessToken');
 		}
 		return response;
