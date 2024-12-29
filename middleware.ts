@@ -21,7 +21,7 @@ export default async function middleware(request: NextRequest) {
 
 	const url = request.nextUrl.clone();
 	const hostname = request.headers.get('host'); // 요청된 호스트 이름 가져오기
-
+	console.log(hostname);
 	// 'admin.' 서브도메인 처리
 	if (hostname && hostname.startsWith('admin.')) {
 		url.pathname = `/admin${url.pathname}`;
@@ -43,7 +43,7 @@ export default async function middleware(request: NextRequest) {
 				});
 			}
 		} else {
-			response = NextResponse.redirect(NEXT_URL + '/admin/login');
+			response = NextResponse.redirect(ADMIN_URL + '/login');
 			response.cookies.delete('solslab-accessToken');
 		}
 

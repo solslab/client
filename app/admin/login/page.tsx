@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { loginAdmin } from '@/app/lib/data-admin';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ADMIN_URL } from '@/app/lib/constants';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -42,7 +43,7 @@ export default function LoginForm() {
 						throw new Error('쿠키 설정에 실패했습니다');
 					}
 
-					router.push('/admin');
+					router.push('/');
 				} else {
 					setError(responseData.message || '로그인에 실패했습니다.');
 				}
