@@ -277,6 +277,7 @@ export default function CompanyDetailPage({
 										handleDeleteCompany();
 										setIsDeleteConfirmOpen(false);
 									}}
+									className="bg-red-600"
 								>
 									삭제
 								</AlertDialogAction>
