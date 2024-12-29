@@ -43,9 +43,8 @@ export default async function middleware(request: NextRequest) {
 		}
 		return response;
 	}
-
 	// 개발환경 관리자 인가처리 - 배포환경에서는 Nginx로 403 처리
-	if (pathName.startsWith('/admin')) {
+	else if (pathName.startsWith('/admin')) {
 		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
 			return NextResponse.next();
 		} else if (token && token.role === 'ADMIN') {
@@ -65,8 +64,7 @@ export default async function middleware(request: NextRequest) {
 		}
 		return response;
 	}
-
-	if (pathName.includes('suggestion')) {
+	else if (pathName.includes('suggestion')) {
 		if (token) {
 			response = NextResponse.next();
 
