@@ -11,7 +11,6 @@ export default async function middleware(request: NextRequest) {
 
 	const url = request.nextUrl.clone();
 	const hostname = request.headers.get('host');
-	// console.log(hostname);
 
 	let token;
 	if (pathName.startsWith('/admin') || hostname === ADMIN_URL) {
@@ -23,13 +22,12 @@ export default async function middleware(request: NextRequest) {
 	let response;
 
 	if (hostname && hostname === ADMIN_URL) {
-		// 서브도메인 처리
-		url.pathname = `/admin${url.pathname}`;
+		url.pathname = `/admin${url.pathname}`; // 서브도메인 처리
 		return NextResponse.rewrite(url);
 	}
 
-	if (pathName.startsWith('/admin')) {
-		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+	if (pathName.startsWith('/admin') || hostname === ADMIN_URL) {
+		if (pathName.includes('/login') || pathName.includes('/api/login')) {
 			return NextResponse.next();
 		} else if (token && token.role === 'ADMIN') {
 			response = NextResponse.next();
@@ -43,8 +41,15 @@ export default async function middleware(request: NextRequest) {
 				});
 			}
 		} else {
-			response = NextResponse.redirect(ADMIN_URL + '/login');
-			response.cookies.delete('solslab-accessToken');
+			// 인증 실패 시
+			if (pathName.startsWith('/admin')) {  // 개발환경
+				response = NextResponse.redirect(NEXT_URL + '/login');
+				response.cookies.delete('solslab-accessToken');
+			}
+			else if (hostname === ADMIN_URL) {  // 배포환경
+				response = NextResponse.redirect(ADMIN_URL + '/login');
+				response.cookies.delete('solslab-accessToken');
+			}
 		}
 
 		return response;
