@@ -21,51 +21,73 @@ export default async function middleware(request: NextRequest) {
 
 	const host = request.headers.get('host');
 
-	if (host === 'admin.sols.kr') {
-		// 프로덕션 환경 관리자 인가처리
-		if (pathName === '/login' || pathName === '/api/admin') {
+	if (pathName.startsWith('/admin')) {
+		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
 			return NextResponse.next();
-		}
-		else if (token && token.role === 'ADMIN') {
+		} else if (token && token.role === 'ADMIN') {
 			response = NextResponse.next();
+
 			if (token.new_token) {
-					const clearToken = token.new_token.replace('Bearer ', '');
-					response.cookies.set('solslab-accessToken', clearToken, {
-						httpOnly: true,
-						secure: true,
-						expires: getDateOneMonthLater()
-					});
+				const clearToken = token.new_token.replace('Bearer ', '');
+				response.cookies.set('solslab-accessToken', clearToken, {
+					httpOnly: true,
+					secure: true,
+					expires: getDateOneMonthLater()
+				});
 			}
-			else {
-				response = NextResponse.redirect(ADMIN_URL + '/login');
-				response.cookies.delete('solslab-accessToken');
-			}
-			return response;
+		} else {
+			response = NextResponse.redirect(NEXT_URL + '/admin/login');
+			response.cookies.delete('solslab-accessToken');
 		}
-	} else {
-		// 개발환경 관리자 인가처리
-		if (pathName.startsWith('/admin')) {
-			if (pathName === '/admin/login' || pathName === '/admin/api/login') {
-				return NextResponse.next();
-			} else if (token && token.role === 'ADMIN') {
-				response = NextResponse.next();
 
-				if (token.new_token) {
-					const clearToken = token.new_token.replace('Bearer ', '');
-					response.cookies.set('solslab-accessToken', clearToken, {
-						httpOnly: true,
-						secure: true,
-						expires: getDateOneMonthLater()
-					});
-				}
-			} else {
-				response = NextResponse.redirect(NEXT_URL + '/admin/login');
-				response.cookies.delete('solslab-accessToken');
-			}
-
-			return response;
-		}
+		return response;
 	}
+
+	// if (host === 'admin.sols.kr') {
+	// 	// 프로덕션 환경 관리자 인가처리
+	// 	if (pathName === '/login' || pathName === '/api/admin') {
+	// 		return NextResponse.next();
+	// 	}
+	// 	else if (token && token.role === 'ADMIN') {
+	// 		response = NextResponse.next();
+	// 		if (token.new_token) {
+	// 				const clearToken = token.new_token.replace('Bearer ', '');
+	// 				response.cookies.set('solslab-accessToken', clearToken, {
+	// 					httpOnly: true,
+	// 					secure: true,
+	// 					expires: getDateOneMonthLater()
+	// 				});
+	// 		}
+	// 		else {
+	// 			response = NextResponse.redirect(ADMIN_URL + '/login');
+	// 			response.cookies.delete('solslab-accessToken');
+	// 		}
+	// 		return response;
+	// 	}
+	// } else {
+	// 	// 개발환경 관리자 인가처리
+	// 	if (pathName.startsWith('/admin')) {
+	// 		if (pathName === '/admin/login' || pathName === '/admin/api/login') {
+	// 			return NextResponse.next();
+	// 		} else if (token && token.role === 'ADMIN') {
+	// 			response = NextResponse.next();
+
+	// 			if (token.new_token) {
+	// 				const clearToken = token.new_token.replace('Bearer ', '');
+	// 				response.cookies.set('solslab-accessToken', clearToken, {
+	// 					httpOnly: true,
+	// 					secure: true,
+	// 					expires: getDateOneMonthLater()
+	// 				});
+	// 			}
+	// 		} else {
+	// 			response = NextResponse.redirect(NEXT_URL + '/admin/login');
+	// 			response.cookies.delete('solslab-accessToken');
+	// 		}
+
+	// 		return response;
+	// 	}
+	// }
 
 	if (pathName.includes('suggestion')) {
 		if (token) {
