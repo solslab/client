@@ -30,9 +30,17 @@ export async function getToken() {
     const token = cookies().get('sols-accessToken');
     return token
 }
+export async function getAdminToken() {
+	const token = cookies().get('solslab-accessToken');
+	return token;
+}
 
 export async function deleteToken() {
     cookies().delete('sols-accessToken')
+}
+
+export async function deleteAdminToken() {
+	cookies().delete('solslab-accessToken');
 }
 
 export async function redirectToPrev() {

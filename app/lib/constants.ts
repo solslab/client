@@ -1,5 +1,6 @@
 export const NEXT_URL:string = process.env.NEXT_URL || '';
 export const SPRING_URL:string = process.env.SPRING_URL ||'';
+export const ADMIN_URL: string = process.env.ADMIN_URL || '';
 export const SKILLS = [
     "C",
     "C++",
