@@ -84,7 +84,7 @@ export default function TrSearchBox({
 						)}
 						type="text"
 						role="combobox"
-                        aria-controls=""
+						aria-controls=""
 						aria-expanded="false"
 						placeholder={''}
 						onChange={(e) => {
@@ -116,7 +116,7 @@ export default function TrSearchBox({
 											setCompanyId(el.company_id);
 											clearFeild();
 										}}
-										className="px-4 py-2 text-sm hover:bg-gray-100 "
+										className="px-4 py-2 text-sm hover:bg-gray-100"
 									>
 										{el.company_name}
 									</div>
@@ -131,7 +131,8 @@ export default function TrSearchBox({
 									}}
 									className="px-4 py-2 text-sm hover:bg-gray-100"
 								>
-									{value + ' 직접 입력'}
+									<span className="font-bold">{`"${value}"`}</span>
+									<span> 새로운 기업 등록</span>
 								</div>
 							) : (
 								<></>

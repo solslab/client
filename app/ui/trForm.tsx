@@ -12,8 +12,9 @@ import TrSearchBox from './testReview/trSearchbox';
 import BasicAlert from './basicAlert';
 import { redirectToPrev } from '../lib/cookie';
 import NaturalNumberInput from './naturalNumberInput';
+import ScrollToTop from './ScrollToTop';
 const years: number[] = [];
-for (let i = 2024; i >= 2000; i--) {
+for (let i = 2024; i >= 2010; i--) {
 	years.push(i);
 }
 
@@ -62,6 +63,7 @@ export default function TrForm({company_id}:{company_id:string|undefined}) {
 	 },[totalProblem]) 
 	return (
 		<>
+		<ScrollToTop />
 		<form onSubmit={handleSubmit}>
 			<div className="text-2xl font-bold text-title-black">코딩테스트 후기 작성</div>
 			<div className=" px-5 py-16">
