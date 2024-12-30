@@ -4,9 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface FullPageScrollProps {
 	children: React.ReactNode;
+	isSearching: boolean;
 }
 
-const FullPageScroll: React.FC<FullPageScrollProps> = ({ children }) => {
+const FullPageScroll: React.FC<FullPageScrollProps> = ({ children, isSearching }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const sectionRefs = useRef<HTMLElement[]>([]);
 	const [activeSection, setActiveSection] = useState(0);
@@ -16,6 +17,8 @@ const FullPageScroll: React.FC<FullPageScrollProps> = ({ children }) => {
 		if (!container) return;
 
 		const handleWheel = (e: WheelEvent) => {
+			if (isSearching) return;
+
 			e.preventDefault();
 			const delta = e.deltaY;
 			const currentSection = activeSection;
@@ -32,7 +35,7 @@ const FullPageScroll: React.FC<FullPageScrollProps> = ({ children }) => {
 		return () => {
 			container.removeEventListener('wheel', handleWheel);
 		};
-	}, [activeSection]);
+	}, [activeSection, isSearching]);
 
 	useEffect(() => {
 		sectionRefs.current[activeSection]?.scrollIntoView({
