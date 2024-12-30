@@ -125,11 +125,16 @@ export default async function middleware(request: NextRequest) {
 	return NextResponse.next();
 }
 
+export const config = {
+	matcher: ['/((?!_next).*)']
+};
 
 
 
 
-/* 이전 코드 - matcher 제거 */
+
+
+/* 이전 코드 */
 
 // import { NextRequest, NextResponse } from 'next/server';
 // import { tokenTest } from './app/lib/auth';
