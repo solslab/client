@@ -22,7 +22,6 @@ import {
 	AlertDialogAction
 } from '@/components/ui/alert-dialog';
 import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
-import { NEXT_URL } from '@/app/lib/constants';
 
 
 export default function CompanyDetailPage() {
@@ -164,7 +163,7 @@ export default function CompanyDetailPage() {
 						</div>
 						<div className="w-1/2">
 							<Image
-								src={companyDetail.company_logo || `${NEXT_URL}/companyLogo/default_company_logo.png`}
+								src={companyDetail.company_logo || '/companyLogo/default_company_logo.png'}
 								alt={`${companyDetail.company_name} 로고`}
 								width={192}
 								height={192}
