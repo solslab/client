@@ -49,7 +49,6 @@ export default async function Page({
 }) {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
-	console.log(companyData)
 	if (!companyData?.public) {
 		notFound();
 	}

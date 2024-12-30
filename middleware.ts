@@ -84,7 +84,7 @@ export default async function middleware(request: NextRequest) {
 				setTokenCookie(response, token.new_token, 'sols-accessToken');
 			}
 		} else {
-			response = NextResponse.redirect(requestUrl);
+			response = NextResponse.next();
 			response.cookies.delete('sols-accessToken');
 		}
 		return response;
@@ -121,8 +121,6 @@ export default async function middleware(request: NextRequest) {
 		setTokenCookie(response, token.new_token, 'sols-accessToken');
 		return response;
 	} 
-
-	return NextResponse.next();
 }
 
 export const config = {

@@ -7,6 +7,8 @@ import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 export default function AdminPage() {
 	const router = useRouter();
 	const basePath = useIsAdminDomain() ? '' : '/admin';
+	console.log(useIsAdminDomain())
+	console.log(basePath);
 
 	useEffect(() => {
 		router.push(`${basePath}/member`);
