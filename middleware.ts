@@ -159,6 +159,7 @@ export const config = {
 		'/testReview',
 		'/login',
 		'/member/:path*',
-		'/company/:path*'
+		'/company/:path*',
+		'/api/:path*'
 	]
 };
