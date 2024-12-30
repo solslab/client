@@ -33,7 +33,7 @@ export default function LoginForm() {
 				const responseData = await loginAdmin(email, password);
 				if (responseData.status === 200) {
 					const token = responseData.data.accessToken;
-					const cookieResponse = await fetch('/admin/api/login', {
+					const cookieResponse = await fetch(`${basePath}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
