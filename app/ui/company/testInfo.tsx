@@ -23,9 +23,23 @@ export default function TestInfo({
 					<div className="w-full px-6">
 						<div className="mb-4 flex w-full flex-row flex-wrap">
 							<div className="my-auto w-full text-base md:w-1/4">시기/직무구분</div>
-							<div className="mt-4 flex w-full md:mt-0 md:w-3/4 relative">
-								<PositionSelectBox positions={positions} selected={position_id} isOfficial={data.is_official}/>
-								{data.is_official ? <> <div className='flex sm:hidden absolute top-1/2 transform -translate-y-1/2 left-3'><Image src={'/icons/verifyIcon.png'} width={18} height={18} alt='verifyed'/></div><VerifyMark /></> : <></>}
+							<div className="relative mt-4 flex w-full md:mt-0 md:w-3/4">
+								<PositionSelectBox
+									positions={positions}
+									selected={position_id}
+									isOfficial={data.is_official}
+								/>
+								{data.is_official ? (
+									<>
+										{' '}
+										<div className="absolute left-3 top-1/2 flex -translate-y-1/2 transform sm:hidden">
+											<Image src={'/icons/verifyIcon.png'} width={18} height={18} alt="verifyed" />
+										</div>
+										<VerifyMark />
+									</>
+								) : (
+									<></>
+								)}
 							</div>
 						</div>
 						<div className="flex w-full flex-row flex-wrap">
@@ -58,32 +72,45 @@ export default function TestInfo({
 					</div>
 				</div>
 				<div className="py-7">
-					<div className="grid w-full grid-cols-1 gap-x-16 gap-y-2 px-6 sm:gap-y-4 md:grid-cols-2">
-						<InfoItem src={'/icons/calendar.png'} label={'시험시간'} data={data.test_time || '-'} />
-						<InfoItem
-							src={'/icons/messageCode.png'}
-							label={'문제수'}
-							data={data.problem_info || '-'}
-						/>
-						<InfoItem src={'/icons/jump.png'} label={'IDE사용'} data={data.permit_ide || '-'} />
-						<InfoItem
-							src={'/icons/glassEye.png'}
-							label={'구글링'}
-							data={data.permit_search || '-'}
-						/>
-						<InfoItem
-							src={'/icons/interrogation.png'}
-							label={'히든 테스트케이스'}
-							data={data.hidden_case || '-'}
-						/>
-						<InfoItem src={'/icons/document.png'} label={'시험방식'} data={data.exam_mode || '-'} />
-						<InfoItem
-							src={'/icons/marker.png'}
-							label={'응시장소 / 플랫폼'}
-							data={data.test_place || '-'}
-						/>
+					<div className="grid w-full px-6">
+						<div className="grid w-full grid-cols-1 gap-x-16 gap-y-2 px-6 sm:gap-y-4 md:grid-cols-2">
+							<InfoItem
+								src={'/icons/calendar.png'}
+								label={'시험시간'}
+								data={data.test_time || '-'}
+							/>
+							<InfoItem
+								src={'/icons/messageCode.png'}
+								label={'문제수'}
+								data={data.problem_info || '-'}
+							/>
+							<InfoItem src={'/icons/jump.png'} label={'IDE사용'} data={data.permit_ide || '-'} />
+							<InfoItem
+								src={'/icons/glassEye.png'}
+								label={'구글링'}
+								data={data.permit_search || '-'}
+							/>
+							<InfoItem
+								src={'/icons/interrogation.png'}
+								label={'히든 테스트케이스'}
+								data={data.hidden_case || '-'}
+							/>
+							<InfoItem
+								src={'/icons/document.png'}
+								label={'시험방식'}
+								data={data.exam_mode || '-'}
+							/>
+							{/* Conditional class for long data */}
+							<InfoItem
+								src={'/icons/marker.png'}
+								label={'응시장소 / 플랫폼'}
+								data={data.test_place || '-'}
+								className={`${data.test_place.length > 20 ? 'break-words md:col-span-2' : ''}`}
+							/>
+						</div>
 					</div>
 				</div>
+
 				{data.note ? (
 					<div className="border-t border-gray-30 py-7">
 						<div className="w-full px-6">
