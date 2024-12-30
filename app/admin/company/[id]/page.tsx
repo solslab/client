@@ -10,6 +10,7 @@ import UpdateCompanyModal from '../../components/update-company';
 import TestInfoModal from '../../components/test-info';
 import { deleteCompany, uploadCompanyLogo, deleteCompanyLogo } from '@/app/lib/data-admin';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -161,10 +162,12 @@ export default function CompanyDetailPage() {
 							</div>
 						</div>
 						<div className="w-1/2">
-							<img
+							<Image
 								src={companyDetail.company_logo || '/companyLogo/default_company_logo.png'}
-								alt="Company Logo"
-								className="mx-auto mt-4 w-48 rounded-xl border-2 border-solid"
+								alt={`${companyDetail.company_name} 로고`}
+								width={192}
+								height={192}
+								className="mx-auto mt-4 rounded-xl border-2 border-solid"
 							/>
 							<div className="mt-4 flex justify-center gap-4">
 								{companyDetail.company_logo && (

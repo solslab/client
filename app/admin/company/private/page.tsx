@@ -9,7 +9,8 @@ import {
 	PaginationPrevious,
 	PaginationEllipsis
 } from '@/components/ui/pagination';
-
+import Image from 'next/image';
+import { NEXT_URL } from 'next/dist/client/components/app-router-headers';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
@@ -85,10 +86,12 @@ export default function PrivateCompanyOverviewPage() {
 								key={company.company_id}
 								onClick={() => router.push(`${company.company_id}`)}
 							>
-								<img
+								<Image
 									src={company.company_logo || '/companyLogo/default_company_logo.png'}
-									alt={`${company.company_name} Logo`}
-									className="mr-2 w-12 rounded"
+									alt={`${company.company_name} 로고`}
+									width={48}
+									height={48}
+									className="mr-2 rounded"
 								/>
 								<span>{company.company_name}</span>
 							</Button>
@@ -100,10 +103,12 @@ export default function PrivateCompanyOverviewPage() {
 								key={company.company_id}
 								onClick={() => router.push(`${company.company_id}`)}
 							>
-								<img
+								<Image
 									src={company.company_logo || '/companyLogo/default_company_logo.png'}
-									alt={`${company.company_name} Logo`}
-									className="mr-2 w-12 rounded"
+									alt={`${company.company_name} 로고`}
+									width={48}
+									height={48}
+									className="mr-2 rounded"
 								/>
 								<span>{company.company_name}</span>
 							</Button>
