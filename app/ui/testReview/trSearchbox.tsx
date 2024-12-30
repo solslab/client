@@ -96,16 +96,12 @@ export default function TrSearchBox({
 					/>
 				</div>
 				<div>
-					<div className="absolute w-full max-w-80 rounded-b-lg">
-						<div
-							className={clsx(
-								`mx-auto w-full overflow-hidden overflow-y-scroll bg-white scrollbar-hide`,
-								{
-									'rounded-b-lg border-x border-b border-x-gray-50 border-b-gray-50':
-										query.length > 0
-								}
-							)}
-						>
+					<div
+						className={clsx('absolute max-h-48 w-full max-w-80 overflow-y-scroll rounded-b-lg', {
+							'border-x border-b border-x-gray-50 border-b-gray-50': query.length > 0
+						})}
+					>
+						<div className={clsx(`mx-auto w-full bg-white`, {})}>
 							{companyList?.length > 0 ? (
 								companyList.map((el: CompanyQuery) => (
 									<div
@@ -131,8 +127,8 @@ export default function TrSearchBox({
 									}}
 									className="px-4 py-2 text-sm hover:bg-gray-100"
 								>
-									<span className="font-bold">{`"${value}"`}</span>
-									<span> 새로운 기업 등록</span>
+									<span className="font-bold">{`"${value}"`} </span>
+									<span>직접 입력</span>
 								</div>
 							) : (
 								<></>

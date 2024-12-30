@@ -72,7 +72,7 @@ export default function Home({ query }: { query: string }) {
 						</div>
 						<div className="hidden lg:block"></div>
 						<Image
-							className="absolute bottom-4 animate-bounce"
+							className="absolute z-0 bottom-4 animate-bounce"
 							src="/icons/scroll.svg"
 							alt="scroll"
 							width={40}
