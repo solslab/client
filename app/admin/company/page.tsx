@@ -88,7 +88,7 @@ export default function CompanyOverviewPage() {
 								onClick={() => router.push(`company/${company.company_id}`)}
 							>
 								<Image
-									src={company.company_logo || '/companyLogo/default_company_logo.png'}
+									src={company.company_logo || `${NEXT_URL}/companyLogo/default_company_logo.png`}
 									alt={`${company.company_name} 로고`}
 									width={48}
 									height={48}
@@ -105,7 +105,7 @@ export default function CompanyOverviewPage() {
 								onClick={() => router.push(`company/${company.company_id}`)}
 							>
 								<Image
-									src={company.company_logo || '/companyLogo/default_company_logo.png'}
+									src={company.company_logo || `${NEXT_URL}/companyLogo/default_company_logo.png`}
 									alt={`${company.company_name} 로고`}
 									width={48}
 									height={48}
