@@ -14,7 +14,7 @@ export default function Topnav() {
 	return (
 		<>
 			{!isAdminPage && (
-				<nav className="fixed top-0 z-50 w-full bg-white shadow">
+				<nav className="fixed top-0 z-40 w-full bg-white shadow">
 					<div className="max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
 						<div className="relative flex h-16 items-center justify-between">
 							<div className="flex flex-1 items-stretch justify-start">
