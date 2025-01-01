@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { fetchCompanyDetail } from '@/app/lib/data';
 import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import UpdateCompanyModal from '../../components/update-company';
-import TestInfoModal from '../../components/test-info';
+import UpdateCompanyModal from '../../../components/update-company';
+import TestInfoModal from '../../../components/test-info';
 import { deleteCompany, uploadCompanyLogo, deleteCompanyLogo } from '@/app/lib/data-admin';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -53,9 +53,9 @@ export default function CompanyDetailPage() {
 			router.push(`${basePath}/login`);
 		} else if (isDeleted) {
 			if (companyDetail?.public) {
-				router.push(`${basePath}/company`);
+				router.push(`${basePath}/manage/company`);
 			} else if (!companyDetail?.public) {
-				router.push(`${basePath}/company/private`);
+				router.push(`${basePath}/manage/company/private`);
 			}
 		}
 		setAlertMessage('');

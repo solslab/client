@@ -46,7 +46,7 @@ export default function LoginForm() {
 						throw new Error('쿠키 설정에 실패했습니다');
 					}
 
-					router.push(`${basePath}/member`);
+					router.push(`${basePath}/manage/member`);
 				} else {
 					setError(responseData.message || '로그인에 실패했습니다.');
 				}

@@ -52,7 +52,7 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
     	if (redirectLoginAfterClose) {
 			router.push(`${basePath}/login`);
 		} else if (companyId) {
-			router.push(`${basePath}/company/${companyId}`); // companyId를 이용한 라우팅
+			router.push(`${basePath}/manage/company/${companyId}`); // companyId를 이용한 라우팅
 		}
   	}
 

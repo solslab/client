@@ -26,7 +26,7 @@ export function AdminSidebar() {
 						{/* 회원 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href={`${basePath}/member`}>
+								<a href={`${basePath}/manage/member`}>
 									<User />
 									<span>회원 관리</span>
 								</a>
@@ -42,14 +42,14 @@ export function AdminSidebar() {
 							<SidebarMenuSub>
 								<SidebarMenuSubItem>
 									<SidebarMenuSubButton asChild>
-										<a href={`${basePath}/company`}>
+										<a href={`${basePath}/manage/company`}>
 											<span>공개 기업 관리</span>
 										</a>
 									</SidebarMenuSubButton>
 								</SidebarMenuSubItem>
 								<SidebarMenuSubItem>
 									<SidebarMenuSubButton asChild>
-										<a href={`${basePath}/company/private`}>
+										<a href={`${basePath}/manage/company/private`}>
 											<span>비공개 기업 관리</span>
 										</a>
 									</SidebarMenuSubButton>
@@ -60,7 +60,7 @@ export function AdminSidebar() {
 						{/* 코딩테스트 리뷰 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href={`${basePath}/review`}>
+								<a href={`${basePath}/manage/review`}>
 									<Pencil />
 									<span>코딩테스트 리뷰 관리</span>
 								</a>
@@ -70,7 +70,7 @@ export function AdminSidebar() {
 						{/* 정보수정요청 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href={`${basePath}/suggestion`}>
+								<a href={`${basePath}/manage/suggestion`}>
 									<FileQuestion />
 									<span>정보수정요청 관리</span>
 								</a>
@@ -80,7 +80,7 @@ export function AdminSidebar() {
 						{/* 피드백 관리 */}
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild>
-								<a href={`${basePath}/feedback`}>
+								<a href={`${basePath}/manage/feedback`}>
 									<Star />
 									<span>피드백 관리</span>
 								</a>

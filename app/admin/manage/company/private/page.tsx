@@ -13,14 +13,14 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
-import { fetchCompanyData, fetchFilteredCompanys } from '@/app/lib/data';
+import { getAllPrivateCompanyData, searchPrivateCompanies } from '@/app/lib/data-admin';
 import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';
-import CreateCompanyModal from '../components/create-company';
+import CreateCompanyModal from '../../../components/create-company';
 
 
-export default function CompanyOverviewPage() {
+export default function PrivateCompanyOverviewPage() {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();
 	const [searchResults, setSearchResults] = useState<CompanyQuery[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +30,7 @@ export default function CompanyOverviewPage() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetchCompanyData(currentPage, 10);
+			const data = await getAllPrivateCompanyData(currentPage, 10);
 			setCompanies(data);
 		};
 
@@ -40,7 +40,7 @@ export default function CompanyOverviewPage() {
 	useEffect(() => {
 		const handler = setTimeout(async () => {
 			if (searchQuery) {
-				const filteredData = await fetchFilteredCompanys(searchQuery);
+				const filteredData = await searchPrivateCompanies(searchQuery);
 				setSearchResults(filteredData || []);
 				setCurrentPage(1);
 			} else {
@@ -57,7 +57,7 @@ export default function CompanyOverviewPage() {
 			<div className="flex flex-col">
 				<div className="mb-4 flex items-center justify-between px-6">
 					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
-						공개 기업 목록 ({companies?.total_elements || 0})
+						비공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
 					<div className="flex items-center" style={{ marginRight: '3%' }}>
 						<Input
@@ -77,14 +77,13 @@ export default function CompanyOverviewPage() {
 						</Button>
 					</div>
 				</div>
-
 				{searchResults.length > 0
 					? searchResults.map((company) => (
 							<Button
 								variant="outline"
 								className="mx-auto my-2 flex h-16 w-10/12 justify-start"
 								key={company.company_id}
-								onClick={() => router.push(`company/${company.company_id}`)}
+								onClick={() => router.push(`${company.company_id}`)}
 							>
 								<Image
 									src={company.company_logo || '/companyLogo/default_company_logo.png'}
@@ -101,7 +100,7 @@ export default function CompanyOverviewPage() {
 								variant="outline"
 								className="mx-auto my-2 flex h-16 w-10/12 justify-start"
 								key={company.company_id}
-								onClick={() => router.push(`company/${company.company_id}`)}
+								onClick={() => router.push(`${company.company_id}`)}
 							>
 								<Image
 									src={company.company_logo || '/companyLogo/default_company_logo.png'}
@@ -212,4 +211,4 @@ export default function CompanyOverviewPage() {
 			)}
 		</>
 	);
-};
+}
