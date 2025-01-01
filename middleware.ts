@@ -34,7 +34,7 @@ export default async function middleware(request: NextRequest) {
 	// 관리자 인가처리(prod)
 	if (hostname === ADMIN_URL) {
 		url.pathname = `/admin${url.pathname}`; // 서브도메인 처리
-		if (pathName === '/login' || pathName === '/api/login') {
+		if (pathName === '/login' || pathName === '/api/admin-login') {
 			return NextResponse.rewrite(url);
 		}
 		if (token?.role === 'ADMIN') {
@@ -51,7 +51,7 @@ export default async function middleware(request: NextRequest) {
 
 	// 관리자 인가처리(dev)
 	if (pathName.startsWith('/admin')) {
-		if (['/admin/login', '/admin/api/login'].includes(pathName)) {
+		if (['/admin/login', '/admin/api/admin-login'].includes(pathName)) {
 			return NextResponse.next();
 		}
 		if (token?.role === 'ADMIN') {
@@ -131,8 +131,9 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
 	matcher: [
-		'/admin/:path*',  // admin (dev)
+		'/admin/:path*', // admin (dev)
 		'/manage/:path*', // admin (prod)
+		'/api/admin-login',
 		'/company/:id*',
 		'/profiles/:path*',
 		'/testReview',
