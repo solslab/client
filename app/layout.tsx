@@ -7,6 +7,7 @@ import PrelineScript from './ui/PrelineScript';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
 import Footer from './ui/Footer';
+import { headers } from 'next/headers';
 import AdminPageLayout from '@/app/admin/components/admin-page-layout';
 
 const pretendard = localFont({
