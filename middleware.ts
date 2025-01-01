@@ -47,8 +47,10 @@ export default async function middleware(request: NextRequest) {
 			response.cookies.delete('solslab-accessToken');
 		}
 		return response;
+	}
+
 	// 관리자 인가처리(dev)
-	} else if (pathName.startsWith('/admin')) {
+	if (pathName.startsWith('/admin')) {
 		if (['/admin/login', '/admin/api/login'].includes(pathName)) {
 			return NextResponse.next();
 		}
@@ -103,6 +105,10 @@ export default async function middleware(request: NextRequest) {
 		return response;
 	} else if (pathName.startsWith('/login')) {
 		if (token) {
+			if (token.new_token) {
+				response = NextResponse.next();
+				setTokenCookie(response, token.new_token, 'sols-accessToken');
+			}
 			response = NextResponse.redirect(`${NEXT_URL}${lastPath}`);
 		} else {
 			response = NextResponse.next();
