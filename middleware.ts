@@ -79,6 +79,10 @@ export default async function middleware(request: NextRequest) {
 		}
 		return response;
 	} else if (pathName.startsWith('/company')) {
+		if (pathName === '/company') {
+			console.log('전체기업 경로 pass')
+			return NextResponse.next();
+		}
 		if (token) {
 			if (token.new_token) {
 				response = NextResponse.next();
