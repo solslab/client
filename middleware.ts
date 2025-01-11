@@ -79,10 +79,6 @@ export default async function middleware(request: NextRequest) {
 		}
 		return response;
 	} else if (pathName.startsWith('/company')) {
-		if (pathName === '/company') {
-			console.log('전체기업 경로 pass')
-			return NextResponse.next();
-		}
 		if (token) {
 			if (token.new_token) {
 				response = NextResponse.next();
@@ -138,7 +134,7 @@ export const config = {
 		'/admin/:path*', // admin (dev)
 		'/manage/:path*', // admin (prod)
 		'/api/admin-login',
-		'/company/:id*',
+		'/company/:id(.*-.*-.*-.*-.*)/:path*',
 		'/profiles/:path*',
 		'/testReview',
 		'/login'
