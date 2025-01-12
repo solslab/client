@@ -71,9 +71,7 @@ export async function tokenTest(role: string) {
 		if (!response.ok) throw new Error(`${response.status}`);
 
 		const data = await response.json();
-        console.log(data);
 		const newToken = response.headers.get('Authorization');
-        console.log('새로운 토큰? ', newToken);
 		if (newToken) data.new_token = newToken;
 
 		return data;

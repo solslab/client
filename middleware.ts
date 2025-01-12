@@ -18,8 +18,6 @@ export default async function middleware(request: NextRequest) {
 	const hostname = headers.get('host');
 	const url = nextUrl.clone();
 
-	console.log('현재 경로: ', pathName);
-
 	let token;
 	if (pathName.startsWith('/admin') || hostname === ADMIN_URL) {
 		token = await tokenTest('ADMIN');

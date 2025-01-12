@@ -105,7 +105,7 @@ export default function TestInfo({
 								src={'/icons/marker.png'}
 								label={'응시장소 / 플랫폼'}
 								data={data.test_place || '-'}
-								className={`${data.test_place.length > 20 ? 'break-words md:col-span-2' : ''}`}
+								className={`${data.test_place && data.test_place.length > 20 ? 'break-words md:col-span-2' : ''}`}
 							/>
 						</div>
 					</div>
