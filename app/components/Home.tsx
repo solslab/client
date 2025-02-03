@@ -19,7 +19,7 @@ const jsonLd = {
 	name: '몇솔',
 	image: 'https://sols.kr/favicon.png',
 	description:
-		'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.'
+		'기업별 코딩테스트 응시환경 정보부터 합격자 분석, 문제 유형과 후기까지! 코딩테스트 합격을 위한 필수 정보를 몇솔에서 한 번에 확인하세요.'
 };
 
 const LogoCarousel = dynamic(() => import('./LogoCarousel'), {
@@ -27,7 +27,7 @@ const LogoCarousel = dynamic(() => import('./LogoCarousel'), {
 	loading: () => <p>로딩 중...</p>
 });
 
-export default function Home({ query }: { query: string }) {
+export default function Home() {
 	const [isSearching, setIsSearching] = useState(false);
 
 	return (
@@ -74,7 +74,7 @@ export default function Home({ query }: { query: string }) {
 						<Image
 							className="absolute z-0 bottom-4 animate-bounce"
 							src="/icons/scroll.svg"
-							alt="scroll"
+							alt="몇솔 스크롤 이미지"
 							width={40}
 							height={40}
 						/>
@@ -88,7 +88,7 @@ export default function Home({ query }: { query: string }) {
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
 							</h2>
 							<span className="text-sm text-gray-80 md:text-base">
-								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
+								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
 						<div className="flex w-full max-w-4xl flex-col items-center justify-center gap-8 py-8">

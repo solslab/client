@@ -66,7 +66,7 @@ const LogoCarousel: React.FC = () => {
 										? company.company_logo
 										: '/companyLogo/default_company_logo_white.png'
 								}
-								alt={`Company logo ${index + 1}`}
+								alt={`기업 로고 ${index + 1} - 몇솔`}
 								width={100}
 								height={100}
 								objectFit="contain"

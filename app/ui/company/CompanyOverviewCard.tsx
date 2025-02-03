@@ -16,7 +16,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 							? companyData.company_logo
 							: '/companyLogo/default_company_logo.png'
 					}
-					alt={companyData.company_name}
+					alt={`${companyData.company_name} 로고 - 몇솔`}
 					width={50}
 					height={50}
 					className="rounded-[10px] border-[1px] border-gray-50"

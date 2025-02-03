@@ -11,9 +11,28 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
 	const companyName = companyData ? companyData.company_name : '';
-	const metaTitle = companyData ? `${companyData.company_name} 데이터랩` : '몇솔';
-	const metaDesc = `${companyName} 데이터랩 정보를 몇솔에서 무료로 확인하세요.`;
-	const metaKeyword = `${companyName} 데이터랩, 개발자 취업 준비, 몇솔`;
+	const metaTitle = companyData ? `${companyData.company_name} 코딩테스트 합격자 분석 | 몇솔` : '몇솔';
+	const metaDesc = `${companyName} 코딩테스트 합격자들의 solved.ac 티어는? 통계를 확인해보세요!`;
+	const metaKeyword = `
+		${companyName} 코딩테스트, ${companyName} 코테, ${companyName} 합격컷, ${companyName} 합격자 정보, 
+		${companyName} 코딩테스트 난이도, ${companyName} 코테 난이도, ${companyName} 몇솔, ${companyName} 몇 문제, 
+		${companyName} 코딩테스트 분석, ${companyName} 코딩테스트 점수, ${companyName} 코딩테스트 후기, 
+		${companyName} 알고리즘 테스트, ${companyName} 프로그래밍 테스트, ${companyName} 개발자 테스트, 
+		${companyName} 취업 코딩테스트, ${companyName} 기업 코딩테스트, ${companyName} 코딩테스트 준비, 
+		${companyName} 코테 준비, ${companyName} 코딩테스트 문제 풀이, ${companyName} 알고리즘 문제, 
+		${companyName} 코딩 문제, ${companyName} 실력 측정, ${companyName} 코딩테스트 통계, 
+		${companyName} 합격자 점수, ${companyName} 코딩테스트 난이도, ${companyName} 코테 난이도, 
+		${companyName} 백준, ${companyName} 코딩테스트 통과, ${companyName} 코테 통과, ${companyName} 코딩테스트 합격 ${companyName} 코테 합격, ${companyName} 코테 불합격, ${companyName} 코테 불합격, 
+		${companyName} 코테 탈락, ${companyName} 코테 수준, ${companyName} 코딩테스트 수준, ${companyName} 공채, ${companyName} 코테 느낌, ${companyName} 코테 시간초과,
+
+		코딩테스트, 코테, 합격컷, 합격자 정보, 코딩테스트 난이도, 코테 난이도, 코테 몇솔, 몇 문제, 몇솔, 합격커트,
+		코딩테스트 분석, 코딩테스트 점수, 코딩테스트 후기, 알고리즘 테스트, 프로그래밍 테스트, 
+		개발자 테스트, 취업 코딩테스트, 기업 코딩테스트, 코딩테스트 준비, 코테 준비, 코테 문제 풀이, 
+		알고리즘 문제, 코딩테스트 문제, 후기, 코테 실력, 코딩테스트 통계, 합격자 점수, 난이도 평가, 난이도 분석, 
+		백준, 코딩테스트 통과, 코딩테스트 합격, 코딩테스트 불합격, 탈락, 코딩테스트 수준, 공채, 코딩테스트 느낌, 코테 시간초과
+	`;
+
+
 
 	return {
 		title: metaTitle,
