@@ -1,38 +1,25 @@
-import FullPageScroll from './components/FullPageScroll';
-import Container from './ui/container';
-import Float from './ui/interaction/float';
-import ClientSearchBox from './ui/clientSearchBox';
+import Home from './components/Home';
 import { Metadata } from 'next';
-import Script from 'next/script';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import FadeIn from './motion/FadeIn';
-import IndexTrLink from './ui/main/IndexTrLink';
-
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'WebSite',
-	url: 'https://sols.kr/',
-	name: '몇솔',
-	image: 'https://sols.kr/favicon.png',
-	description:
-		'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.'
-};
 
 export const metadata: Metadata = {
-	title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
+	title: '몇솔 | 더 빠르고, 쉽게 코딩테스트를 준비하는 방법',
 	description:
-		'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
-	keywords:
-		'기업 코딩테스트, 코딩테스트 정보, 코딩테스트 후기, 프로그래머스, 개발자 취업, IT 기업 채용, 코딩테스트 언어, 코딩테스트 준비, 코딩테스트 합격, 코딩테스트 난이도, 비대면 코딩테스트, 개발자 채용 플랫폼',
+		'기업별 코딩테스트 응시환경 정보부터 합격자 분석, 문제 유형과 후기까지! 몇솔에서 코딩테스트 합격을 위한 필수 정보를 한 번에 확인하세요.',
+	keywords: `기업 코딩테스트, 코딩테스트 정보, 코딩테스트 후기, 프로그래머스, 개발자 취업, 코딩테스트 언어, 코딩테스트 준비, 코딩테스트 합격,
+		코딩테스트 난이도, 비대면 코딩테스트, 코딩테스트 후기, 코테 후기, 지원언어, 응시언어, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용,
+		구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도, 히든 테케, 후기, 프로그래머스, 백준, 코드포스,
+		리트코드, 난이도, 검색, 비대면, 부정행위, 알고리즘, SQL, 프론트엔드, 백엔드, AI, 데이터, 자바, 파이썬, 코틀린, 스위프트,
+		자바스크립트, 모니토, 화상감독, 코딩테스트, 코테, 합격컷, 합격자 정보, 코딩테스트 난이도, 코테 난이도, 코테 몇솔, 몇 문제, 몇솔, 합격커트,
+		코딩테스트 분석, 코딩테스트 점수, 코딩테스트 후기, 알고리즘 테스트, 프로그래밍 테스트, 개발자 테스트, 취업 코딩테스트, 기업 코딩테스트,
+		코딩테스트 준비, 코테 준비, 코테 문제 풀이, 알고리즘 문제, 코딩테스트 문제, 후기, 코테 실력, 코딩테스트 통계, 합격자 점수, 난이도 평가,
+		난이도 분석, 백준, 코딩테스트 통과, 코딩테스트 합격, 코딩테스트 불합격, 탈락, 코딩테스트 수준, 공채, 코딩테스트 느낌, 코테 시간초과`,
 	icons: {
 		icon: '/favicon.png'
 	},
 	openGraph: {
-		title: '몇솔 | 개발자 취업 준비 필수 플랫폼',
+		title: '몇솔 | 더 빠르고, 쉽게 코딩테스트를 준비하는 방법',
 		description:
-			'기업별 코딩테스트 정보를 한 번에. 지원자들의 100% 리얼 후기로 더 확실하게 대비하세요.',
+			'기업별 코딩테스트 응시환경 정보부터 합격자 분석, 문제 유형과 후기까지! 몇솔에서 코딩테스트 합격을 위한 필수 정보를 한 번에 확인하세요.',
 		siteName: '몇솔',
 		images: [
 			{
@@ -45,98 +32,6 @@ export const metadata: Metadata = {
 	}
 };
 
-const LogoCarousel = dynamic(() => import('./components/LogoCarousel'), {
-	ssr: false,
-	loading: () => <p>로딩 중...</p>
-});
-
-export default function Home({
-	searchParams
-}: {
-	searchParams?: {
-		query?: string;
-	};
-}) {
-	const query = searchParams?.query || '';
-	return (
-		<div className="h-screen">
-			<Script
-				id="jsonLd"
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-			/>
-			<FullPageScroll>
-				<section className="relative h-full w-full items-center justify-center bg-white">
-					<div className="flex h-full flex-col items-center justify-between">
-						<div className="relative flex w-full flex-1 items-center justify-center">
-							<Float />
-							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
-								<FadeIn>
-									<Container className="relative flex h-46 max-w-7xl justify-center">
-										<div className="z-30 flex flex-col items-center justify-center">
-											<div className="text-3xl">
-												<div className="bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent">
-													더 빠르고, 쉽게
-												</div>
-												<div className="hidden bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:block">
-													기업 코딩테스트를 준비하는 방법
-												</div>
-												<div className="block bg-gradient-text-2 bg-clip-text pb-6 text-center font-extrabold text-transparent sm:hidden">
-													기업 코딩테스트를
-												</div>
-												<div className="block bg-gradient-text-2 bg-clip-text pb-16 text-center font-extrabold text-transparent sm:hidden">
-													준비하는 방법
-												</div>
-											</div>
-
-											<ClientSearchBox />
-										</div>
-									</Container>
-								</FadeIn>
-							</div>
-						</div>
-						<div className="hidden lg:block"></div>
-						<Image
-							className="absolute bottom-4 animate-bounce"
-							src="/icons/scroll.svg"
-							alt="scroll"
-							width={40}
-							height={40}
-						/>
-					</div>
-				</section>
-
-				<section className="flex h-full w-full pt-16 flex-col items-center justify-between">
-					<article className="flex flex-col gap-2 pt-16  text-center ">
-						<h2 className="bg-gradient-text-1 bg-clip-text text-lg font-bold text-transparent md:text-2xl">
-							이 기업 코딩테스트, 내가 합격할 수 있을까?
-						</h2>
-						<span className="text-sm text-gray-80 md:text-base">
-							응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
-						</span>
-					</article>
-					<div className="flex w-full max-w-4xl flex-col items-center justify-center gap-8 py-8">
-						<LogoCarousel />
-						<Link
-							className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"
-							href="/company"
-						>
-							기업 전체 보기 →
-						</Link>
-					</div>
-					<FadeIn>
-						<div className="flex flex-col gap-5">
-							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
-								여러분의 후기를 들려주세요!
-							</h2>
-							<IndexTrLink/>
-						</div>
-						<div className="py-16">
-							<div className="text-center text-black">2024 © solslab Corp.</div>
-						</div>
-					</FadeIn>
-				</section>
-			</FullPageScroll>
-		</div>
-	);
+export default function Page() {
+	return <Home />;
 }

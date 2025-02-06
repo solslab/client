@@ -57,11 +57,16 @@ const LogoCarousel: React.FC = () => {
 					<div key={index} className="flex flex-col items-center justify-between px-2">
 						<Link
 							href={`/company/${company.company_id}`}
+							prefetch={false}
 							className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
 						>
 							<Image
-								src={company.company_logo?company.company_logo:'/companyLogo/default_company_logo_white.png'}
-								alt={`Company logo ${index + 1}`}
+								src={
+									company.company_logo
+										? company.company_logo
+										: '/companyLogo/default_company_logo_white.png'
+								}
+								alt={`기업 로고 ${index + 1} - 몇솔`}
 								width={100}
 								height={100}
 								objectFit="contain"

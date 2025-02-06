@@ -16,10 +16,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
 	const companyName = companyData ? companyData.company_name : '';
 	const metaTitle = companyData
-		? `${companyData.company_name} 코딩테스트 정보 - 지원 언어, 시험 방식, 응시 후기 모음 | 몇솔`
+		? `${companyData.company_name} 코딩테스트 정보 - 응시 환경, 지원 언어, 시험 방식 등 | 몇솔`
 		: '몇솔';
-	const metaDesc = `${companyName} 코딩테스트 준비에 필요한 모든 정보 및 후기를 몇솔에서 무료로 확인하세요.`;
-	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코딩 언어, ${companyName} 코딩테스트 후기, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도`;
+	const metaDesc = `${companyName} 코딩테스트 환경정보를 확인해보세요. 지원언어, 문제 수, IDE 사용 가능 여부, 구글링 가능 여부, 시험 방식 등 중요 참고사항을 한 눈에 확인하세요.`;
+	const metaKeyword = `${companyName} 코딩테스트, ${companyName} 채용, ${companyName} 코테 언어, ${companyName} 코테, ${companyName} 코테 후기, ${companyName} 코딩테스트 후기,
+		코테 후기, 지원언어, 응시언어, 개발자 취업 준비, 몇솔, 시험시간, 문제수, IDE사용, 구글링, 히든 테스트케이스, 시험방식, 응시장소, 플랫폼, 합격컷, 합격기준, 수준, 난이도, 히든 테케, 후기, 프로그래머스,
+		백준, 코드포스, 리트코드, 난이도, 검색, 비대면, 부정행위, 알고리즘, SQL, 프론트엔드, 백엔드, AI, 데이터, 자바, 파이썬, 코틀린, 스위프트, 자바스크립트, 모니토, 화상감독`;
 
 	return {
 		title: metaTitle,
@@ -49,7 +51,6 @@ export default async function Page({
 }) {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
-	console.log(companyData)
 	if (!companyData?.public) {
 		notFound();
 	}

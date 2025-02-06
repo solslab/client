@@ -1,4 +1,3 @@
-
 export default function BasicConfirm({
   children,
   onConfirm,
@@ -9,7 +8,7 @@ export default function BasicConfirm({
   onCancel?:()=>void;
 }) {
   return (
-    <div className='fixed inset-0 w-screen h-screen flex justify-center items-center'>
+    <div className='fixed inset-0 w-screen h-screen flex justify-center items-center bg-black/50 z-50'>
         <div className="w-96 px-16 py-8 shadow-customShadow bg-white border border-gray-50 rounded-xl flex flex-col items-center ">
       <div className="min-h-44 py-12 flex flex-col justify-center items-center">
         {children}
@@ -25,5 +24,5 @@ export default function BasicConfirm({
     </div>
     </div>
 
-  );
+  );  
 }

@@ -7,6 +7,8 @@ import PrelineScript from './ui/PrelineScript';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
 import Footer from './ui/Footer';
+import { headers } from 'next/headers';
+import AdminPageLayout from '@/app/admin/components/admin-page-layout';
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -35,7 +37,8 @@ export default function RootLayout({
 			<body className={`${pretendard.className}`}>
 				<LastPathSetter />
 				<Topnav />
-				<main className="pt-16">{children}</main>
+				<AdminPageLayout></AdminPageLayout>
+				<main>{children}</main>
 				<Footer />
 			</body>
 			<GoogleAnalytics gaId="G-9PG6DER9G1" />

@@ -6,6 +6,8 @@ export interface User {
     prefer_positions: string[];
     prefer_industries: string[];
     social_type: string;
+    al_platform: string;
+    nickname: string;
 };
 
 export interface UserUpdateField {
@@ -16,12 +18,14 @@ export interface UserUpdateField {
 };
 
 export interface Company {
-    company_name: string;
-    industry_type: string[];
-    company_logo: string;
-    positions:Position[];
-    public:boolean;
+	 company_name: string;
+	 industry_type: string[];
+	 company_logo: string;
+	 positions: Position[];
+	 search_terms: string[];
+   public: boolean;
 }
+
 export interface CompanyQuery {
     company_id:string;
     company_name: string;
@@ -60,7 +64,7 @@ export interface TestData {
   }
 
   export interface CompanyOverviewData {
-      company_id: string;
+    company_id: string;
     company_name: string;
     company_logo: string;
     industry_type: string[];
@@ -95,3 +99,17 @@ export type DataItem = {
 	tr_solved_num: number;
 	tr_pass_status: string;
 };
+
+export interface AllMemberPage {
+	members: {
+		member_key: string;
+		name: string;
+		email: string;
+		social_type: string;
+		created_date: string;
+	}[];
+	total_elements: number;
+	total_pages: number;
+	current_page: number;
+	page_size: number;
+}

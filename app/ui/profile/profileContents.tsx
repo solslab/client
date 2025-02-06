@@ -29,69 +29,65 @@ useEffect(()=>{
 },[])
 
   return (
-    <div className="px-5 py-16">
-    <div className="text-base py-4 flex flex-wrap w-full ">
-      <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
-        이름
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-        {profileData?.name}
-      </div>
-    </div>
-    <div className="text-base py-4 flex flex-wrap w-full">
-      <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
-        닉네임
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-        {profileData?.nickname}
-      </div>
-    </div>
-    <div className="text-base py-4 flex flex-wrap w-full">
-      <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
-        이메일
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-        {profileData?.email}
-      </div>
-    </div>
-    <div className="text-base py-4 flex flex-wrap w-full">
-      <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-center">
-        티어 / 점수
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0">
-        <span>{platformAndLabel?.label}</span>
-        <span className="text-gray-70 text-sm ">
-          {" "}
-          {platformAndLabel?.platform? "("+platformAndLabel.platform+")":""}
-        </span>
-      </div>
-    </div>
-    <div className="text-base py-4 flex flex-wrap w-full">
-      <div className="text-gray-80 font-bold w-full md:w-1/5 flex flex-col justify-start ">
-        선호 언어
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
-        {profileData?.prefer_languages ?
-          profileData?.prefer_languages.map((language) => (
-            <LanguageBox key={language} language={language} />
-          ))
-        :
-        <p>-</p>}
-      </div>
-    </div>
-    <div className="text-base py-4 flex flex-wrap w-full">
-      <div className="text-gray-80 font-bold w-full md:w-1/5  flex flex-col justify-start">
-        취업 희망 분야
-      </div>
-      <div className="text-text-base w-full md:w-4/5 mt-4 md:mt-0 flex flex-wrap">
-        {profileData?.prefer_industries ?
-          profileData.prefer_industries.map((industry) => (
-            <FieldBox key={industry} feild={industry} />
-          ))
-        :
-        <p>-</p>}
-      </div>
-    </div>
-  </div>
-  );
+		<div className="px-5 py-16">
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+					이름
+				</div>
+				<div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">{profileData?.name}</div>
+			</div>
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+					닉네임
+				</div>
+				<div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">{profileData?.nickname}</div>
+			</div>
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+					이메일
+				</div>
+				<div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">{profileData?.email}</div>
+			</div>
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+					티어 / 점수
+				</div>
+				<div className="mt-4 w-full text-text-base md:mt-0 md:w-4/5">
+					<span>{platformAndLabel?.label || '-'}</span>
+					<span className="text-sm text-gray-70">
+						{platformAndLabel?.platform ? ` (${platformAndLabel.platform})` : ''}
+					</span>
+				</div>
+			</div>
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-start font-bold text-gray-80 md:w-1/5">
+					선호 언어
+				</div>
+				<div className="mt-4 flex w-full flex-wrap text-text-base md:mt-0 md:w-4/5">
+					{profileData?.prefer_languages && profileData?.prefer_languages.length > 0 ? (
+						profileData?.prefer_languages.map((language) => (
+							<LanguageBox key={language} language={language} />
+						))
+					) : (
+						<p>-</p>
+					)}
+				</div>
+			</div>
+
+			<div className="flex w-full flex-wrap py-4 text-base">
+				<div className="flex w-full flex-col justify-start font-bold text-gray-80 md:w-1/5">
+					취업 희망 분야
+				</div>
+				<div className="mt-4 flex w-full flex-wrap text-text-base md:mt-0 md:w-4/5">
+					{profileData?.prefer_industries ? (
+						profileData.prefer_industries.map((industry) => (
+							<FieldBox key={industry} feild={industry} />
+						))
+					) : (
+						<p>-</p>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 }

@@ -1,5 +1,6 @@
 export const NEXT_URL:string = process.env.NEXT_URL || '';
 export const SPRING_URL:string = process.env.SPRING_URL ||'';
+export const ADMIN_URL: string = process.env.ADMIN_URL || '';
 export const SKILLS = [
     "C",
     "C++",
@@ -113,7 +114,8 @@ export const SKILLS = [
   ];
   export const PROBLEM_TYPE = [
     { value: "문자열(String, string)", label: "문자열",type:'자료구조' },
-    { value: "해시(Hash, hash)", label: "해시" ,type:'자료구조'},
+    { value: "집합(Set, set)", label: "집합" ,type:'자료구조'},
+    { value: "해시(Hash, hash, 해싱)", label: "해시" ,type:'자료구조'},
     { value: "스택(Stack, stack)", label: "스택",type:'자료구조' },
     { value: "큐(Queue, queue)", label: "큐" ,type:'자료구조'},
     { value: "덱(Deque, deque)", label: "덱" ,type:'자료구조'},
@@ -129,17 +131,23 @@ export const SKILLS = [
     { value: "그래프(Graph, graph)", label: "그래프" ,type:'알고리즘'},
     { value: "재귀(Recursion, recursion)", label: "재귀" ,type:'알고리즘'},
     { value: "백트래킹(Backtracking, backtracking)", label: "백트래킹" ,type:'알고리즘'},
+    { value: "구현(Implementation, implementation)", label: "구현" ,type:'알고리즘'},
+    { value: "누적 합(Prefix Sum, prefix sum, 누적합)", label: "누적 합" ,type:'알고리즘'},
     { value: "시뮬레이션(Simulation, simulation, 구현)", label: "시뮬레이션" ,type:'알고리즘'},
     { value: "정렬(Sort, sort)", label: "정렬" ,type:'알고리즘'},
     { value: "최단 거리(Shortest Path, shortest path)", label: "최단 거리" ,type:'알고리즘'},
-    { value: "우선순위 큐(Priority Queue, priority queue)", label: "우선순위 큐" ,type:'알고리즘'},
-    { value: "투 포인터(Two Pointer, two pointer)", label: "투 포인터" ,type:'알고리즘'},
+    { value: "우선순위 큐(Priority Queue, priority queue, 우선순위큐)", label: "우선순위 큐" ,type:'알고리즘'},
+    { value: "투 포인터(Two Pointer, two pointer, 투포인터)", label: "투 포인터" ,type:'알고리즘'},
+    { value: "슬라이딩 윈도우(Sliding Window, sliding window, 슬라이딩윈도우)", label: "슬라이딩 윈도우" ,type:'알고리즘'},
+    { value: "조합(Combination, combination)", label: "조합" ,type:'알고리즘'},
     { value: "다익스트라(Dijkstra, dijkstra)", label: "다익스트라" ,type:'알고리즘'},
     { value: "벨만 포드(Bellman-Ford, bellman-ford)", label: "벨만 포드" ,type:'알고리즘'},
     { value: "플로이드-워셜(Floyd-Warshall, floyd-warshall)", label: "플로이드-워셜" ,type:'알고리즘'},
-    { value: "위상 정렬(Topological Sorting, topological sorting)", label: "위상 정렬" ,type:'알고리즘'},
-    { value: "최소 신장 트리(MST, Minimum Spanning Tree, minimum spanning tree)", label: "최소 신장 트리" ,type:'알고리즘'},
+    { value: "위상 정렬(Topological Sorting, topological sorting, 위상정렬)", label: "위상 정렬" ,type:'알고리즘'},
+    { value: "최소 신장 트리(MST, Minimum Spanning Tree, minimum spanning tree, 최소신장트리)", label: "최소 신장 트리" ,type:'알고리즘'},
     { value: "크루스칼(Kruskal Algorithm, kruskal algorithm)", label: "크루스칼" ,type:'알고리즘'},
+    { value: "유니온 파인드(Union Find, union find, 유니온파인드", label: "유니온 파인드" ,type:'알고리즘'},
+    { value: "비트마스킹(Bit Masking, bit masking)", label: "비트마스킹" ,type:'알고리즘'},
     { value: "KMP", label: "KMP" ,type:'알고리즘'},
     { value: "수학(Math, math)", label: "수학" ,type:'알고리즘'},
     { value: "JOIN", label: "JOIN" ,type:'SQL'},
@@ -157,9 +165,9 @@ export const SKILLS = [
     { value: "집계함수", label: "집계함수" ,type:'SQL'}
 ];
 export const TR_CAREER = [
-  '신입','경력','인턴'
+  '신입','경력'
 ]  
 export const PASS_STATUS
  = [
-  '합격','불합격','대기중'
+  '합격','불합격'
  ]

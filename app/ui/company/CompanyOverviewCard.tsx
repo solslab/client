@@ -7,6 +7,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 		<Link
 			href={`/company/${companyData.company_id}`}
 			className="flex w-full flex-col gap-4 rounded-[10px] border-[1px] border-gray-50 p-[10px] text-sm hover-effect md:gap-5 md:p-5"
+			prefetch={false}
 		>
 			<div className="flex items-center gap-[14px]">
 				<Image
@@ -15,7 +16,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 							? companyData.company_logo
 							: '/companyLogo/default_company_logo.png'
 					}
-					alt={companyData.company_name}
+					alt={`${companyData.company_name} 로고 - 몇솔`}
 					width={50}
 					height={50}
 					className="rounded-[10px] border-[1px] border-gray-50"

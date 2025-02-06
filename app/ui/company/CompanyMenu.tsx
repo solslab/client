@@ -13,7 +13,7 @@ export default function CompanyMenu({ company_id, currentPage }: CompanyMenuProp
 			isActive: currentPage === 'testInfo'
 		},
 		{
-			label: '데이터랩',
+			label: '합격자 분석',
 			href: `/company/${company_id}/datalab`,
 			isActive: currentPage === 'datalab'
 		}

@@ -10,18 +10,15 @@ export default function FieldToggleButton({
   onClick: () => void;
 }) {
   return (
-    <button
-    type='button'
-      onClick={() => onClick()}
-      className={clsx(
-        `rounded-3xl mx-1 mb-4 px-4 py-2 text-sm font-bold  `,
-        {
-          "bg-main-base text-white": active,
-          "text-text-base text-base bg-bg-base hover:bg-gray-60 border border-gray-50": !active,
-        }
-      )}
-    >
-      {text}
-    </button>
-  );
+		<button
+			type="button"
+			onClick={() => onClick()}
+			className={clsx(`mx-1 mb-4 rounded-3xl px-4 py-2 text-sm font-semibold`, {
+				'border border-main-base text-white bg-main-base': active,
+				'bg-bg-white border border-gray-30 text-base text-text-base hover:bg-gray-60': !active
+			})}
+		>
+			{text}
+		</button>
+	);
 }
