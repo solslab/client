@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 const LogoCarousel: React.FC = () => {
 	const [randomCompany, setRandomCompany] = useState<CompanyQuery[] | null>(null);
-
+	
 	useEffect(() => {
 		fetchRandomCompany().then(setRandomCompany);
 	}, []);
@@ -20,16 +20,14 @@ const LogoCarousel: React.FC = () => {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 4,
+		slidesToShow: 5,
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 2000,
 		pauseOnHover: true,
 		draggable: false,
 		centerMode: false,
-		variableWidth: true,
 		adaptiveHeight: true,
-
 		responsive: [
 			{
 				breakpoint: 768,
@@ -54,8 +52,10 @@ const LogoCarousel: React.FC = () => {
 		<div className="w-full overflow-hidden">
 			<Slider {...settings}>
 				{randomCompany?.map((company, index) => (
-					<div key={index} className="flex flex-col items-center justify-between px-2">
-						<Link
+					<div key={index} className="flex flex-col items-center justify-between px-2 slick-slide  h-[120px] w-[120px] md:h-[140px] md:w-[140px]">
+						<div className='w-full flex flex-col justify-center '>
+							<div className='flex w-full justify-center'>
+							<Link
 							href={`/company/${company.company_id}`}
 							prefetch={false}
 							className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
@@ -71,8 +71,11 @@ const LogoCarousel: React.FC = () => {
 								height={100}
 								objectFit="contain"
 							/>
+
 						</Link>
+							</div>
 						<p className="pt-[10px] text-center text-sm font-semibold">{company.company_name}</p>
+						</div>
 					</div>
 				))}
 			</Slider>
