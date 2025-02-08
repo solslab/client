@@ -31,14 +31,14 @@ export default function Topnav() {
 								height={24}
 								className="hidden sm:block"
 								src="/icons/logo_light.png"
-								alt="Sols"
+								alt="몇솔"
 							/>
 							<Image
 								width={48}
 								height={48}
 								className="block h-auto w-auto sm:hidden"
 								src="/icons/mobile_logo.png"
-								alt="Sols"
+								alt="몇솔"
 							/>
 						</Link>
 						<div className="hidden sm:ml-6 sm:block md:ml-32">
