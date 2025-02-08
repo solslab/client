@@ -11,6 +11,7 @@ import Link from 'next/link';
 import FadeIn from '../motion/FadeIn';
 import IndexTrLink from '../ui/main/IndexTrLink';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -39,7 +40,7 @@ export default function Home() {
 			/>
 			<FullPageScroll isSearching={isSearching}>
 				<section className="relative h-full w-full items-center justify-center bg-white">
-					<div className="flex h-full flex-col items-center justify-between">
+					<div className="z-0 flex h-full flex-col items-center justify-between">
 						<div className="relative flex w-full flex-1 items-center justify-center">
 							<Float />
 							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
@@ -70,19 +71,23 @@ export default function Home() {
 								</FadeIn>
 							</div>
 						</div>
-						<div className="hidden lg:block"></div>
-						<Image
-							className="absolute z-0 bottom-4 animate-bounce"
-							src="/icons/scroll.svg"
-							alt="몇솔 스크롤 이미지"
-							width={40}
-							height={40}
-						/>
+						<div className="absolute bottom-4 animate-bounce">
+							<Image
+								className={clsx(
+									'transition-opacity duration-500 ease-in-out',
+									isSearching ? 'pointer-events-none opacity-0' : 'opacity-100'
+								)}
+								src="/icons/scroll.svg"
+								alt="몇솔 스크롤 이미지"
+								width={40}
+								height={40}
+							/>
+						</div>
 					</div>
 				</section>
 
 				<section className="flex h-full w-full flex-col items-center justify-between pt-16">
-					<div className="flex flex-col items-center justify-center flex-1">
+					<div className="flex flex-1 flex-col items-center justify-center">
 						<article className="flex flex-col gap-2 text-center">
 							<h2 className="bg-gradient-text-1 bg-clip-text text-lg font-bold text-transparent md:text-2xl">
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
