@@ -20,7 +20,8 @@ const LogoCarousel: React.FC = () => {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 5,
+		initialSilde:0,
+		slideToShow: 5,
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 2000,
@@ -33,17 +34,15 @@ const LogoCarousel: React.FC = () => {
 				breakpoint: 768,
 				settings: {
 					slidesToShow: 3,
-					centerMode: true,
-					centerPadding: '25%'
+					variableWidth: true,
 				}
 			},
 			{
-				breakpoint: 500,
+				breakpoint: 2400,
 				settings: {
-					slidesToShow: 1,
-					centerMode: true,
-					centerPadding: '25%'
+					slidesToShow: 5,
 				}
+
 			}
 		]
 	};
@@ -52,7 +51,7 @@ const LogoCarousel: React.FC = () => {
 		<div className="w-full overflow-hidden">
 			<Slider {...settings}>
 				{randomCompany?.map((company, index) => (
-					<div key={index} className="flex flex-col items-center justify-between px-2 slick-slide  h-[120px] w-[120px] md:h-[140px] md:w-[140px]">
+					<div key={index} className="  px-2 slick-slide  w-[100px]  md:w-[140px]">
 						<div className='w-full flex flex-col justify-center '>
 							<div className='flex w-full justify-center'>
 							<Link
