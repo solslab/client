@@ -98,7 +98,7 @@ export default function Home() {
 								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
-						<div className="flex  w-full max-w-4xl flex-col items-center justify-center gap-8 py-8">
+						<div className="flex  w-full max-w-[692px] md:max-w-4xl flex-col items-center justify-center gap-8 py-8">
 							<LogoCarousel />
 							<Link
 								className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"
