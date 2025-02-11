@@ -426,3 +426,58 @@ export const getTestInfo = async (positionId: string): Promise<TestData> => {
 		);
 	}
 };
+
+export const updateTestInfo = async (positionId: string, testData: any) => {
+	try {
+		const token = await getAdminToken();
+
+		const response = await fetch(`${SPRING_URL}/position/${positionId}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token?.value}`
+			},
+			body: JSON.stringify(testData)
+		});
+
+		if (response.status === 200) {
+			const data = await response.json();
+			return {
+				status: 200,
+				message: '시험정보 수정이 완료되었습니다.',
+				data
+			};
+		} else if (response.status === 404) {
+			return {
+				status: 404,
+				message: '존재하지 않는 시험 ID입니다.'
+			};
+		} else if (response.status === 400) {
+			const errorData = await response.json();
+			return {
+				status: 400,
+				message: errorData.message || '잘못된 필드가 포함되어 있습니다.'
+			};
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '시험정보 수정 중 알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('시험정보 수정 중 오류 발생:', error);
+		return {
+			status: 500,
+			message: '시험정보 수정 중 알 수 없는 오류가 발생했습니다.'
+		};
+	}
+};
