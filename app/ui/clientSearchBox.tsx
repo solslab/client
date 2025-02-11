@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CompanyQuery } from '../lib/definitions';
 import { fetchFilteredCompanys } from '../lib/data';
 import Link from 'next/link';
@@ -10,9 +10,10 @@ import clsx from 'clsx';
 interface ClientSearchBoxProps {
     onSearchStart: () => void;
     onSearchEnd: () => void;
+	setIconActive:Dispatch<SetStateAction<boolean>>;
 }
 
-export default function ClientSearchBox({ onSearchStart, onSearchEnd }: ClientSearchBoxProps) {
+export default function ClientSearchBox({ onSearchStart, onSearchEnd,setIconActive }: ClientSearchBoxProps) {
     const [query, setQuery] = useState('');
     const [value, setValue] = useState('');
     const [companyList, setCompanyList] = useState<CompanyQuery[]>([]);
@@ -42,6 +43,14 @@ export default function ClientSearchBox({ onSearchStart, onSearchEnd }: ClientSe
             clearTimeout(handler);
         };
     }, [value]);
+	useEffect(()=>{
+		if(companyList?.length>0){
+			setIconActive(false);
+		}else{
+			setIconActive(true);
+		}
+
+	},[companyList]);
 
     useEffect(() => {
         const fetchQuery = async () => {

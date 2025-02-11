@@ -30,6 +30,7 @@ const LogoCarousel = dynamic(() => import('./LogoCarousel'), {
 
 export default function Home() {
 	const [isSearching, setIsSearching] = useState(false);
+	const [isMouseIconActive, setIsMouseIconActive] = useState(true);
 
 	return (
 		<div className="h-screen">
@@ -65,6 +66,7 @@ export default function Home() {
 											<ClientSearchBox
 												onSearchStart={() => setIsSearching(true)}
 												onSearchEnd={() => setIsSearching(false)}
+												setIconActive={setIsMouseIconActive}
 											/>
 										</div>
 									</Container>
@@ -75,7 +77,7 @@ export default function Home() {
 							<Image
 								className={clsx(
 									'transition-opacity duration-500 ease-in-out',
-									isSearching ? 'pointer-events-none opacity-0' : 'opacity-100'
+									isMouseIconActive ?   'opacity-100':'pointer-events-none opacity-0'
 								)}
 								src="/icons/scroll.svg"
 								alt="몇솔 스크롤 이미지"
@@ -87,7 +89,7 @@ export default function Home() {
 				</section>
 
 				<section className="flex h-full w-full flex-col items-center justify-between pt-16">
-					<div className="flex flex-1 flex-col items-center justify-center">
+					<div className="flex flex-1 flex-col items-center justify-center w-full">
 						<article className="flex flex-col gap-2 text-center">
 							<h2 className="bg-gradient-text-1 bg-clip-text text-lg font-bold text-transparent md:text-2xl">
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
@@ -96,7 +98,7 @@ export default function Home() {
 								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
-						<div className="flex w-full max-w-4xl flex-col items-center justify-center gap-8 py-8">
+						<div className="flex  w-full max-w-4xl flex-col items-center justify-center gap-8 py-8">
 							<LogoCarousel />
 							<Link
 								className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"
