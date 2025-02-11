@@ -537,7 +537,6 @@ export const getAllSuggestions = async (page: number, size: number): Promise<any
 	}
 };
 
-
 export const getSuggestionDetails = async (suggestionId: string): Promise<any> => {
 	try {
 		const token = await getAdminToken();
@@ -612,3 +611,39 @@ export const updateSuggestionStatus = async (
 		};
 	}
 };
+
+export const getAllFeedbacks = async (page: number, size: number): Promise<any> => {
+	try {
+		const token = await getAdminToken();
+		const response = await fetch(`${SPRING_URL}/feedback?page=${page}&size=${size}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+
+		if (response.ok) {
+			const data: AllSuggestionPage = await response.json();
+			return data;
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('전체 피드백 조회 중 오류 발생:', error);
+		return {
+			status: 500,
+			message: '전체 피드백 조회 중 알 수 없는 오류가 발생했습니다.'
+		};
+	}};

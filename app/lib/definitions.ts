@@ -166,3 +166,15 @@ export interface SuggestionDetail {
   status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED";
   created_date: string;
 }
+
+export interface AllFeedbackPage {
+	feedbacks: {
+		rating: number;
+		feedback_content: string;
+		created_date: string;
+	}[];
+	total_elements: number;
+	total_pages: number;
+	current_page: number;
+	page_size: number;
+}
