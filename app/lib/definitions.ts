@@ -113,3 +113,31 @@ export interface AllMemberPage {
 	current_page: number;
 	page_size: number;
 }
+
+export interface AllReviewPage {
+	test_reviews: {
+		tr_id: string;
+		member_name: string;
+		company_name: string;
+		created_date: string;
+	}[];
+	total_elements: number;
+	total_pages: number;
+	current_page: number;
+	page_size: number;
+}
+
+export interface ReviewDetail {
+  company_name: string;
+  member_name: string;
+  member_tier: number;
+  tr_year: string;
+	tr_position: string | null;
+	tr_career: string;
+	tr_problem_num: number;
+	tr_solved_num: number;
+	tr_pass_status: string;
+  tr_problem_type: string[];
+  tr_comment: string;
+  created_date: string;
+}

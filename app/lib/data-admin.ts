@@ -2,7 +2,7 @@
 
 import { SPRING_URL } from './constants';
 // import { deleteToken, getToken, updateToken } from './cookie';
-import { CompanyPageResponse, AllMemberPage, User, TestData } from './definitions';
+import { CompanyPageResponse, AllMemberPage, AllReviewPage, User, TestData } from './definitions';
 import { getAdminToken, deleteAdminToken } from './cookie';
 
 type ErrorResponse = { status: number; message: any };
@@ -424,5 +424,78 @@ export const getTestInfo = async (positionId: string): Promise<TestData> => {
 		throw new Error(
 			error instanceof Error ? error.message : 'testinfo 조회 중 알 수 없는 오류가 발생했습니다.'
 		);
+	}
+};
+
+export const getAllReviews = async (page: number, size: number): Promise<any> => {
+	try {
+		const token = await getAdminToken();
+		const response = await fetch(`${SPRING_URL}/tr?page=${page}&size=${size}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+
+		if (response.ok) {
+			const data: AllReviewPage = await response.json();
+			return data;
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('전체 리뷰 조회 중 오류 발생:', error);
+		return {
+			status: 500,
+			message: '전체 리뷰 조회 중 알 수 없는 오류가 발생했습니다.'
+		};
+	}
+};
+
+export const getReviewDetails = async (trId: string): Promise<any> => {
+	try {
+		const token = await getAdminToken();
+		const response = await fetch(`${SPRING_URL}/tr/${trId}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token?.value}`
+			}
+		});
+		if (response.ok) {
+			const data: User = await response.json();
+			return data;
+		} else if (response.status === 401) {
+			if (token?.value) {
+				deleteAdminToken();
+			}
+			return {
+				status: 401,
+				message: '토큰이 만료되었습니다. 다시 로그인하세요.'
+			};
+		} else {
+			const errorData = await response.json();
+			return {
+				status: response.status,
+				message: errorData.message || '알 수 없는 오류가 발생했습니다.'
+			};
+		}
+	} catch (error) {
+		console.error('리뷰 상세조회 중 오류 발생:', error);
+		return {
+			status: 500,
+			message: '리뷰 상세조회 중 알 수 없는 오류가 발생했습니다.'
+		};
 	}
 };
