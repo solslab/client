@@ -8,7 +8,7 @@ import Script from 'next/script';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import FadeIn from '../../motion/FadeIn';
+import FadeIn from '@/app/ui/motion/FadeIn';
 import IndexTrLink from './IndexTrLink';
 import { useState } from 'react';
 import clsx from 'clsx';

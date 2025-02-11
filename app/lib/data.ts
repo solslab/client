@@ -74,6 +74,27 @@ export const fetchFilteredCompanys = async (query: string) => {
     }
 
 };
+export const fetchAllCompanies = async () => {
+    try {
+        const response = await fetch(`${SPRING_URL}/company/ids`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`오류 발생: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data
+
+    } catch (error) {
+        console.error('fetchAllCompanys중 오류 발생:', error);
+    }
+
+}
 
 export const fetchFiltereAllCompanys = async (query: string) => {
     try {

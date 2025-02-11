@@ -1,4 +1,4 @@
-import Home from './ui/main/Home';
+import Home from '@/app/ui/main/Home';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
