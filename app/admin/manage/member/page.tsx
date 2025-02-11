@@ -58,7 +58,7 @@ export default function MemberOverviewPage() {
 			<div className="container mx-auto">
 				<div className="mb-4 flex h-10 items-center px-6">
 					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
-						회원 목록 ({totalElements})
+						회원 목록 {members ? `(${totalElements})` : ''}
 					</span>
 				</div>
 				<Table className="mx-auto w-10/12 border">
@@ -71,18 +71,26 @@ export default function MemberOverviewPage() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{members.map((member) => (
-							<TableRow
-								key={member.member_key}
-								onClick={() => handleRowClick(member.member_key)}
-								className="cursor-pointer hover:bg-gray-100"
-							>
-								<TableCell className="font-medium">{member.name}</TableCell>
-								<TableCell className="overflow-hidden text-ellipsis">{member.email}</TableCell>
-								<TableCell>{member.social_type}</TableCell>
-								<TableCell>{member.created_date}</TableCell>
+						{members ? (
+							members.map((member) => (
+								<TableRow
+									key={member.member_key}
+									onClick={() => handleRowClick(member.member_key)}
+									className="cursor-pointer hover:bg-gray-100"
+								>
+									<TableCell className="font-medium">{member.name}</TableCell>
+									<TableCell className="overflow-hidden text-ellipsis">{member.email}</TableCell>
+									<TableCell>{member.social_type}</TableCell>
+									<TableCell>{member.created_date}</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={4} className="py-4 text-center text-gray-500">
+									정보가 없습니다.
+								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 				<Pagination className="mt-4">

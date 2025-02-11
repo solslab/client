@@ -171,3 +171,10 @@ export const PASS_STATUS
  = [
   '합격','불합격'
  ]
+
+export const STATUS_OPTIONS = [
+	{ value: 'NOT_STARTED', label: '처리 전' },
+	{ value: 'IN_PROGRESS', label: '진행 중' },
+	{ value: 'COMPLETED', label: '완료됨' },
+	{ value: 'REJECTED', label: '거절됨' }
+];

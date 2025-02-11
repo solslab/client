@@ -21,68 +21,81 @@ import {
 import { getAllSuggestions } from '@/app/lib/data-admin';
 import { AllSuggestionPage } from '@/app/lib/definitions';
 import SuggestionDetailModal from '@/app/admin/components/suggestion-detail';
+import { STATUS_OPTIONS } from '@/app/lib/constants';
+
 
 export default function SuggestionOverviewPage() {
 	const [suggestions, setSuggestions] = useState<AllSuggestionPage['suggestions']>([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
 	const [totalElements, setTotalElements] = useState(0);
-	const [selectedsuggestionId, setSelectedsuggestionId] = useState<string | null>(null);
+	const [selectedSuggestionId, setSelectedSuggestionId] = useState<string | null>(null);
+
+	const fetchSuggestions = async () => {
+		const response = await getAllSuggestions(currentPage, 15);
+		if (response) {
+			setSuggestions(response.suggestions);
+			setTotalPages(response.total_pages);
+			setTotalElements(response.total_elements);
+		}
+	};
 
 	useEffect(() => {
-		const fetchSuggestions = async () => {
-			const response = await getAllSuggestions(currentPage, 20);
-			if (response) {
-				setSuggestions(response.suggestions);
-				setTotalPages(response.total_pages);
-				setTotalElements(response.total_elements);
-			}
-		};
-
 		fetchSuggestions();
 	}, [currentPage]);
 
 	const handleRowClick = (suggestionId: string) => {
-		setSelectedsuggestionId(suggestionId);
+		setSelectedSuggestionId(suggestionId);
 	};
 
 	const handleCloseModal = () => {
-		setSelectedsuggestionId(null);
+		setSelectedSuggestionId(null);
 	};
 
 	return (
 		<>
-			{selectedsuggestionId && (
-				<SuggestionDetailModal suggestionId={selectedsuggestionId} onClose={handleCloseModal} />
+			{selectedSuggestionId && (
+				<SuggestionDetailModal suggestionId={selectedSuggestionId} onClose={handleCloseModal} onRefresh={fetchSuggestions} />
 			)}
 			<div className="container mx-auto">
 				<div className="mb-4 flex h-10 items-center px-6">
 					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
-						회원 목록 ({totalElements})
+						정보수정요청 목록 {suggestions ? `(${totalElements})` : ''}
 					</span>
 				</div>
 				<Table className="mx-auto w-10/12 border">
 					<TableHeader>
 						<TableRow>
-							<TableHead>이름</TableHead>
-							<TableHead>이메일</TableHead>
-							<TableHead>가입 방식</TableHead>
-							<TableHead>가입날짜</TableHead>
+							<TableHead>회사명</TableHead>
+							<TableHead>작성자명</TableHead>
+							<TableHead>작성날짜</TableHead>
+							<TableHead>처리상태</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{suggestions.map((suggestion) => (
-							<TableRow
-								key={suggestion.suggestionId}
-								onClick={() => handleRowClick(Suggestion.Suggestion_key)}
-								className="cursor-pointer hover:bg-gray-100"
-							>
-								<TableCell className="font-medium">{Suggestion.name}</TableCell>
-								<TableCell className="overflow-hidden text-ellipsis">{Suggestion.email}</TableCell>
-								<TableCell>{Suggestion.social_type}</TableCell>
-								<TableCell>{Suggestion.created_date}</TableCell>
+						{suggestions ? (
+							suggestions.map((suggestion) => (
+								<TableRow
+									key={suggestion.suggestion_id}
+									onClick={() => handleRowClick(suggestion.suggestion_id)}
+									className="cursor-pointer hover:bg-gray-100"
+								>
+									<TableCell className="font-medium">{suggestion.company_name}</TableCell>
+									<TableCell>{suggestion.member_name}</TableCell>
+									<TableCell>{suggestion.created_date}</TableCell>
+									<TableCell>
+										{STATUS_OPTIONS.find((option) => option.value === suggestion.status)?.label ||
+											'-'}
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={4} className="py-4 text-center text-gray-500">
+									정보가 없습니다.
+								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 				<Pagination className="mt-4">
