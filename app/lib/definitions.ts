@@ -141,3 +141,28 @@ export interface ReviewDetail {
   tr_comment: string;
   created_date: string;
 }
+
+export interface AllSuggestionPage {
+  suggestions: {
+    suggestion_id: string;
+    company_name: string;
+    member_name: string;
+    status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED";
+    created_date: string;
+  }[];
+  total_elements: number;
+  total_pages: number;
+  current_page: number;
+  page_size: number;
+}
+
+export interface SuggestionDetail {
+  suggestion_id: string;
+  company_name: string;
+  position_name: string;
+  suggestion_content: string;
+  member_name: string;
+  member_email: string;
+  status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED";
+  created_date: string;
+}
