@@ -185,7 +185,7 @@ export default function CreatePositionModal({
             <Label htmlFor="problemInfo" className="text-right">
               문제 정보
             </Label>
-            <Textarea
+            <Input
               id="problemInfo"
               value={problemInfo}
               onChange={(e) => setProblemInfo(e.target.value)}
