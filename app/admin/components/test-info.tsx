@@ -167,7 +167,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">문제 정보</Label>
 						{isEditing ? (
-							<Textarea
+							<Input
 								value={editData?.problem_info || ''}
 								onChange={(e) => handleChange('problem_info', e.target.value)}
 							/>

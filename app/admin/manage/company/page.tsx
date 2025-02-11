@@ -56,7 +56,7 @@ export default function CompanyOverviewPage() {
 		<>
 			<div className="flex flex-col">
 				<div className="mb-4 flex items-center justify-between px-6">
-					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
+					<span className="hidden sm:block text-l font-medium" style={{ marginLeft: '7%' }}>
 						공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
 					<div className="flex items-center" style={{ marginRight: '3%' }}>
