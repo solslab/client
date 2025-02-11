@@ -78,7 +78,7 @@ export default function MemberOverviewPage() {
 								className="cursor-pointer hover:bg-gray-100"
 							>
 								<TableCell className="font-medium">{member.name}</TableCell>
-								<TableCell>{member.email}</TableCell>
+								<TableCell className="overflow-hidden text-ellipsis">{member.email}</TableCell>
 								<TableCell>{member.social_type}</TableCell>
 								<TableCell>{member.created_date}</TableCell>
 							</TableRow>
