@@ -1,15 +1,15 @@
 'use client';
 
 import FullPageScroll from './FullPageScroll';
-import Container from '../ui/container';
-import Float from '../ui/interaction/float';
-import ClientSearchBox from '../ui/clientSearchBox';
+import Container from '../container';
+import Float from '../interaction/float';
+import ClientSearchBox from '../clientSearchBox';
 import Script from 'next/script';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import FadeIn from '../motion/FadeIn';
-import IndexTrLink from '../ui/main/IndexTrLink';
+import FadeIn from '../../motion/FadeIn';
+import IndexTrLink from './IndexTrLink';
 import { useState } from 'react';
 import clsx from 'clsx';
 

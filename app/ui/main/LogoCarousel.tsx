@@ -5,8 +5,8 @@ import Slider from 'react-slick';
 import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { fetchRandomCompany } from '../lib/data';
-import { CompanyQuery } from '../lib/definitions';
+import { fetchRandomCompany } from '../../lib/data';
+import { CompanyQuery } from '../../lib/definitions';
 import Link from 'next/link';
 
 const LogoCarousel: React.FC = () => {
