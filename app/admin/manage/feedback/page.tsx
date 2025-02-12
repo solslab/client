@@ -64,7 +64,7 @@ export default function FeedbackOverviewPage() {
 								<CardContent>
 									<div className="flex items-center">
 										{Array.from({ length: feedback.rating }, (_, i) => (
-											<Star key={i} fill="yellow" color="#64748b" size={24} />
+											<Star key={i} fill="#64748b" color="#64748b" size={24} />
 										))}
 									</div>
 								</CardContent>
