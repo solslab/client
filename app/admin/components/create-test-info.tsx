@@ -113,7 +113,7 @@ export default function CreatePositionModal({
 
 	return (
 		<Dialog open onOpenChange={(open) => !open && onClose()}>
-			<DialogContent className="sm:max-w-[600px]">
+			<DialogContent className="sm:max-w-[600px] sm:overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>코딩테스트 정보 생성</DialogTitle>
 				</DialogHeader>
@@ -198,6 +198,13 @@ export default function CreatePositionModal({
 					<div className="grid grid-cols-4 items-center gap-4">
 						<Label className="text-right">IDE 사용</Label>
 						<div className="col-span-3 flex gap-2">
+							{/* 미선택 버튼 추가 */}
+							<Button
+								variant={permitIde === '' ? 'default' : 'outline'}
+								onClick={() => setPermitIde('')}
+							>
+								미선택
+							</Button>
 							<Button
 								variant={permitIde === '가능' ? 'default' : 'outline'}
 								onClick={() => setPermitIde('가능')}
@@ -218,6 +225,12 @@ export default function CreatePositionModal({
 						<Label className="text-right">구글링</Label>
 						<div className="col-span-3 flex gap-2">
 							<Button
+								variant={permitSearch === '' ? 'default' : 'outline'}
+								onClick={() => setPermitSearch('')}
+							>
+								미선택
+							</Button>
+							<Button
 								variant={permitSearch === '가능' ? 'default' : 'outline'}
 								onClick={() => setPermitSearch('가능')}
 							>
@@ -237,6 +250,12 @@ export default function CreatePositionModal({
 						<Label className="text-right">히든 테스트케이스</Label>
 						<div className="col-span-3 flex gap-2">
 							<Button
+								variant={hiddenCase === '' ? 'default' : 'outline'}
+								onClick={() => setHiddenCase('')}
+							>
+								미선택
+							</Button>
+							<Button
 								variant={hiddenCase === '있음' ? 'default' : 'outline'}
 								onClick={() => setHiddenCase('있음')}
 							>
@@ -255,6 +274,12 @@ export default function CreatePositionModal({
 					<div className="grid grid-cols-4 items-center gap-4">
 						<Label className="text-right">시험 방식</Label>
 						<div className="col-span-3 flex gap-2">
+							<Button
+								variant={examMode === '' ? 'default' : 'outline'}
+								onClick={() => setExamMode('')}
+							>
+								미선택
+							</Button>
 							<Button
 								variant={examMode === '대면' ? 'default' : 'outline'}
 								onClick={() => setExamMode('대면')}
@@ -303,12 +328,7 @@ export default function CreatePositionModal({
 					<Button variant="outline" onClick={onClose}>
 						취소
 					</Button>
-					<Button
-						type="button"
-						onClick={handleSave}
-						// 필수값인 positionName만 간단히 체크 (추가로 원하는 필드가 있다면 조건 강화)
-						disabled={!positionName}
-					>
+					<Button type="button" onClick={handleSave} disabled={!supportLanguages.trim()}>
 						저장
 					</Button>
 				</DialogFooter>

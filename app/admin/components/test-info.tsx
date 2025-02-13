@@ -59,7 +59,9 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 			setEditData(data);
 		};
 
-		if (testInfoId) fetchTestInfo();
+		if (testInfoId) {
+			fetchTestInfo();
+		}
 	}, [testInfoId]);
 
 	const handleChange = (field: keyof TestData, value: any) => {
@@ -102,7 +104,8 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 					<DialogTitle>코딩테스트 상세정보</DialogTitle>
 				</DialogHeader>
 
-				<div className="grid gap-8 py-4">
+				<div className="grid gap-4 py-4">
+					{/* 이름 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">이름</Label>
 						{isEditing ? (
@@ -115,10 +118,12 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* 공식 여부 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">공식 여부</Label>
 						{isEditing ? (
 							<Select
+								// 공식 여부는 true/false 그대로
 								value={editData?.is_official ? 'true' : 'false'}
 								onValueChange={(value: string) => handleChange('is_official', value === 'true')}
 							>
@@ -135,6 +140,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* 지원 언어 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">지원 언어</Label>
 						{isEditing ? (
@@ -148,6 +154,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* 시험 시간 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">시험 시간</Label>
 						{isEditing ? (
@@ -160,6 +167,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* 문제 정보 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">문제 정보</Label>
 						{isEditing ? (
@@ -172,86 +180,105 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* IDE 사용 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">IDE 사용</Label>
 						{isEditing ? (
 							<Select
-								value={editData?.permit_ide || ''}
-								onValueChange={(value: string) => handleChange('permit_ide', value)}
+								// 내부적으로 "none"을 써서 "선택안함" 구현
+								value={editData?.permit_ide ? editData.permit_ide : 'none'}
+								onValueChange={(value: string) =>
+									handleChange('permit_ide', value === 'none' ? '' : value)
+								}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="IDE 사용 여부 선택" />
 								</SelectTrigger>
 								<SelectContent>
+									{/* value="" 대신 value="none" */}
+									<SelectItem value="none">선택안함</SelectItem>
 									<SelectItem value="가능">가능</SelectItem>
 									<SelectItem value="불가능">불가능</SelectItem>
 								</SelectContent>
 							</Select>
 						) : (
-							<p className="truncate">{testInfo?.permit_ide || '-'}</p>
+							<p className="truncate">{testInfo?.permit_ide || '선택안함'}</p>
 						)}
 					</div>
 
+					{/* 구글링 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">구글링</Label>
 						{isEditing ? (
 							<Select
-								value={editData?.permit_search || ''}
-								onValueChange={(value: string) => handleChange('permit_search', value)}
+								value={editData?.permit_search ? editData.permit_search : 'none'}
+								onValueChange={(value: string) =>
+									handleChange('permit_search', value === 'none' ? '' : value)
+								}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="구글링 허용 여부 선택" />
 								</SelectTrigger>
 								<SelectContent>
+									<SelectItem value="none">선택안함</SelectItem>
 									<SelectItem value="가능">가능</SelectItem>
 									<SelectItem value="불가능">불가능</SelectItem>
 								</SelectContent>
 							</Select>
 						) : (
-							<p className="truncate">{testInfo?.permit_search || '-'}</p>
+							<p className="truncate">{testInfo?.permit_search || '선택안함'}</p>
 						)}
 					</div>
 
+					{/* 히든 테스트케이스 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">히든 테스트케이스</Label>
 						{isEditing ? (
 							<Select
-								value={editData?.hidden_case || ''}
-								onValueChange={(value: string) => handleChange('hidden_case', value)}
+								value={editData?.hidden_case ? editData.hidden_case : 'none'}
+								onValueChange={(value: string) =>
+									handleChange('hidden_case', value === 'none' ? '' : value)
+								}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="히든 테스트케이스 여부 선택" />
 								</SelectTrigger>
 								<SelectContent>
+									<SelectItem value="none">선택안함</SelectItem>
 									<SelectItem value="있음">있음</SelectItem>
 									<SelectItem value="없음">없음</SelectItem>
 								</SelectContent>
 							</Select>
 						) : (
-							<p className="truncate">{testInfo?.hidden_case || '-'}</p>
+							<p className="truncate">{testInfo?.hidden_case || '선택안함'}</p>
 						)}
 					</div>
 
+					{/* 시험 방식 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">시험 방식</Label>
 						{isEditing ? (
 							<Select
-								value={editData?.exam_mode || ''}
-								onValueChange={(value: string) => handleChange('exam_mode', value)}
+								value={editData?.exam_mode ? editData.exam_mode : 'none'}
+								onValueChange={(value: string) =>
+									handleChange('exam_mode', value === 'none' ? '' : value)
+								}
 							>
 								<SelectTrigger>
-									<SelectValue placeholder="시험 방식 여부 선택" />
+									<SelectValue placeholder="시험 방식 선택" />
 								</SelectTrigger>
 								<SelectContent>
+									<SelectItem value="none">선택안함</SelectItem>
 									<SelectItem value="대면">대면</SelectItem>
 									<SelectItem value="비대면">비대면</SelectItem>
 								</SelectContent>
 							</Select>
 						) : (
-							<p className="truncate">{testInfo?.hidden_case || '-'}</p>
+							<p className="truncate">{testInfo?.exam_mode || '선택안함'}</p>
 						)}
 					</div>
 
+					{/* 시험 장소 / 플랫폼 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">시험 장소 / 플랫폼</Label>
 						{isEditing ? (
@@ -264,6 +291,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						)}
 					</div>
 
+					{/* 비고 */}
 					<div className="grid grid-cols-[1fr,3fr] items-center gap-8">
 						<Label className="text-right">비고</Label>
 						{isEditing ? (
