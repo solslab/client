@@ -18,19 +18,18 @@ export default function TrLink({ company_id }: { company_id?: string }) {
 						const token = tokenCookie?.value || undefined;
 						if (!token) {
 							{
-								 router.push('/login');
+								router.push('/login');
 							}
+						}
+						const infoChecked = await infoCheck(token);
+						if (infoChecked) {
+							router.push(`/testReview${company_id ? '?company_id=' + company_id : ''}`);
 						} else {
-							const infoChecked = await infoCheck(token);
-							if (infoChecked) {
-								router.push(`/testReview${company_id ? '?company_id=' + company_id : ''}`);
-							} else {
-								setModalVisible(true);
-							}
+							setModalVisible(true);
 						}
 					}}
 					type="button"
-					className="rounded-md bg-main-base px-6 py-3 text-lg text-white"
+					className="rounded-md bg-main-base px-6 py-3 text-lg text-white max-sm:text-base"
 				>
 					코딩테스트 후기 작성하기
 				</button>

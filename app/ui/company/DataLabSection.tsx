@@ -135,9 +135,9 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 		<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
 			{dataLabDetails.success === 404 ? (
 				<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
-					<div className="mb-4 text-center text-xl">이 기업에 작성된 후기가 없어요. 😢</div>
-					<div className="mb-10 text-center text-xl">
-						여러분의 후기를 공유해주세요! 데이터랩 제작에 큰 힘이 됩니다.
+					<div className="mb-4 text-center text-xl max-sm:text-base">이 기업에 작성된 후기가 없어요. 😢</div>
+					<div className="mb-10 text-center text-xl max-sm:text-base">
+						여러분의 후기를 공유해주세요!
 					</div>
 					<TrLink company_id={company_id} />
 				</div>
@@ -215,9 +215,9 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 									<span className="text-xs text-text-base md:text-[14px]">
 										사이의 지원자가 많이 합격했어요!
 									</span>
-								</div>
-								<div className="flex w-full flex-col items-center gap-5 lg:flex-row">
-									<div className="flex h-[210px] w-full items-center justify-center rounded-[10px] border-[1px] border-gray-40 lg:w-2/3">
+								</div>	
+								<div className="flex w-full flex-col items-center gap-5 sm:flex-row">
+									<div className="flex h-[210px] w-full items-center justify-center rounded-[10px] border-[1px] border-gray-40 sm:w-2/3">
 										{dataLabDetails.success === 403 ? (
 											<ReviewButton />
 										) : (
@@ -226,7 +226,7 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 											/>
 										)}
 									</div>
-									<div className="grid h-[210px] w-full grid-cols-2 gap-5 p-5 lg:w-1/3">
+									<div className="grid h-[210px] w-full grid-cols-2 gap-5 p-5 sm:w-1/3">
 										<div className="flex-shrink-0 whitespace-nowrap text-left font-bold text-text-base">
 											합격자 / 응답자 수
 										</div>

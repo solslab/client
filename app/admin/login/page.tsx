@@ -6,6 +6,7 @@ import { loginAdmin } from '@/app/lib/data-admin';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import {
 	AlertDialog,
@@ -62,21 +63,26 @@ export default function LoginForm() {
 				<meta name="robots" content="noindex, nofollow" />
 			</Head>
 			<div
-				className="flex min-h-screen items-center justify-center"
+				className="flex min-h-screen flex-col items-center justify-center"
 				style={{ height: 'calc(100vh - 64px)' }}
 			>
-				<div className="w-96 rounded-lg bg-white p-8 shadow-lg">
-					<h1 className="mb-6 text-center text-2xl font-bold">SOLSLAB ADMIN</h1>
+				<div className="flex items-center space-x-4 mb-8">
+					<Image src="/admin_logo.png" alt="몇솔 로고" width={32} height={32} />
+					<h1 className="text-3xl font-semibold">solslab admin</h1>
+				</div>
+
+				{/* <h1 className="mb-8 text-center text-3xl font-semibold">solslab admin</h1> */}
+				<div className="border-silver w-3/12 rounded-lg rounded-md border bg-white p-12 shadow-lg">
 					<form className="space-y-6" onSubmit={handleSubmit}>
 						<div className="flex flex-col space-y-2">
 							<label htmlFor="email" className="text-lg font-medium">
-								Email
+								ID
 							</label>
 							<Input
 								className="w-full rounded border p-2"
 								id="email"
 								type="email"
-								placeholder="Enter your email"
+								placeholder="Enter your admin account"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
@@ -94,7 +100,7 @@ export default function LoginForm() {
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</div>
-						<Button className="mt-6 w-full">OK</Button>
+						<Button className="mt-6 w-full">Login</Button>
 					</form>
 				</div>
 
