@@ -1,5 +1,5 @@
 'use client';
-
+import clsx from 'clsx';
 import {
 	Pagination,
 	PaginationContent,
@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../components/create-company';
-
 
 export default function CompanyOverviewPage() {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();
@@ -55,11 +54,11 @@ export default function CompanyOverviewPage() {
 	return (
 		<>
 			<div className="flex flex-col">
-				<div className="mb-4 flex items-center justify-between px-6">
-					<span className="hidden sm:block text-l font-medium" style={{ marginLeft: '7%' }}>
+				<div className={clsx('mb-4 flex items-center justify-between', 'px-[8.5%]')}>
+					<span className={clsx('text-l hidden font-medium sm:block')}>
 						공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
-					<div className="flex items-center" style={{ marginRight: '3%' }}>
+					<div className={clsx('flex items-center')}>
 						<Input
 							type="text"
 							placeholder="기업명으로 검색"
@@ -212,4 +211,4 @@ export default function CompanyOverviewPage() {
 			)}
 		</>
 	);
-};
+}

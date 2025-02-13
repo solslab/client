@@ -120,7 +120,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Select
 								value={editData?.is_official ? 'true' : 'false'}
-								onValueChange={(value) => handleChange('is_official', value === 'true')}
+								onValueChange={(value: string) => handleChange('is_official', value === 'true')}
 							>
 								<SelectTrigger>
 									<SelectValue />
@@ -140,15 +140,11 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Input
 								value={editData?.support_languages.join(', ') || ''}
-								onChange={(e) =>
-									handleChange('support_languages', e.target.value.split(', '))
-								}
+								onChange={(e) => handleChange('support_languages', e.target.value.split(', '))}
 								placeholder="Python, Java"
 							/>
 						) : (
-							<p className="truncate">
-								{testInfo?.support_languages.join(', ') || '-'}
-							</p>
+							<p className="truncate">{testInfo?.support_languages.join(', ') || '-'}</p>
 						)}
 					</div>
 
@@ -181,7 +177,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Select
 								value={editData?.permit_ide || ''}
-								onValueChange={(value) => handleChange('permit_ide', value)}
+								onValueChange={(value: string) => handleChange('permit_ide', value)}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="IDE 사용 여부 선택" />
@@ -201,7 +197,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Select
 								value={editData?.permit_search || ''}
-								onValueChange={(value) => handleChange('permit_search', value)}
+								onValueChange={(value: string) => handleChange('permit_search', value)}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="구글링 허용 여부 선택" />
@@ -221,7 +217,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Select
 								value={editData?.hidden_case || ''}
-								onValueChange={(value) => handleChange('hidden_case', value)}
+								onValueChange={(value: string) => handleChange('hidden_case', value)}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="히든 테스트케이스 여부 선택" />
@@ -241,7 +237,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 						{isEditing ? (
 							<Select
 								value={editData?.exam_mode || ''}
-								onValueChange={(value) => handleChange('exam_mode', value)}
+								onValueChange={(value: string) => handleChange('exam_mode', value)}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="시험 방식 여부 선택" />
