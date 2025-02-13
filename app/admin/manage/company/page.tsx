@@ -58,13 +58,13 @@ export default function CompanyOverviewPage() {
 					<span className={clsx('text-l hidden font-medium sm:block')}>
 						공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
-					<div className={clsx('flex items-center')}>
+					<div className={clsx('flex w-full items-center sm:w-auto')}>
 						<Input
 							type="text"
 							placeholder="기업명으로 검색"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="mr-2 w-56"
+							className="mr-2 w-full sm:w-56"
 						/>
 						<Button
 							variant="ghost"
