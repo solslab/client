@@ -72,8 +72,8 @@ export default function CreatePositionModal({
 		setAlertMessage('');
 
 		try {
-			// API에 맞게 body 데이터 구성
-			const requestBody = {
+			// 우선 모든 필드를 담되, ""(빈 문자열)인 항목도 포함
+			const requestBody: Record<string, any> = {
 				position_name: positionName,
 				is_official: isOfficial,
 				support_languages: supportLanguages
@@ -90,16 +90,20 @@ export default function CreatePositionModal({
 				note: note
 			};
 
+			// requestBody 중에서 값이 빈 문자열("")인 프로퍼티는 제거
+			Object.keys(requestBody).forEach((key) => {
+				if (requestBody[key] === '') {
+					delete requestBody[key];
+				}
+			});
+
+			// 이제 requestBody에는 빈 문자열이 아닌 필드만 남음
 			const response = await createTestInfo(companyId, requestBody);
 
 			if (response.status === 200) {
-				// 성공
 				setAlertMessage('시험정보 생성이 완료되었습니다.');
-				if (response.data && typeof response.data.position_id === 'number') {
-					setNewPositionId(response.data.position_id);
-				}
+				// 추가 로직 ...
 			} else {
-				// 오류 (401 등) 처리
 				setAlertMessage(response.message || '시험정보 생성 실패');
 				if (response.status === 401) {
 					setRedirectLoginAfterClose(true);
