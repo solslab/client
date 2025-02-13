@@ -1,5 +1,6 @@
 'use client';
 import { ResponsiveBar, BarLayer, ComputedBarDatum } from '@nivo/bar';
+import { useState, useEffect } from 'react';
 
 const tiers = ['브론즈', '실버', '골드', '플래티넘', '다이아', '루비'];
 const ranks = ['1', '2', '3', '4', '5'];
@@ -89,6 +90,18 @@ interface ColorMap {
 const colors = generateColors();
 
 const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
+	const [isMobile, setIsMobile] = useState(false);
+	useEffect(() => {
+		const handleResize = () => {
+		  setIsMobile(window.innerWidth < 560); // 768px 이하이면 모바일로 간주
+		};
+		
+		window.addEventListener('resize', handleResize);
+		handleResize(); // 초기 상태 설정
+	
+		return () => window.removeEventListener('resize', handleResize); // cleanup
+	  }, []);
+	
 	const chartData = generateData(dataLabDetails);
 	const maxTotal = Math.max(...chartData.map((d) => d.total));
 
@@ -107,47 +120,58 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 
 		return (
 			<g>
-				{Object.entries(tierBars).map(([tier, bars]) => {
-					const topBar = bars.reduce((prevBar, currBar) =>
-						currBar.y < prevBar.y ? currBar : prevBar
-					);
-					const tierData = chartData.find((d) => d.tier === tier);
-					const total = tierData?.total ?? 0;
-					const x = topBar.x + topBar.width / 2;
-					const y = topBar.y - 5;
-					return (
-						<text
-							key={tier}
-							x={x}
-							y={y}
-							textAnchor="middle"
-							style={{
-								fill: '#000',
-								fontSize: 12,
-								fontWeight: 'bold'
-							}}
-						>
-							{total}
-						</text>
-					);
-				})}
+			  {Object.entries(tierBars).map(([tier, bars]) => {
+				const topBar = bars.reduce((prevBar, currBar) =>
+				  currBar.y < prevBar.y ? currBar : prevBar
+				);
+				const tierData = chartData.find((d) => d.tier === tier);
+				const total = tierData?.total ?? 0;
+				if (total === 0) return null; // total이 0이면 렌더링하지 않음
+		  
+				const x = topBar.x + topBar.width / 2;
+				const y = topBar.y - 5;
+				return (
+				  <text
+					key={tier}
+					x={x}
+					y={y}
+					textAnchor="middle"
+					style={{
+					  fill: '#000',
+					  fontSize: 12,
+					  fontWeight: 'bold'
+					}}
+				  >
+					{total}
+				  </text>
+				);
+			  })}
 			</g>
-		);
+		  );
+		  
 	};
 
 	return (
 		<div style={{ height: '100%', width: '100%' }}>
 			<ResponsiveBar
+				tooltip={({ id, value }) => {
+					const formattedId = String(id).replace(/(\D+)(\d)/, '$1 $2'); // id를 문자열로 변환 후 공백 추가
+					return (
+						<div style={{ fontSize: '13px', fontWeight: "400", background: 'white', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}>
+							<strong>{formattedId}</strong>: {value}명
+						</div>
+					);
+				}}
 				data={chartData}
 				keys={tiers.flatMap((tier) => ranks.map((rank) => `${tier}${rank}`))}
 				indexBy="tier"
 				margin={{ top: 40, right: 10, bottom: 30, left: 50 }}
-				padding={0.2}
+				padding={0.4}
 				groupMode="stacked"
 				valueScale={{ type: 'linear', max: maxTotal * 1.2 }}
 				colors={({ id }) => colors[id]}
 				borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
-				borderWidth={1}
+				borderWidth={0.6}
 				borderRadius={1}
 				enableLabel={false}
 				theme={{
@@ -173,13 +197,23 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 					tickPadding: 5,
 					tickRotation: 0
 				}}
-				axisLeft={{
-					tickSize: 5,
-					tickPadding: 10,
-					tickRotation: 0,
-					tickValues: 5,
-					format: (value) => `${value}`
-				}}
+				axisLeft={
+					isMobile
+						? {
+							tickSize: 5,
+							tickPadding: 10,
+							tickRotation: 0,
+							tickValues: 3,
+							format: (value: number) => `${value}`,
+						} // 모바일에서 축을 숨김
+						: {
+								tickSize: 5,
+								tickPadding: 10,
+								tickRotation: 0,
+								tickValues: 5,
+								format: (value: number) => `${value}`,
+						  }
+				}
 				enableGridY={false}
 				enableGridX={false}
 				layers={['grid', 'axes', 'bars', CustomLayer, 'markers', 'annotations']}
