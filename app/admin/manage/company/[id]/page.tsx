@@ -8,7 +8,15 @@ import { Company } from '@/app/lib/definitions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import UpdateCompanyModal from '../../../components/update-company';
 import TestInfoModal from '../../../components/test-info';
-import { deleteCompany, uploadCompanyLogo, deleteCompanyLogo } from '@/app/lib/data-admin';
+import CreatePositionModal from '@/app/admin/components/create-test-info';
+
+import {
+	deleteCompany,
+	uploadCompanyLogo,
+	deleteCompanyLogo,
+	deleteTestInfo // ★ 새로 추가한 시험정보 삭제 API 임포트
+} from '@/app/lib/data-admin';
+
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -23,14 +31,24 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
 
-
 export default function CompanyDetailPage() {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
 	const [isCompanyUpdateModalOpen, setIsCompanyUpdateModalOpen] = useState(false);
+	const [isCreatePositionModalOpen, setIsCreatePositionModalOpen] = useState(false);
+
+	// ====== 시험정보 수정 모달/상태 ======
 	const [testInfoId, setTestInfoId] = useState('');
-	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
+
+	// ====== 기업 삭제/알림 상태 ======
 	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+
+	// ====== 시험정보 삭제/알림 상태 ======
+	const [isDeleteTestConfirmOpen, setIsDeleteTestConfirmOpen] = useState(false);
+	const [testInfoIdToDelete, setTestInfoIdToDelete] = useState('');
+
+	// ====== 공통 AlertDialog 상태 ======
 	const [alertMessage, setAlertMessage] = useState('');
+	const [redirectLoginAfterClose, setRedirectLoginAfterClose] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 
 	const router = useRouter();
@@ -44,14 +62,18 @@ export default function CompanyDetailPage() {
 			setCompanyDetail(companyData);
 		}
 	};
+
 	useEffect(() => {
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [companyId]);
 
+	// 알림 창 닫힐 때 처리
 	const handleAlertClose = () => {
 		if (redirectLoginAfterClose) {
 			router.push(`${basePath}/login`);
 		} else if (isDeleted) {
+			// 기업 삭제가 완료된 경우 목록으로 이동
 			if (companyDetail?.public) {
 				router.push(`${basePath}/manage/company`);
 			} else if (!companyDetail?.public) {
@@ -61,11 +83,12 @@ export default function CompanyDetailPage() {
 		setAlertMessage('');
 	};
 
+	// ====== 기업 삭제 함수 ======
 	const handleDeleteCompany = async () => {
 		setAlertMessage('');
 		try {
 			const response = await deleteCompany(companyId);
-			if (response.status == 204) {
+			if (response.status === 204) {
 				setAlertMessage(response.message);
 				setIsDeleted(true);
 			} else {
@@ -76,6 +99,28 @@ export default function CompanyDetailPage() {
 			}
 		} catch (error) {
 			setAlertMessage('기업 삭제 실패. 다시 시도해주세요.');
+		}
+	};
+
+	// ====== 시험정보 삭제 함수 ======
+	const handleDeleteTestInfo = async () => {
+		setAlertMessage('');
+		try {
+			const response = await deleteTestInfo(testInfoIdToDelete);
+			if (response.status === 204) {
+				// 삭제 성공
+				setAlertMessage(response.message); // "시험정보 삭제가 완료되었습니다."
+				// 목록 재조회
+				fetchData();
+			} else {
+				// 오류
+				setAlertMessage(response.message);
+				if (response.status === 401) {
+					setRedirectLoginAfterClose(true);
+				}
+			}
+		} catch (error) {
+			setAlertMessage('시험정보 삭제 실패. 다시 시도해주세요.');
 		}
 	};
 
@@ -119,13 +164,12 @@ export default function CompanyDetailPage() {
 				<Card className="mx-auto mt-16 w-9/12 p-4">
 					<CardHeader className="flex items-center">
 						<div className="ml-auto flex gap-2">
-							<Button
-								variant="ghost"
-								size="sm"
-								onClick={() => setIsCompanyUpdateModalOpen(true)} // 모달 열기
-							>
+							{/* 기업 수정 버튼 */}
+							<Button variant="ghost" size="sm" onClick={() => setIsCompanyUpdateModalOpen(true)}>
 								<FileEdit size={16} />
 							</Button>
+
+							{/* 기업 삭제 버튼 */}
 							<Button
 								variant="ghost"
 								size="sm"
@@ -137,6 +181,7 @@ export default function CompanyDetailPage() {
 							</Button>
 						</div>
 					</CardHeader>
+
 					<CardTitle className="mb-4 pl-12">기업 상세정보</CardTitle>
 					<CardContent className="flex w-full">
 						<div className="jusitfy-center flex w-1/2 pt-8">
@@ -154,13 +199,14 @@ export default function CompanyDetailPage() {
 										: '-'}
 								</div>
 								<div>
-									{companyDetail.search_terms.length == 1 && companyDetail.search_terms[0] === ''
+									{companyDetail.search_terms.length === 1 && companyDetail.search_terms[0] === ''
 										? '-'
 										: companyDetail.search_terms.join(', ')}
 								</div>
 								<div>{companyDetail.public ? '공개' : '비공개'}</div>
 							</div>
 						</div>
+
 						<div className="w-1/2">
 							<Image
 								src={companyDetail.company_logo || '/companyLogo/default_company_logo.png'}
@@ -180,7 +226,6 @@ export default function CompanyDetailPage() {
 										삭제
 									</Button>
 								)}
-
 								<Button
 									variant="secondary"
 									onClick={() => {
@@ -189,7 +234,6 @@ export default function CompanyDetailPage() {
 								>
 									{companyDetail.company_logo ? '수정' : '사진 등록'}
 								</Button>
-
 								{/* 파일 input 숨기기 */}
 								<input
 									id="logo-upload"
@@ -201,30 +245,65 @@ export default function CompanyDetailPage() {
 							</div>
 						</div>
 					</CardContent>
+
+					{/* 코딩테스트 정보 목록 */}
 					<CardContent className="mt-16 flex w-full flex-col">
 						<CardTitle className="p-4">
 							코딩테스트 정보 목록 ({companyDetail.positions.length})
 						</CardTitle>
 						<div className="flex w-full flex-col gap-2 p-4">
-							<Button className="mb-2 w-full p-5" variant="outline">
+							{/* 새로 추가하기 버튼 */}
+							<Button
+								className="mb-2 w-full p-5"
+								variant="outline"
+								onClick={() => setIsCreatePositionModalOpen(true)}
+							>
 								새로 추가하기
 							</Button>
+
+							{/* 각 시험정보(positions) 리스트 */}
 							{companyDetail.positions.map((position, index) => (
-								<Button
-									key={index}
-									className="mb-2 w-full p-5"
-									onClick={() => {
-										setTestInfoId(position.position_id);
-										// alert(`Position clicked: ${position.position_name}`);
-									}}
-								>
-									{position.position_name}
-								</Button>
+								<div key={index} className="flex items-center gap-2">
+									<Button
+										className="w-full p-5 text-left"
+										onClick={() => {
+											setTestInfoId(position.position_id);
+										}}
+									>
+										{position.position_name}
+									</Button>
+
+									<Button
+										className="p-5 text-red-500"
+										variant="outline"
+										size="icon"
+										onClick={() => {
+											setTestInfoIdToDelete(position.position_id);
+											setIsDeleteTestConfirmOpen(true);
+										}}
+									>
+										<LucideTrash size={20} />
+									</Button>
+								</div>
 							))}
 						</div>
 					</CardContent>
 				</Card>
 			)}
+
+			{/* 시험정보 생성 모달 */}
+			{isCreatePositionModalOpen && (
+				<CreatePositionModal
+					companyId={companyId}
+					onClose={() => setIsCreatePositionModalOpen(false)}
+					onSuccess={() => {
+						fetchData();
+						setIsCreatePositionModalOpen(false);
+					}}
+				/>
+			)}
+
+			{/* 기업 수정 모달 */}
 			{isCompanyUpdateModalOpen && companyDetail && (
 				<UpdateCompanyModal
 					companyId={companyId}
@@ -236,16 +315,20 @@ export default function CompanyDetailPage() {
 					}}
 				/>
 			)}
+
+			{/* 시험정보 상세/수정 모달 */}
 			{testInfoId && (
 				<TestInfoModal
 					testInfoId={testInfoId}
 					onClose={() => setTestInfoId('')}
 					// onSuccess={() => {
-					// 	fetchData();
-					// 	setTestInfoId('');
+					//   fetchData();
+					//   setTestInfoId('');
 					// }}
 				/>
 			)}
+
+			{/* ===== 기업 삭제 확인 창 ===== */}
 			{isDeleteConfirmOpen && (
 				<AlertDialog
 					defaultOpen
@@ -279,6 +362,43 @@ export default function CompanyDetailPage() {
 					</AlertDialogContent>
 				</AlertDialog>
 			)}
+
+			{/* ===== 시험정보 삭제 확인 창 ===== */}
+			{isDeleteTestConfirmOpen && (
+				<AlertDialog
+					defaultOpen
+					onOpenChange={(open) => {
+						if (!open) {
+							setIsDeleteTestConfirmOpen(false);
+						}
+					}}
+				>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>시험정보 삭제</AlertDialogTitle>
+							<AlertDialogDescription>
+								정말로 삭제하시겠습니까? 복구할 수 없습니다.
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogAction
+								onClick={() => {
+									handleDeleteTestInfo();
+									setIsDeleteTestConfirmOpen(false);
+								}}
+								className="bg-red-600"
+							>
+								삭제
+							</AlertDialogAction>
+							<AlertDialogCancel onClick={() => setIsDeleteTestConfirmOpen(false)}>
+								취소
+							</AlertDialogCancel>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			)}
+
+			{/* ===== 공통 AlertDialog (성공/오류 메시지 표시) ===== */}
 			{alertMessage && (
 				<AlertDialog
 					defaultOpen

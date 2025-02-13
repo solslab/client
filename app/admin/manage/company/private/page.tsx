@@ -1,5 +1,5 @@
 'use client';
-
+import clsx from 'clsx';
 import {
 	Pagination,
 	PaginationContent,
@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../../components/create-company';
-
 
 export default function PrivateCompanyOverviewPage() {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();
@@ -55,17 +54,17 @@ export default function PrivateCompanyOverviewPage() {
 	return (
 		<>
 			<div className="flex flex-col">
-				<div className="mb-4 flex items-center justify-between px-6">
-					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
+				<div className={clsx('mb-4 flex items-center justify-between', 'px-[8.5%]')}>
+					<span className={clsx('text-l hidden font-medium sm:block')}>
 						비공개 기업 목록 ({companies?.total_elements || 0})
 					</span>
-					<div className="flex items-center" style={{ marginRight: '3%' }}>
+					<div className={clsx('flex w-full items-center sm:w-auto')}>
 						<Input
 							type="text"
 							placeholder="기업명으로 검색"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="mr-2 w-56"
+							className="mr-2 w-full sm:w-56"
 						/>
 						<Button
 							variant="ghost"
@@ -77,6 +76,7 @@ export default function PrivateCompanyOverviewPage() {
 						</Button>
 					</div>
 				</div>
+
 				{searchResults.length > 0
 					? searchResults.map((company) => (
 							<Button
