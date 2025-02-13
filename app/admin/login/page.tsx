@@ -71,8 +71,7 @@ export default function LoginForm() {
 					<h1 className="text-3xl font-semibold">solslab admin</h1>
 				</div>
 
-				{/* <h1 className="mb-8 text-center text-3xl font-semibold">solslab admin</h1> */}
-				<div className="border-silver w-3/12 rounded-lg rounded-md border bg-white p-12 shadow-lg">
+				<div className="border-silver w-96 rounded-lg rounded-md border bg-white p-12 shadow-lg">
 					<form className="space-y-6" onSubmit={handleSubmit}>
 						<div className="flex flex-col space-y-2">
 							<label htmlFor="email" className="text-lg font-medium">
