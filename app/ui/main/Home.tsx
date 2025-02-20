@@ -12,6 +12,7 @@ import FadeIn from '@/app/ui/motion/FadeIn';
 import IndexTrLink from './IndexTrLink';
 import { useState } from 'react';
 import clsx from 'clsx';
+import TierGuard from '../tierGuard';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -113,7 +114,7 @@ export default function Home() {
 							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
 								여러분의 후기를 들려주세요!
 							</h2>
-							<IndexTrLink />
+							<TierGuard render={(checkTier)=><IndexTrLink onClick={checkTier} />} />
 						</div>
 						<div className="py-16">
 							<div className="text-center text-black">2024 © solslab Corp.</div>
