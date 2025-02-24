@@ -33,7 +33,7 @@ export default function PositionSelectBox({
       onChange={(e) =>handleChange(e)}
       className={clsx("shadow-customShadow py-3 px-2  ps-2 sm:ps-2 pe-9 block    border text-text-base border-gray-30 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none0",
         {
-          "ps-8 w-3/4":isOfficial,
+          "w-3/4":isOfficial,
           "w-full":!isOfficial
         }
       )}

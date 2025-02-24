@@ -32,7 +32,7 @@ export default function TestInfo({
 								{data.is_official ? (
 									<>
 										{' '}
-										<div className="absolute left-3 top-1/2 flex -translate-y-1/2 transform sm:hidden">
+										<div className="absolute -left-7 top-1/2 flex -translate-y-1/2 transform sm:hidden">
 											<Image src={'/icons/verifyIcon.png'} width={18} height={18} alt="verifyed" />
 										</div>
 										<VerifyMark />

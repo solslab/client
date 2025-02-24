@@ -79,7 +79,7 @@ export async function updateTier(prevState: TiernState, formData: FormData) {
     } finally {
         if (redirectFlag) {
             redirect('/testReview')
-            
+
         }
 
     }
@@ -252,7 +252,7 @@ export async function createSuggestion(prevState: SuggestionState, formData: For
         }
 
     } catch (error) {
-        console.error('createSuggestion중 오류발생',error)
+        console.error('createSuggestion중 오류발생', error)
         return {
             submitted: true,
             fullfilled: false
@@ -275,7 +275,7 @@ export type TestReviewState = {
         tr_comment?: string[];
     };
     message?: string | null;
-    fullfilled?: boolean ;
+    fullfilled?: boolean;
 };
 
 const TestReviewFormSchema = z.object({
@@ -296,10 +296,10 @@ const TestReviewFormSchema = z.object({
     }),
     tr_problem_num: z.coerce.number({
         invalid_type_error: '총 문제수를 입력해주세요.',
-    }).min(1, '총 문제수를 입력해주세요.').max(30,'총 문제 수는 30이하여야 합니다.'),
+    }).min(1, '총 문제수를 입력해주세요.').max(30, '총 문제 수는 30이하여야 합니다.'),
     tr_solved_num: z.coerce.number({
         invalid_type_error: '푼 문제수를 입력해주세요.',
-    }).min(0, '푼 문제수를 입력해주세요.').max(30,'푼 문제 수는 30이하여야 합니다.'),
+    }).min(0, '푼 문제수를 입력해주세요.').max(30, '푼 문제 수는 30이하여야 합니다.'),
     tr_pass_status: z.string({
         invalid_type_error: '합격 여부를 입력해주세요.',
     }),
@@ -318,7 +318,7 @@ export async function createTestReview(prevState: TestReviewState, formData: For
     let flag = false;
 
     const validatedFields = TestReviewFormSchema.safeParse({
-        company_id:formData.get('company_id')|| undefined,
+        company_id: formData.get('company_id') || undefined,
         company_name: formData.get('company_name'),
         tr_year: formData.get('tr_year'),
         tr_position: formData.get('tr_position'),
@@ -365,16 +365,14 @@ export async function createTestReview(prevState: TestReviewState, formData: For
         flag = true;
         const data = await response.json();
         return {
-            fullfilled:true
+            fullfilled: true
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.error('createTestReview중 오류 발생:', error);
-            return {
-                message: '제출 중 문제가 발생했습니다.'
-            }
+            console.log('createTestReview중 오류 발생:', typeof error);
+            const parsedError:{error_code:string;message:string;} = JSON.parse(error.message);
+            return { message: parsedError.message || "알 수 없는 오류 발생" };
         } else {
-            console.error('createTestReview 중 알 수 없는 오류 발생');
             return {
                 message: '제출 중 문제가 발생했습니다.'
             }
@@ -457,7 +455,7 @@ export async function createFeedBack(prevState: FeedBackState, formData: FormDat
         };
 
     } catch (error) {
-        console.error('createFeedBack중 오류발생',error)
+        console.error('createFeedBack중 오류발생', error)
         return {
             errors: {},
             message: '피드백이 정상 제출되지 않았습니다.',
@@ -504,7 +502,7 @@ export async function infoCheck(tokenParam?: string) {
         }
     }
     catch (error) {
-        console.error('infoCheck중 오류발생',error)
+        console.error('infoCheck중 오류발생', error)
         return false
     }
 }
