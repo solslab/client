@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import ScrollToTop from '@/app/ui/common/ScrollToTop';
 import Container from '@/app/ui/common/container';
 import { fetchCompanyData } from '../../lib/server/queries/company';
+import FeedBackBtn from '@/app/ui/common/feedBackBtn';
 
 const PAGE_SIZE = 10;
 
@@ -81,6 +82,7 @@ export default async function Page({
 				totalPages={totalPages}
 				pageNumbers={pageNumbers}
 			/>
+			<FeedBackBtn />
 		</Container>
 	);
 }

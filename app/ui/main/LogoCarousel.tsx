@@ -56,7 +56,7 @@ const LogoCarousel: React.FC = () => {
 								<Link
 									href={`/company/${company.company_id}`}
 									prefetch={false}
-									className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border-2 md:h-[140px] md:w-[140px]"
+									className="flex h-[120px] w-[120px] items-center justify-center rounded-4xl border md:h-[140px] md:w-[140px]"
 								>
 									<Image
 										src={
@@ -71,7 +71,7 @@ const LogoCarousel: React.FC = () => {
 									/>
 								</Link>
 							</div>
-							<p className="pt-[10px] text-center text-sm font-semibold">{company.company_name}</p>
+							<p className="pt-[10px] text-center text-sm">{company.company_name}</p>
 						</div>
 					</div>
 				))}

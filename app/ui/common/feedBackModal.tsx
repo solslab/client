@@ -62,7 +62,7 @@ export default function FeedBackModal({
 				{!state.fullfiled?.value == true ? (
 					<div className="px-16 pb-2 pt-10">
 						<form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-							<div className="pb-4 text-2xl font-semibold">Send Feedback</div>
+							<div className="pb-4 text-xl font-semibold">Send Feedback!</div>
 							<div className="text-base">
 								더 나은 서비스 제공을 위해 평가를 남겨주세요!
 							</div>
@@ -80,8 +80,8 @@ export default function FeedBackModal({
 											}}
 											src={active >= star.value ? '/yellowStar.png' : '/grayStar.png'}
 											alt="star"
-											width={60}
-											height={60}
+											width={56}
+											height={56}
 										/>
 									))}
 								</div>

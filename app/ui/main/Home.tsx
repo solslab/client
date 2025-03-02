@@ -13,6 +13,7 @@ import IndexTrLink from './IndexTrLink';
 import { useState } from 'react';
 import clsx from 'clsx';
 import TierGuard from '../common/tierGuard';
+import FeedBackBtn from '../common/feedBackBtn';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -45,7 +46,7 @@ export default function Home() {
 					<div className="z-0 flex h-full flex-col items-center justify-between">
 						<div className="relative flex w-full flex-1 items-center justify-center">
 							<Float />
-							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-[7px]">
+							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-75 backdrop-blur-[7px]">
 								<FadeIn>
 									<Container className="relative flex h-46 max-w-7xl justify-center">
 										<div className="z-30 flex flex-col items-center justify-center">
@@ -96,7 +97,7 @@ export default function Home() {
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
 							</h2>
 							<span className="text-sm text-gray-80 md:text-base">
-								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
+								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
 						<div className="flex md:max-w-3xl flex-col items-center justify-center gap-8 py-8 max-w-[400px]">
@@ -122,6 +123,7 @@ export default function Home() {
 					</FadeIn>
 				</section>
 			</FullPageScroll>
+			<FeedBackBtn />
 		</div>
 	);
 }

@@ -118,13 +118,13 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 					/>
 
 					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="w-full font-bold text-gray-80 md:w-1/5">티어 / 점수</div>
+						<div className="w-full font-bold text-gray-80 md:w-1/5">solved.ac 티어</div>
 						<div className="mt-4 w-full md:mt-0 md:w-4/5">
 							<Select value={level.toString()} onValueChange={(value) => setLevel(Number(value))}>
 								<SelectTrigger className="w-full max-w-80">
 									<SelectValue placeholder="티어를 선택해주세요" />
 								</SelectTrigger>
-								<SelectContent>
+								<SelectContent className="max-h-60 overflow-y-auto">
 									{PLATFORMLIST[platform].level.map((platform) => (
 										<SelectItem value={platform.value.toString()} key={platform.label}>
 											{platform.label}

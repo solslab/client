@@ -67,7 +67,7 @@ export const SOLVEDACLEVEL = {
 		{ label: '루비 3', value: 33 },
 		{ label: '루비 2', value: 34 },
 		{ label: '루비 1', value: 35 },
-		{ label: '마스터 (이상)', value: 36 }
+		{ label: '마스터', value: 36 }
 	]
 };
 export const PLATFORMLIST = [

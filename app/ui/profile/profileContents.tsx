@@ -58,7 +58,7 @@ export default function ProfileContents() {
 			<ProfileField label="이름" value={profileData?.name || null} />
 			<ProfileField label="닉네임" value={profileData?.nickname || null} />
 			<ProfileField label="이메일" value={profileData?.email || null} />
-			<ProfileField label="티어 / 점수" value={tierLabel?.label || null} />
+			<ProfileField label="solved.ac 티어" value={tierLabel?.label || null} />
 
 			<div className="flex w-full flex-wrap py-4 text-base">
 				<div className="flex w-full flex-col justify-start font-bold text-gray-80 md:w-1/5">

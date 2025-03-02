@@ -97,7 +97,7 @@ export default function TierModal({
 													<SelectValue placeholder="티어를 선택해주세요" />
 												</SelectTrigger>
 											</FormControl>
-											<SelectContent>
+											<SelectContent className="max-h-60 overflow-y-auto">
 												{SOLVEDACLEVEL.level.map((level) => (
 													<SelectItem value={level.value.toString()} key={level.label}>
 														{level.label}
