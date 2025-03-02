@@ -10,6 +10,7 @@ export interface TestReviewState {
 		tr_pass_status?: string[];
 		tr_problem_type?: string[];
 		tr_comment?: string[];
+		difficulty?: string[];
 	};
 	message?: string | null;
 	fullfilled?: boolean;

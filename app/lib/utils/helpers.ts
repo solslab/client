@@ -1,4 +1,9 @@
 import { PLATFORMLIST, SPRING_URL } from './constants';
+import clsx from 'clsx';
+
+export const cn = (...classes: (string | undefined | false)[]) => {
+	return clsx(...classes);
+};
 
 export function findPlatformAndLabel(value: number): { label: string } | undefined {
 	for (const item of PLATFORMLIST[0].level) {

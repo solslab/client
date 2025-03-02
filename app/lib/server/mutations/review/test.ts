@@ -10,7 +10,7 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 	let flag = false;
 
 	const validatedFields = TestReviewFormSchema.safeParse({
-		company_id: formData.get('company_id') || undefined,
+		company_id: formData.get('company_id'),
 		company_name: formData.get('company_name'),
 		tr_year: formData.get('tr_year'),
 		tr_position: formData.get('tr_position'),
@@ -19,8 +19,10 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 		tr_solved_num: formData.get('tr_solved_num'),
 		tr_pass_status: formData.get('tr_pass_status'),
 		tr_problem_type: formData.get('tr_problem_type'),
+		difficulty: formData.get('difficulty'),
 		tr_comment: formData.get('tr_comment')
 	});
+
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,

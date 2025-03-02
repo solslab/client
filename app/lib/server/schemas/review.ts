@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const TestReviewFormSchema = z.object({
 	company_id: z.string({
 		invalid_type_error: '회사를 선택해주세요.'
-	}),
+	}).nullable(),
 	company_name: z.string({
 		invalid_type_error: '회사를 선택해주세요.'
 	}),
@@ -42,7 +42,10 @@ export const TestReviewFormSchema = z.object({
 			invalid_type_error: '후기를 입력해주세요.'
 		})
 		.min(1, { message: '후기는 최소 1자 이상이어야 합니다.' })
-		.max(200, { message: '후기는 최대 200자까지 입력할 수 있습니다.' })
+		.max(200, { message: '후기는 최대 200자까지 입력할 수 있습니다.' }),
+	difficulty: z.string({
+		invalid_type_error: '난이도를 선택해주세요.'
+	})
 });
 
 export const FeedbackFormSchema = z.object({

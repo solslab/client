@@ -19,25 +19,22 @@ import ScrollToTop from '../common/ScrollToTop';
 import { TestReviewState } from '@/app/lib/types/actions/review';
 import { createTestReview } from '@/app/lib/server/mutations/review/test';
 import { PASS_STATUS, PROBLEM_TYPE, TR_CAREER, TR_POSITIONS } from '@/app/lib/utils/constants';
-
+import { Slider } from '@/app/ui/shadcn/components/ui/slider';
 import { redirectToPrev } from '@/app/lib/utils/cookie';
 
 const years: number[] = [];
 for (let i = 2024; i >= 2014; i--) {
 	years.push(i);
 }
-const df: number[] = [];
-for (let i = 1; i <= 5; i++) {
-	df.push(i);
-}
-
 
 export default function TrForm({ company_id }: { company_id: string | undefined }) {
 	const [problems, setProblems] = useState<Set<string>>(new Set());
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState<string>('');
 	const [companyId, setCompanyId] = useState(company_id);
-	const [totalProblem, setTotalProblem] = useState(0);
+	const [totalProblem, setTotalProblem] = useState<number>(0);
 	const [solvedProblem, setSolvedProblem] = useState<number[]>([]);
+	const [difficulty, setDifficulty] = useState<number>(0);
+	
 	const handleSolvedProblem = (endNumber: number): void => {
 		const length = Math.floor(endNumber * 2) + 1;
 		setSolvedProblem(Array.from({ length }, (_, index) => index * 0.5));
@@ -60,12 +57,17 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 	};
 	const [state, formAction] = useActionState(createTestReview, initialState);
 
+	const handleSliderChange = (value: number[]) => {
+		setDifficulty(value[0]);
+	};
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
-		companyId && formData.append('company_id', companyId);
+		companyId !== undefined && formData.append('company_id', companyId);
 		formData.append('company_name', value);
 		formData.append('tr_problem_type', Array.from(problems).toString());
+		formData.append('difficulty', (difficulty+1).toString());
 		startTransition(() => {
 			formAction(formData);
 		});
@@ -101,18 +103,16 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 						>
 							{' '}
 							<Select name="tr_position" required={true}>
-								<Select name="tr_position" required={true}>
-									<SelectTrigger className="w-full max-w-80">
-										<SelectValue placeholder="선택" />
-									</SelectTrigger>
-									<SelectContent className="max-h-60 overflow-y-auto">
-										{TR_POSITIONS.map((el) => (
-											<SelectItem value={el.toString()} key={el}>
-												{el}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent className="max-h-60 overflow-y-auto">
+									{TR_POSITIONS.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
+									))}
+								</SelectContent>
 							</Select>
 						</TrFormRow>
 						<TrFormRow label={'채용형태'} error={state.errors?.tr_career && state.errors.tr_career}>
@@ -218,20 +218,22 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 						</div>
 					</div>
 					<div className="border-b border-gray-30 py-6">
-						<TrFormRow label={'난이도'} error={state.errors?.tr_year && state.errors.tr_year}>
-							<Select name="difficulty" required={true}>
-								<SelectTrigger className="w-full max-w-80">
-									<SelectValue placeholder="선택" />
-								</SelectTrigger>
-								<SelectContent>
-									{df.map((el) => (
-										<SelectItem value={el.toString()} key={el}>
-											{el}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</TrFormRow>
+						<div className="flex w-full flex-wrap py-4 text-base">
+							<div className="mt-4 w-full font-bold text-gray-80">
+								난이도<span className="textsm text-main-base"> *</span>
+							</div>
+							<div className="mt-8 flex w-full items-center justify-between text-text-base">
+								<div className="w-full">
+									{/* 슬라이더 */}
+									<Slider defaultValue={[0]} max={4} step={1} onValueChange={handleSliderChange} />
+									<div className="mt-4 flex justify-between text-sm text-text-base">
+										<span>쉬움</span>
+										<span>보통</span>
+										<span>어려움</span>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div className="py-6">
 							<div className="flex w-full flex-wrap py-4 text-base">
 								<div className="w-full font-bold text-gray-80">
