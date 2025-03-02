@@ -2,24 +2,29 @@
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import LanguageToggleButton from '../profile/languageToggleButton';
-import BaseSubmitButton from './baseSubmitButton';
 import TrComboBox from '../testReview/trCombobox';
-
-import Select from './select';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/app/ui/shadcn/components/ui/select';
 import TrFormRow from '../testReview/trFormRow';
 import TrSearchBox from '../testReview/trSearchbox';
-import BasicAlert from './basicAlert';
-
-import NaturalNumberInput from './naturalNumberInput';
-import ScrollToTop from './ScrollToTop';
+import BasicAlert from '../common/basicAlert';
+import { Button } from '../shadcn/components/ui/button';
+import NaturalNumberInput from '../common/naturalNumberInput';
+import ScrollToTop from '../common/ScrollToTop';
 import { TestReviewState } from '@/app/lib/types/actions/review';
 import { createTestReview } from '@/app/lib/server/mutations/review/test';
-import { PASS_STATUS, PROBLEM_TYPE, TR_CAREER } from '@/app/lib/utils/constants';
+import { PASS_STATUS, PROBLEM_TYPE, TR_CAREER, TR_POSITIONS } from '@/app/lib/utils/constants';
 
 import { redirectToPrev } from '@/app/lib/utils/cookie';
-import Input from './input';
+
 const years: number[] = [];
-for (let i = 2024; i >= 2010; i--) {
+for (let i = 2024; i >= 2014; i--) {
 	years.push(i);
 }
 
@@ -70,7 +75,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 			<ScrollToTop />
 			<form onSubmit={handleSubmit}>
 				<div className="text-2xl font-bold text-title-black">코딩테스트 후기 작성</div>
-				<div className="px-5 py-16">
+				<div className="px-5 pt-16">
 					<div className="border-b border-gray-30 py-6">
 						<TrFormRow
 							required={true}
@@ -86,28 +91,53 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							/>
 						</TrFormRow>
 						<TrFormRow
-							label={'지원직무(선택)'}
-							required={false}
+							label={'지원직무'}
+							required={true}
 							error={state.errors?.tr_position && state.errors.tr_position}
 						>
 							{' '}
-							<Input name="tr_position" id="tr_position" />
+							<Select name="tr_position" required={true}>
+								<Select name="tr_position" required={true}>
+									<SelectTrigger className="w-full max-w-80">
+										<SelectValue placeholder="선택" />
+									</SelectTrigger>
+									<SelectContent className="max-h-60 overflow-y-auto">
+										{TR_POSITIONS.map((el) => (
+											<SelectItem value={el.toString()} key={el}>
+												{el}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</Select>
 						</TrFormRow>
 						<TrFormRow label={'채용형태'} error={state.errors?.tr_career && state.errors.tr_career}>
 							{' '}
-							<Select name="tr_career" id="tr_career" required={true}>
-								{TR_CAREER.map((el) => (
-									<option key={el}>{el}</option>
-								))}
+							<Select name="tr_career" required={true}>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent>
+									{TR_CAREER.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
+									))}
+								</SelectContent>
 							</Select>
 						</TrFormRow>
 						<TrFormRow label={'응시년도'} error={state.errors?.tr_year && state.errors.tr_year}>
-							<Select name="tr_year" id="tr_year" required={true}>
-								{years.map((el) => (
-									<option value={el} key={el}>
-										{el}년
-									</option>
-								))}
+							<Select name="tr_year" required={true}>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent>
+									{years.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
+									))}
+								</SelectContent>
 							</Select>
 						</TrFormRow>
 					</div>
@@ -129,18 +159,32 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							error={state.errors?.tr_solved_num && state.errors.tr_solved_num}
 						>
 							{' '}
-							<Select name="tr_solved_num" id="tr_solved_num" required={true}>
-								{solvedProblem.map((el) => (
-									<option key={el}>{el}</option>
-								))}
+							<Select name="tr_solved_num" required={true}>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent>
+									{solvedProblem.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
+									))}
+								</SelectContent>
 							</Select>
 						</TrFormRow>
 						<TrFormRow label={'합격 여부'}>
 							{' '}
-							<Select id="tr_pass_status" name="tr_pass_status" required={true}>
-								{PASS_STATUS.map((el) => (
-									<option key={el}>{el}</option>
-								))}
+							<Select name="tr_pass_status" required={true}>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent>
+									{PASS_STATUS.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
+									))}
+								</SelectContent>
 							</Select>
 						</TrFormRow>
 					</div>
@@ -179,7 +223,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									maxLength={100}
 									id="tr_comment"
 									name="tr_comment"
-									className="h-36 w-full resize-none rounded-lg border border-gray-50 p-3"
+									className="h-36 w-full resize-none rounded-lg border border-gray-30 p-3 placeholder:text-sm"
 									placeholder="간단한 시험 후기를 들려주세요! 직접적으로 시험의 지문, 테스트케이스, 힌트 등을 게시하게 되면 문제 유출로 간주될 수 있으니 조심해주세요!"
 								/>
 							</div>
@@ -194,7 +238,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 						</div>
 					</div>
 				</div>
-				<BaseSubmitButton text="제출" />
+				<Button className="w-full bg-main-base" type="submit">
+					제출하기
+				</Button>
 				<div className="flex h-6 w-full items-center justify-end">
 					{state.message && <p className="text-sm text-red-warning">{state.message}</p>}
 				</div>

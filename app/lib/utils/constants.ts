@@ -149,79 +149,59 @@ export const FEILDLIST = [
 	'공기업'
 ];
 export const PROBLEM_TYPE = [
-	{ value: '문자열(String, string)', label: '문자열', type: '자료구조' },
-	{ value: '집합(Set, set)', label: '집합', type: '자료구조' },
-	{ value: '해시(Hash, hash, 해싱)', label: '해시', type: '자료구조' },
-	{ value: '스택(Stack, stack)', label: '스택', type: '자료구조' },
-	{ value: '큐(Queue, queue)', label: '큐', type: '자료구조' },
-	{ value: '덱(Deque, deque)', label: '덱', type: '자료구조' },
-	{ value: '힙(Heap)', label: '힙', type: '자료구조' },
-	{ value: '트리(Tree, tree)', label: '트리', type: '자료구조' },
-	{ value: '트라이(Trie, trie)', label: '트라이', type: '자료구조' },
+	{ value: '문자열(string)', label: '문자열', type: '자료구조' },
+	{ value: '집합(set)', label: '집합', type: '자료구조' },
+	{ value: '해시(hash, 해싱)', label: '해시', type: '자료구조' },
+	{ value: '스택(stack)', label: '스택', type: '자료구조' },
+	{ value: '큐(queue)', label: '큐', type: '자료구조' },
+	{ value: '덱(deque)', label: '덱', type: '자료구조' },
+	{ value: '힙(heap)', label: '힙', type: '자료구조' },
+	{ value: '트리(tree)', label: '트리', type: '자료구조' },
+	{ value: '트라이(trie)', label: '트라이', type: '자료구조' },
+	{ value: '브루트포스(완전탐색, brute force)', label: '브루트포스', type: '알고리즘' },
+	{ value: '그리디(탐욕법, greedy)', label: '그리디', type: '알고리즘' },
+	{ value: '분할 정복(divide and conquer)', label: '분할 정복', type: '알고리즘' },
 	{
-		value: '브루트포스(완전탐색, Brute Force, brute force)',
-		label: '브루트포스',
-		type: '알고리즘'
-	},
-	{ value: '그리디(탐욕법, Greedy, greedy)', label: '그리디', type: '알고리즘' },
-	{
-		value: 'DP(동적 계획법, 다이나믹 프로그래밍, Dynamic Programming, dynamic programming)',
+		value: 'DP(동적 계획법, 다이나믹 프로그래밍, dynamic programming)',
 		label: 'DP',
 		type: '알고리즘'
 	},
-	{ value: 'DFS(깊이우선탐색, dfs)', label: 'DFS', type: '알고리즘' },
-	{ value: 'BFS(너비우선탐색, bfs)', label: 'BFS', type: '알고리즘' },
+	{ value: '배낭 문제(knapsack problem)', label: '배낭 문제', type: '알고리즘' },
+	{ value: 'DFS(깊이우선탐색)', label: 'DFS', type: '알고리즘' },
+	{ value: 'BFS(너비우선탐색)', label: 'BFS', type: '알고리즘' },
+	{ value: '이분탐색(이진탐색, binary search)', label: '이분탐색', type: '알고리즘' },
+	{ value: '그래프(graph)', label: '그래프', type: '알고리즘' },
+	{ value: '재귀(recursion)', label: '재귀', type: '알고리즘' },
+	{ value: '백트래킹(backtracking)', label: '백트래킹', type: '알고리즘' },
+	{ value: '구현(implementation)', label: '구현', type: '알고리즘' },
+	{ value: '누적 합(prefix sum, 누적합, 구간합)', label: '누적 합', type: '알고리즘' },
+	{ value: '시뮬레이션(simulation, 구현)', label: '시뮬레이션', type: '알고리즘' },
+	{ value: '정렬(sort)', label: '정렬', type: '알고리즘' },
+	{ value: '최단 거리(shortest path)', label: '최단 거리', type: '알고리즘' },
+	{ value: '우선순위 큐(priority queue, 우선순위큐)', label: '우선순위 큐', type: '알고리즘' },
+	{ value: '투 포인터(two pointer, 투포인터)', label: '투 포인터', type: '알고리즘' },
 	{
-		value: '이분탐색(이진탐색, Binary Search, binary search)',
-		label: '이분탐색',
-		type: '알고리즘'
-	},
-	{ value: '그래프(Graph, graph)', label: '그래프', type: '알고리즘' },
-	{ value: '재귀(Recursion, recursion)', label: '재귀', type: '알고리즘' },
-	{ value: '백트래킹(Backtracking, backtracking)', label: '백트래킹', type: '알고리즘' },
-	{ value: '구현(Implementation, implementation)', label: '구현', type: '알고리즘' },
-	{ value: '누적 합(Prefix Sum, prefix sum, 누적합)', label: '누적 합', type: '알고리즘' },
-	{ value: '시뮬레이션(Simulation, simulation, 구현)', label: '시뮬레이션', type: '알고리즘' },
-	{ value: '정렬(Sort, sort)', label: '정렬', type: '알고리즘' },
-	{ value: '최단 거리(Shortest Path, shortest path)', label: '최단 거리', type: '알고리즘' },
-	{
-		value: '우선순위 큐(Priority Queue, priority queue, 우선순위큐)',
-		label: '우선순위 큐',
-		type: '알고리즘'
-	},
-	{ value: '투 포인터(Two Pointer, two pointer, 투포인터)', label: '투 포인터', type: '알고리즘' },
-	{
-		value: '슬라이딩 윈도우(Sliding Window, sliding window, 슬라이딩윈도우)',
+		value: '슬라이딩 윈도우(sliding window, 슬라이딩윈도우)',
 		label: '슬라이딩 윈도우',
 		type: '알고리즘'
 	},
-	{ value: '조합(Combination, combination)', label: '조합', type: '알고리즘' },
-	{ value: '다익스트라(Dijkstra, dijkstra)', label: '다익스트라', type: '알고리즘' },
-	{ value: '벨만 포드(Bellman-Ford, bellman-ford)', label: '벨만 포드', type: '알고리즘' },
+	{ value: '조합(combination)', label: '조합', type: '알고리즘' },
+	{ value: '다익스트라(dijkstra)', label: '다익스트라', type: '알고리즘' },
+	{ value: '벨만 포드(bellman-ford)', label: '벨만 포드', type: '알고리즘' },
+	{ value: '플로이드-워셜(floyd-warshall)', label: '플로이드-워셜', type: '알고리즘' },
+	{ value: '위상 정렬(topological sorting, 위상정렬)', label: '위상 정렬', type: '알고리즘' },
 	{
-		value: '플로이드-워셜(Floyd-Warshall, floyd-warshall)',
-		label: '플로이드-워셜',
-		type: '알고리즘'
-	},
-	{
-		value: '위상 정렬(Topological Sorting, topological sorting, 위상정렬)',
-		label: '위상 정렬',
-		type: '알고리즘'
-	},
-	{
-		value: '최소 신장 트리(MST, Minimum Spanning Tree, minimum spanning tree, 최소신장트리)',
+		value: '최소 신장 트리(MST, minimum spanning tree, 최소신장트리)',
 		label: '최소 신장 트리',
 		type: '알고리즘'
 	},
-	{ value: '크루스칼(Kruskal Algorithm, kruskal algorithm)', label: '크루스칼', type: '알고리즘' },
-	{
-		value: '유니온 파인드(Union Find, union find, 유니온파인드',
-		label: '유니온 파인드',
-		type: '알고리즘'
-	},
-	{ value: '비트마스킹(Bit Masking, bit masking)', label: '비트마스킹', type: '알고리즘' },
+	{ value: '크루스칼(kruskal algorithm)', label: '크루스칼', type: '알고리즘' },
+	{ value: '유니온 파인드(union find, 유니온파인드', label: '유니온 파인드', type: '알고리즘' },
+	{ value: '비트마스킹(bit masking)', label: '비트마스킹', type: '알고리즘' },
 	{ value: 'KMP', label: 'KMP', type: '알고리즘' },
-	{ value: '수학(Math, math)', label: '수학', type: '알고리즘' },
+	{ value: '애드 혹(ad hoc)', label: '애드 혹', type: '알고리즘' },
+	{ value: '세그먼트 트리(segment tree)', label: '세그먼트 트리', type: '알고리즘' },
+	{ value: '수학(math)', label: '수학', type: '알고리즘' },
 	{ value: 'JOIN', label: 'JOIN', type: 'SQL' },
 	{ value: 'UNION', label: 'UNION', type: 'SQL' },
 	{ value: 'ORDER BY', label: 'ORDER BY', type: 'SQL' },
@@ -238,6 +218,31 @@ export const PROBLEM_TYPE = [
 ];
 export const TR_CAREER = ['신입', '경력'];
 export const PASS_STATUS = ['합격', '불합격'];
+export const TR_POSITIONS = [
+	'백엔드 개발',
+	'프론트엔드 개발',
+	'풀스택 개발',
+	'금융 IT 개발',
+	'안드로이드 개발',
+	'iOS 개발',
+	'SW 엔지니어',
+	'크로스플랫폼 앱 개발',
+	'게임 서버 개발',
+	'게임 클라이언트 개발',
+	'데이터 엔지니어',
+	'데이터 사이언티스트',
+	'데이터 분석',
+	'DBA',
+	'DevOps',
+	'클라우드 엔지니어',
+	'시스템 엔지니어',
+	'임베디드/HW 엔지니어',
+	'머신러닝 엔지니어',
+	'QA/테스트 엔지니어',
+	'보안 엔지니어',
+	'블록체인 엔지니어',
+	'기타/직무 선택 없음'
+];
 
 export const STATUS_OPTIONS = [
 	{ value: 'NOT_STARTED', label: '처리 전' },
