@@ -3,7 +3,6 @@ import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import LanguageToggleButton from '../profile/languageToggleButton';
 import TrComboBox from '../testReview/trCombobox';
-import { Input } from '@/app/ui/shadcn/components/ui/input';
 import {
 	Select,
 	SelectContent,
@@ -27,6 +26,11 @@ const years: number[] = [];
 for (let i = 2024; i >= 2014; i--) {
 	years.push(i);
 }
+const df: number[] = [];
+for (let i = 1; i <= 5; i++) {
+	df.push(i);
+}
+
 
 export default function TrForm({ company_id }: { company_id: string | undefined }) {
 	const [problems, setProblems] = useState<Set<string>>(new Set());
@@ -213,27 +217,43 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							</div>
 						</div>
 					</div>
-					<div className="py-6">
-						<div className="flex w-full flex-wrap py-4 text-base">
-							<div className="w-full font-bold text-gray-80">
-								한줄 후기<span className="textsm text-main-base"> *</span>
-							</div>
-							<div className="mt-4 flex w-full justify-end text-text-base">
-								<textarea
-									maxLength={100}
-									id="tr_comment"
-									name="tr_comment"
-									className="h-36 w-full resize-none rounded-lg border border-gray-30 p-3 placeholder:text-sm"
-									placeholder="간단한 시험 후기를 들려주세요! 직접적으로 시험의 지문, 테스트케이스, 힌트 등을 게시하게 되면 문제 유출로 간주될 수 있으니 조심해주세요!"
-								/>
-							</div>
-							<div className="flex h-6 w-full items-center justify-end">
-								{state.errors?.tr_comment &&
-									state.errors?.tr_comment.map((error: string) => (
-										<p key={error} className="text-sm text-red-warning">
-											{error}
-										</p>
+					<div className="border-b border-gray-30 py-6">
+						<TrFormRow label={'난이도'} error={state.errors?.tr_year && state.errors.tr_year}>
+							<Select name="difficulty" required={true}>
+								<SelectTrigger className="w-full max-w-80">
+									<SelectValue placeholder="선택" />
+								</SelectTrigger>
+								<SelectContent>
+									{df.map((el) => (
+										<SelectItem value={el.toString()} key={el}>
+											{el}
+										</SelectItem>
 									))}
+								</SelectContent>
+							</Select>
+						</TrFormRow>
+						<div className="py-6">
+							<div className="flex w-full flex-wrap py-4 text-base">
+								<div className="w-full font-bold text-gray-80">
+									한줄 후기<span className="textsm text-main-base"> *</span>
+								</div>
+								<div className="mt-4 flex w-full justify-end text-text-base">
+									<textarea
+										maxLength={100}
+										id="tr_comment"
+										name="tr_comment"
+										className="h-36 w-full resize-none rounded-lg border border-gray-30 p-3 placeholder:text-sm"
+										placeholder="간단한 시험 후기를 들려주세요! 직접적으로 시험의 지문, 테스트케이스, 힌트 등을 게시하게 되면 문제 유출로 간주될 수 있으니 조심해주세요!"
+									/>
+								</div>
+								<div className="flex h-6 w-full items-center justify-end">
+									{state.errors?.tr_comment &&
+										state.errors?.tr_comment.map((error: string) => (
+											<p key={error} className="text-sm text-red-warning">
+												{error}
+											</p>
+										))}
+								</div>
 							</div>
 						</div>
 					</div>
