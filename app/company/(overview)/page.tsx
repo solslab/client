@@ -72,7 +72,7 @@ export default async function Page({
 		<Container>
 			<ScrollToTop />
 			<div className="flex flex-col gap-[10px] py-5 md:gap-5">
-				{companies.map((company: { company_id: string }) => (
+				{companyData.companies.map((company) => (
 					<CompanyOverviewCard key={company.company_id} companyData={company} />
 				))}
 			</div>
