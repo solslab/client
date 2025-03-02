@@ -13,10 +13,7 @@ export default function BaseLink({ text, href }: BaseLinkProps) {
 
 	return (
 		<Link href={href} className="block w-full">
-			<Button
-				className="h-12 w-full rounded-3xl bg-main-base text-xl font-bold text-white hover:bg-main-base/90"
-				variant="ghost"
-			>
+			<Button className="w-full bg-main-base text-white" variant="ghost">
 				{btnText}
 			</Button>
 		</Link>
