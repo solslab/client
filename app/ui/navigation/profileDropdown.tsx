@@ -4,9 +4,10 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { logOut, tokenTest } from '@/app/lib/auth';
+import { logOut } from '@/app/lib/server/mutations/auth';
+import { tokenTest } from '@/app/lib/server/queries/auth/token';
 import { usePathname } from 'next/navigation';
-import { getToken } from '@/app/lib/cookie';
+import { getToken } from '@/app/lib/utils/cookie';
 
 const links = [{ name: '내 프로필', href: '/profiles' }];
 const menus = [{ name: '전체기업', href: '/company' }];
@@ -48,29 +49,28 @@ export default function ProfileDropdown({
 				<></>
 			) : (
 				<>
-					{visible ? 
-					isLoggedIn?(
-						<button
-							type="button"
-							className="relative hidden rounded-full text-sm focus:outline-none sm:flex"
-							id="user-menu-button"
-							aria-expanded="false"
-							aria-haspopup="true"
-							onClick={() => handleProfileClicked()}
-						>
-							<span className="absolute -inset-1.5"></span>
-							<span className="sr-only">Open user menu</span>
-							<Image width={42} height={42} src="/icons/default_profile.png" alt="menu button" />
-						</button>
-					)
-					:
-					(
-						<Link
-							className="rounded-3xl border border-gray-40 px-6 py-2 text-sm font-medium text-text-base hover:text-black"
-							href="/login"
-						>
-							로그인 / 회원가입
-						</Link>
+					{visible ? (
+						isLoggedIn ? (
+							<button
+								type="button"
+								className="relative hidden rounded-full text-sm focus:outline-none sm:flex"
+								id="user-menu-button"
+								aria-expanded="false"
+								aria-haspopup="true"
+								onClick={() => handleProfileClicked()}
+							>
+								<span className="absolute -inset-1.5"></span>
+								<span className="sr-only">Open user menu</span>
+								<Image width={42} height={42} src="/icons/default_profile.png" alt="menu button" />
+							</button>
+						) : (
+							<Link
+								className="rounded-3xl border border-gray-40 px-6 py-2 text-sm font-medium text-text-base hover:text-black"
+								href="/login"
+							>
+								로그인 / 회원가입
+							</Link>
+						)
 					) : (
 						<button
 							type="button"
@@ -158,126 +158,123 @@ export default function ProfileDropdown({
 							})}
 							id="mobile-menu"
 						>
-							{
-								isLoggedIn?
+							{isLoggedIn ? (
 								<>
-								<div className="space-y-2 px-2 pb-3 pt-2">
-								<div className="flex w-full flex-col justify-between p-6">
-									<div className="flex w-full justify-end">
-										{/* <Image
+									<div className="space-y-2 px-2 pb-3 pt-2">
+										<div className="flex w-full flex-col justify-between p-6">
+											<div className="flex w-full justify-end">
+												{/* <Image
 											className="rounded-full"
 											width={74}
 											height={74}
 											src="/icons/default_profile.png"
 											alt="User avatar"
 										/> */}
+												<button
+													onClick={handleProfileClicked}
+													className="flex h-6 w-6 items-center justify-center"
+												>
+													<Image width={16} height={16} src="/icons/ex.png" alt="cancel button" />
+												</button>
+											</div>
+											<div className="text-xl text-text-base">{userName}</div>
+										</div>
+									</div>
+
+									<div>
+										{menus.map((link, index) => (
+											<Link
+												key={link.href + link.name}
+												href={link.href}
+												role="menuitem"
+												tabIndex={index}
+											>
+												<div
+													onClick={handleProfileClicked}
+													className="px-6 py-4 text-base text-text-base"
+												>
+													{link.name}
+												</div>
+											</Link>
+										))}
+
+										<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
+										{links.map((link, index) => (
+											<Link
+												key={link.href + link.name}
+												href={link.href}
+												role="menuitem"
+												tabIndex={index}
+											>
+												<div
+													onClick={handleProfileClicked}
+													className="px-6 py-4 text-base text-text-base"
+												>
+													{link.name}
+												</div>
+											</Link>
+										))}
 										<button
-											onClick={handleProfileClicked}
-											className="flex h-6 w-6 items-center justify-center"
+											className="px-6 py-4 text-base text-text-base"
+											role="logOut"
+											tabIndex={-1}
+											onClick={() => {
+												logout();
+												handleProfileClicked();
+											}}
 										>
-											<Image width={16} height={16} src="/icons/ex.png" alt="cancel button" />
+											로그아웃
 										</button>
 									</div>
-									<div className="text-xl text-text-base">{userName}</div>
-								</div>
-							</div>
-
-							
-							<div>
-							{menus.map((link, index) => (
-									<Link
-										key={link.href + link.name}
-										href={link.href}
-										role="menuitem"
-										tabIndex={index}
-									>
-										<div
-											onClick={handleProfileClicked}
-											className="px-6 py-4 text-base text-text-base"
-										>
-											{link.name}
-										</div>
-									</Link>
-								))}
-								
-								<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
-								{links.map((link, index) => (
-									<Link
-										key={link.href + link.name}
-										href={link.href}
-										role="menuitem"
-										tabIndex={index}
-									>
-										<div
-											onClick={handleProfileClicked}
-											className="px-6 py-4 text-base text-text-base"
-										>
-											{link.name}
-										</div>
-									</Link>
-								))}
-								<button
-									className="px-6 py-4 text-base text-text-base"
-									role="logOut"
-									tabIndex={-1}
-									onClick={() => {
-										logout();
-										handleProfileClicked();
-									}}
-								>
-									로그아웃
-								</button>
-							</div>
 								</>
-								:
+							) : (
 								<>
-								<div className="space-y-2 px-2 pb-3 pt-2">
-								<div className="flex w-full flex-col justify-between p-6">
-									<div className="flex w-full justify-end">
-										<button
-											onClick={handleProfileClicked}
-											className="flex h-6 w-6 items-center justify-center"
-										>
-											<Image width={16} height={16} src="/icons/ex.png" alt="cancel button" />
-										</button>
-									</div>
-									<div className="text-xl text-text-base">{userName}</div>
-								</div>
-							</div>
-							<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
-							<div>
-								{menus.map((link, index) => (
-									<Link
-										key={link.href + link.name}
-										href={link.href}
-										role="menuitem"
-										tabIndex={index}
-									>
-										<div
-											onClick={handleProfileClicked}
-											className="px-6 py-4 text-base text-text-base"
-										>
-											{link.name}
+									<div className="space-y-2 px-2 pb-3 pt-2">
+										<div className="flex w-full flex-col justify-between p-6">
+											<div className="flex w-full justify-end">
+												<button
+													onClick={handleProfileClicked}
+													className="flex h-6 w-6 items-center justify-center"
+												>
+													<Image width={16} height={16} src="/icons/ex.png" alt="cancel button" />
+												</button>
+											</div>
+											<div className="text-xl text-text-base">{userName}</div>
 										</div>
-									</Link>
-								))}
-								<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
-								<Link href='/login'>
-								<button
-									className="px-6 w-full py-4 text-base text-text-base text-left"
-									role="logIn"
-									tabIndex={-1}
-									onClick={() => {
-										handleProfileClicked();
-									}}
-								>
-									로그인
-								</button>
-								</Link>
-							</div>
+									</div>
+									<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
+									<div>
+										{menus.map((link, index) => (
+											<Link
+												key={link.href + link.name}
+												href={link.href}
+												role="menuitem"
+												tabIndex={index}
+											>
+												<div
+													onClick={handleProfileClicked}
+													className="px-6 py-4 text-base text-text-base"
+												>
+													{link.name}
+												</div>
+											</Link>
+										))}
+										<div id="" className="my-5 h-1 w-full bg-gray-10"></div>
+										<Link href="/login">
+											<button
+												className="w-full px-6 py-4 text-left text-base text-text-base"
+												role="logIn"
+												tabIndex={-1}
+												onClick={() => {
+													handleProfileClicked();
+												}}
+											>
+												로그인
+											</button>
+										</Link>
+									</div>
 								</>
-							}
-
+							)}
 						</div>
 					)}
 				</>

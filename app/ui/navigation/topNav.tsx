@@ -5,7 +5,7 @@ import Link from 'next/link';
 import NavBtn from './navBtn';
 import InteractiveLink from './InteractiveLink';
 import { usePathname } from 'next/navigation';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 import { useEffect, useState } from 'react';
 
 export default function Topnav() {

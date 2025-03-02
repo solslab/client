@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchFilteredCompanys } from '@/app/lib/data';
-import { CompanyQuery } from '@/app/lib/definitions';
+
 import Link from 'next/link';
 import clsx from 'clsx';
+import { CompanyQuery } from '@/app/lib/types/models';
+import { fetchFilteredCompanys } from '@/app/lib/server/queries/company';
 export default function NavSearchBox({ visible }: { visible?: boolean }) {
 	const [query, setQuery] = useState('');
 	const [value, setValue] = useState('');

@@ -4,12 +4,11 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/app/ui/shadcn/components/ui/dialog';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
 import { useState } from 'react';
-import { createCompany } from '@/app/lib/data-admin';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -17,11 +16,11 @@ import {
 	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
-	AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+	AlertDialogTitle
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
-
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
+import { createCompany } from '@/app/lib/server/mutations/company/index';
 type IndustryType =
 	| 'IT 서비스'
 	| '금융'
@@ -49,12 +48,12 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 	const basePath = useIsAdminDomain() ? '' : '/admin';
 
 	const handleClose = () => {
-    	if (redirectLoginAfterClose) {
+		if (redirectLoginAfterClose) {
 			router.push(`${basePath}/login`);
 		} else if (companyId) {
 			router.push(`${basePath}/manage/company/${companyId}`); // companyId를 이용한 라우팅
 		}
-  	}
+	};
 
 	const handleSave = async () => {
 		setAlertMessage('');
@@ -70,9 +69,9 @@ export default function CreateCompanyModal({ onClose }: { onClose: () => void })
 				setAlertMessage('기업 생성이 완료되었습니다.');
 				setCompanyId(response.company_id);
 			} else {
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '기업 생성 실패. 다시 시도해주세요.');
 				if (response.status === 401) {
-					 setRedirectLoginAfterClose(true);
+					setRedirectLoginAfterClose(true);
 				}
 			}
 		} catch (error) {

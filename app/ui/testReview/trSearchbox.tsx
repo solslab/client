@@ -1,10 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchCompanyData, fetchCompanyDetail, fetchFiltereAllCompanys, fetchFilteredCompanys } from '@/app/lib/data';
-import { CompanyQuery } from '@/app/lib/definitions';
+
 import Link from 'next/link';
 import clsx from 'clsx';
+import { CompanyQuery } from '@/app/lib/types/models';
+import { fetchCompanyDetail } from '@/app/lib/server/queries/company';
+import { fetchFiltereAllCompanys } from '@/app/lib/server/queries/company';
 export default function TrSearchBox({
 	value,
 	setValue,
@@ -42,12 +44,11 @@ export default function TrSearchBox({
 	}, [value]);
 	useEffect(() => {
 		const fetchQuery = async () => {
-			try{
+			try {
 				const data = await fetchFiltereAllCompanys(query);
 				setCompanyList(data);
-			}
-			catch(error){
-				console.error('기업 쿼리중에 문제 발생.')
+			} catch (error) {
+				console.error('기업 쿼리중에 문제 발생.');
 			}
 		};
 		if (query != '') {

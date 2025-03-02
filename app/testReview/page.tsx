@@ -1,5 +1,5 @@
-import XsContainer from '../ui/xsContainer';
-import TrForm from '../ui/trForm';
+import XsContainer from '../ui/common/xsContainer';
+import TrForm from '../ui/common/trForm';
 
 export default async function Page({ searchParams }: { searchParams: { company_id?: string } }) {
 	return (

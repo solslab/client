@@ -1,10 +1,10 @@
-import { fetchCompanyData } from '@/app/lib/data';
-import Container from '@/app/ui/container';
 import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import { BsThreeDots } from 'react-icons/bs';
 import { PaginationButtons } from '@/app/ui/paging/Pagination';
 import { Metadata } from 'next';
-import ScrollToTop from '@/app/ui/ScrollToTop';
+import ScrollToTop from '@/app/ui/common/ScrollToTop';
+import Container from '@/app/ui/common/container';
+import { fetchCompanyData } from '../../lib/server/queries/company';
 
 const PAGE_SIZE = 10;
 
@@ -72,7 +72,7 @@ export default async function Page({
 		<Container>
 			<ScrollToTop />
 			<div className="flex flex-col gap-[10px] py-5 md:gap-5">
-				{companies.map((company) => (
+				{companies.map((company: { company_id: string }) => (
 					<CompanyOverviewCard key={company.company_id} companyData={company} />
 				))}
 			</div>

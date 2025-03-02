@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow
-} from '@/components/ui/table';
+} from '@/app/ui/shadcn/components/ui/table';
 import {
 	Pagination,
 	PaginationItem,
@@ -17,10 +17,11 @@ import {
 	PaginationPrevious,
 	PaginationEllipsis,
 	PaginationLink
-} from '@/components/ui/pagination';
-import { getAllMembers } from '@/app/lib/data-admin';
-import { AllMemberPage } from '@/app/lib/definitions';
+} from '@/app/ui/shadcn/components/ui/pagination';
+
 import MemberDetailModal from '@/app/admin/components/member-detail';
+import { AllMemberPage } from '@/app/lib/types/models';
+import { getAllMembers } from '@/app/lib/server/queries/admin';
 
 export default function MemberOverviewPage() {
 	const [members, setMembers] = useState<AllMemberPage['members']>([]);

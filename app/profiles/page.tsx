@@ -1,6 +1,6 @@
 'use server';
 
-import SmallContainer from '../ui/smallContainer';
+import SmallContainer from '../ui/common/smallContainer';
 import BaseLink from '../ui/profile/baseLink';
 import DeletionBtn from '../ui/profile/deletionBtn';
 import ProfileContents from '../ui/profile/profileContents';

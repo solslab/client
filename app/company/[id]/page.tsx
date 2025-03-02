@@ -1,15 +1,15 @@
-import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/data';
-import { Company, Position, TestData } from '@/app/lib/definitions';
 import CompanyMenu from '@/app/ui/company/CompanyMenu';
 import SuggestionLink from '@/app/ui/company/suggestionLink';
 import TestInfo from '@/app/ui/company/testInfo';
-import TrLink from '@/app/ui/company/trLink';
-import Container from '@/app/ui/container';
-import FeedBackBtn from '@/app/ui/feedBackBtn';
+import Container from '@/app/ui/common/container';
+import FeedBackBtn from '@/app/ui/common/feedBackBtn';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Position, TestData } from '@/app/lib/types/models/company';
+import { Company } from '@/app/lib/types/models/company';
+import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/server/queries/company';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const company_id = params.id;
@@ -56,14 +56,12 @@ export default async function Page({
 	}
 	const positions: Position[] = companyData.positions;
 	const position_id = searchParams.position || positions[0]?.position_id;
-	let data: TestData|undefined ;
+	let data: TestData | undefined;
 	if (!position_id) {
-		data = undefined
+		data = undefined;
+	} else {
+		data = await fetchPositionData(position_id);
 	}
-	else{
-		data= await fetchPositionData(position_id);
-	}
-
 
 	return (
 		<>
@@ -72,7 +70,12 @@ export default async function Page({
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
-						style={{ backgroundImage:companyData.company_logo? `url(${companyData.company_logo})`:'url(/companyLogo/default_company_logo.png)',backgroundColor:'#F0F1F2' }}
+						style={{
+							backgroundImage: companyData.company_logo
+								? `url(${companyData.company_logo})`
+								: 'url(/companyLogo/default_company_logo.png)',
+							backgroundColor: '#F0F1F2'
+						}}
 					/>
 					<div className="flex flex-row items-center font-bold text-title-black">
 						<div className="pt-[0.625rem] text-xl md:pt-0 md:text-2xl">
@@ -87,49 +90,50 @@ export default async function Page({
 				</Container>
 			</div>
 			<div className="md:my-12">
-				{data?
-				<>
-				<TestInfo positions={positions} position_id={position_id} data={data} />
-				<Container>
-					<div className="flex w-full flex-wrap justify-between py-7 text-gray-70">
-						<div className="mb-8 flex w-full flex-col justify-center text-sm md:mb-0 md:w-1/2">
-							위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
-							채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수 있습니다.
-							<div className="flex">
-								<div className="mr-1 flex items-center justify-center">
-									<Image src={'/icons/verifyIcon.png'} width={16} height={16} alt="verified" />
+				{data ? (
+					<>
+						<TestInfo positions={positions} position_id={position_id} data={data} />
+						<Container>
+							<div className="flex w-full flex-wrap justify-between py-7 text-gray-70">
+								<div className="mb-8 flex w-full flex-col justify-center text-sm md:mb-0 md:w-1/2">
+									위 정보는 응시자의 설문을 바탕으로 제공되며, <br />
+									채용 프로세스 변경 또는 지원 직무에 따라 일부 정보가 다를 수 있습니다.
+									<div className="flex">
+										<div className="mr-1 flex items-center justify-center">
+											<Image src={'/icons/verifyIcon.png'} width={16} height={16} alt="verified" />
+										</div>
+										뱃지가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
+									</div>
 								</div>
-								뱃지가 없는 정보의 경우, 실제 시험 응시 전 재확인을 권장드립니다.
-							</div>
-						</div>
-						<div className="flex w-full justify-end md:w-1/2">
-							<div className="flex w-full justify-between md:w-auto md:flex-col md:justify-center">
-								<div className="sm:text-70 my-auto text-center text-sm text-gray-90 md:mb-2 md:text-gray-70">
-									잘못된 정보가 있나요?
+								<div className="flex w-full justify-end md:w-1/2">
+									<div className="flex w-full justify-between md:w-auto md:flex-col md:justify-center">
+										<div className="sm:text-70 my-auto text-center text-sm text-gray-90 md:mb-2 md:text-gray-70">
+											잘못된 정보가 있나요?
+										</div>
+										<Link
+											href={`/company/${company_id}/suggestion?position=${position_id}`}
+											className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base"
+										>
+											정보 수정 요청
+										</Link>
+									</div>
 								</div>
-								<Link
-									href={`/company/${company_id}/suggestion?position=${position_id}`}
-									className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base"
-								>
-									정보 수정 요청
-								</Link>
 							</div>
-						</div>
-					</div>
-				</Container>
-				</>
-				:
-				<>
-				<Container className="rounded-md bg-white">
-						<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base text-sm font-semibold">
-							<div className="mb-4 text-center ">이 기업에 대한 정보가 아직 없어요 😢</div>
-							<div className="mb-10 text-center">
-							{companyData.company_name}의 코딩테스트 응시 환경을 공유해주세요!
+						</Container>
+					</>
+				) : (
+					<>
+						<Container className="rounded-md bg-white">
+							<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-sm font-semibold text-text-base">
+								<div className="mb-4 text-center">이 기업에 대한 정보가 아직 없어요 😢</div>
+								<div className="mb-10 text-center">
+									{companyData.company_name}의 코딩테스트 응시 환경을 공유해주세요!
+								</div>
+								<SuggestionLink company_id={company_id} company_name={companyData.company_name} />
 							</div>
-							<SuggestionLink company_id={company_id} company_name={companyData.company_name}/>
-						</div>
-					</Container></>
-				}
+						</Container>
+					</>
+				)}
 			</div>
 			<FeedBackBtn />
 		</>

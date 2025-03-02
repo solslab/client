@@ -1,6 +1,4 @@
-import { deleteToken } from "@/app/lib/cookie";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { deleteToken } from '@/app/lib/utils/cookie';
 export async function GET(request: Request) {
-    await deleteToken();
+	await deleteToken();
 }

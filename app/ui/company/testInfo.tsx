@@ -1,9 +1,9 @@
 import { Position, TestData } from '@/app/lib/definitions';
-import Container from '../container';
+import Container from '../common/container';
 import PositionSelectBox from './positionSelectBox';
 import Image from 'next/image';
 import InfoItem from './infoItem';
-import LanguageBox from '../languageBox';
+import LanguageBox from '../common/languageBox';
 import Link from 'next/link';
 import VerifyMark from './verifyMark';
 

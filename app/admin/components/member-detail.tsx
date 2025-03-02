@@ -4,13 +4,13 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+} from '@/app/ui/shadcn/components/ui/dialog';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 import { useState, useEffect } from 'react';
-import { getMemberDetails } from '@/app/lib/data-admin';
-import { User } from '@/app/lib/definitions';
-import { Label } from '@/components/ui/label';
 
+import { User } from '@/app/lib/types/models';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
+import { getMemberDetails } from '@/app/lib/server/queries/member';
 interface MemberDetailProps {
 	memberKey: string;
 	onClose: () => void;

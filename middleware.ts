@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { tokenTest } from './app/lib/auth';
-import { getLastRoute } from './app/lib/cookie';
-import { ADMIN_URL, NEXT_URL } from './app/lib/constants';
-import { getDateOneMonthLater } from './app/lib/utils';
+import { getDateOneMonthLater } from './app/lib/utils/helpers';
+import { tokenTest } from './app/lib/server/queries/auth/token';
+import { ADMIN_URL, NEXT_URL } from './app/lib/utils/constants';
+import { getLastRoute } from './app/lib/utils/cookie';
 
 function setTokenCookie(response: NextResponse, token: string, cookieName: string) {
 	response.cookies.set(cookieName, token.replace('Bearer ', ''), {

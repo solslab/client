@@ -10,7 +10,7 @@ import {
 	PaginationPrevious,
 	PaginationEllipsis,
 	PaginationLink
-} from '@/components/ui/pagination';
+} from '@/app/ui/shadcn/components/ui/pagination';
 import {
 	Card,
 	CardContent,
@@ -18,9 +18,9 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle
-} from '@/components/ui/card';
-import { getAllFeedbacks } from '@/app/lib/data-admin';
-import { AllFeedbackPage } from '@/app/lib/definitions';
+} from '@/app/ui/shadcn/components/ui/card';
+import { AllFeedbackPage } from '@/app/lib/types/models';
+import { getAllFeedbacks } from '@/app/lib/server/queries/admin';
 
 export default function FeedbackOverviewPage() {
 	const [feedbacks, setFeedbacks] = useState<AllFeedbackPage['feedbacks']>([]);
@@ -40,7 +40,6 @@ export default function FeedbackOverviewPage() {
 
 		fetchFeedbacks();
 	}, [currentPage]);
-
 
 	return (
 		<>
