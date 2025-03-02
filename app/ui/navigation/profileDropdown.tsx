@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import { getToken } from '@/app/lib/utils/cookie';
 
 const links = [{ name: '내 프로필', href: '/profiles' }];
-const menus = [{ name: '전체기업', href: '/company' }];
+const menus = [{ name: '전체 기업', href: '/company' }, { name: '리뷰 작성', href: '/testReview'}];
 
 export default function ProfileDropdown({
 	userName,

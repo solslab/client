@@ -52,7 +52,7 @@ export default function NavSearchBox({ visible }: { visible?: boolean }) {
 						</div>
 						<input
 							className={clsx(
-								`block h-10 w-72 rounded-3xl border border-gray-50 bg-gray-5 px-8 py-3 text-sm focus:outline-none`,
+								`block h-10 w-72 rounded-3xl border border-gray-20 bg-gray-5 px-8 py-3 text-sm focus:outline-none`,
 								{
 									'rounded-b-none rounded-t-2.5xl border-b-0 bg-white outline-none':
 										companyList.length > 0
