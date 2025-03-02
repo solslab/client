@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
-import Input from './input';
 import { Dispatch, SetStateAction, startTransition, useActionState, useState } from 'react';
 import { FeedBackState } from '@/app/lib/types/actions/review';
 import { createFeedBack } from '@/app/lib/server/mutations/review/feedback';
 import clsx from 'clsx';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
 const STARS = [
 	{ active: false, value: 1 },
 	{ active: false, value: 2 },
@@ -61,15 +62,15 @@ export default function FeedBackModal({
 				{!state.fullfiled?.value == true ? (
 					<div className="px-16 pb-2 pt-10">
 						<form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-							<div className="pb-4 text-2xl font-bold">몇솔에 만족하셨나요?</div>
-							<div className="text-base font-semibold">
+							<div className="pb-4 text-2xl font-semibold">Send Feedback</div>
+							<div className="text-base">
 								더 나은 서비스 제공을 위해 평가를 남겨주세요!
 							</div>
 							<div className="pb-2 pt-10">
 								<div className="flex">
 									{STARS.map((star, index) => (
 										<Image
-											className="px-2"
+											className="px-2 cursor-pointer"
 											key={star.value}
 											onMouseEnter={() => setActive(star.value)}
 											onMouseLeave={() => setActive(rating)}
@@ -98,14 +99,15 @@ export default function FeedBackModal({
 								<Input
 									id="feedback_content"
 									name="feedback_content"
-									placeHolder="평가 내용 입력(선택)"
+									placeholder="평가 내용 입력(선택)"
 								/>
-								<button
+								<Button
 									type="submit"
-									className="ml-2 h-9 w-24 cursor-pointer rounded-lg bg-main-light text-base font-semibold text-main-base"
+									variant="main"
+									className="ml-2 h-9 w-24 bg-main-base"
 								>
 									제출
-								</button>
+								</Button>
 							</div>
 							<div className="h-8 py-2">
 								{state.errors?.feedback_content &&

@@ -61,7 +61,6 @@ export default async function DataLabPage({ params }: { params: { id: string } }
 		notFound();
 	}
 	const dataLabDetails = await fetchDatalabData(company_id);
-	console.log(dataLabDetails);
 	return (
 		<>
 			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>

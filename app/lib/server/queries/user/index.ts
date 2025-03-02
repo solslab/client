@@ -28,7 +28,6 @@ export const fetchProfile = async () => {
 			updateToken(newToken);
 		}
 		const data = await response.json();
-		console.log(data, '@@@data');
 		return data;
 	} catch (error) {
 		console.error('fetchProfile중 에러발생', error);
