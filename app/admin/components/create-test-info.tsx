@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useIsSmallScreen } from '@/hooks/useIsSmallScreen'; // <- 방금 만든 Hook
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsSmallScreen } from '@/app/lib/hooks/useIsSmallScreen'; // <- 방금 만든 Hook
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 import {
 	Dialog,
@@ -12,7 +12,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
+} from '@/app/ui/shadcn/components/ui/dialog';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -21,14 +21,21 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle
-} from '@/components/ui/alert-dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
+import { ScrollArea } from '@/app/ui/shadcn/components/ui/scroll-area';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
+import { Textarea } from '@/app/ui/shadcn/components/ui/textarea';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/app/ui/shadcn/components/ui/select';
 
-import { createTestInfo } from '@/app/lib/data-admin';
+import { createTestInfo } from '@/app/lib/server/mutations/company/index';
 
 type CreatePositionModalProps = {
 	companyId: string;

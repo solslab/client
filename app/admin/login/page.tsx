@@ -1,8 +1,8 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { loginAdmin } from '@/app/lib/data-admin';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { loginAdmin } from '@/app/lib/server/mutations/admin';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
@@ -15,10 +15,9 @@ import {
 	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
-	AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
-
+	AlertDialogTitle
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 export default function LoginForm() {
 	const [email, setEmail] = useState('');
@@ -27,35 +26,35 @@ export default function LoginForm() {
 	const router = useRouter();
 	const basePath = useIsAdminDomain() ? '' : '/admin';
 
-	 const handleSubmit = async (e: React.FormEvent) => {
-			e.preventDefault();
-			setError('');
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setError('');
 
-			try {
-				const responseData = await loginAdmin(email, password);
-				if (responseData.status === 200) {
-					const token = responseData.data.accessToken;
-					const cookieResponse = await fetch(`${basePath}/api/admin-login`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({ token })
-					});
+		try {
+			const responseData = await loginAdmin(email, password);
+			if (responseData.status === 200) {
+				const token = responseData.data.accessToken;
+				const cookieResponse = await fetch(`${basePath}/api/admin-login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ token })
+				});
 
-					if (!cookieResponse.ok) {
-						throw new Error('쿠키 설정에 실패했습니다');
-					}
-
-					router.push(`${basePath}/manage/member`);
-				} else {
-					setError(responseData.message || '로그인에 실패했습니다.');
+				if (!cookieResponse.ok) {
+					throw new Error('쿠키 설정에 실패했습니다');
 				}
-			} catch (err) {
-				setError('로그인 처리 중 오류가 발생했습니다.');
-				console.error('Login error:', err);
+
+				router.push(`${basePath}/manage/member`);
+			} else {
+				setError(responseData.message || '로그인에 실패했습니다.');
 			}
-		};
+		} catch (err) {
+			setError('로그인 처리 중 오류가 발생했습니다.');
+			console.error('Login error:', err);
+		}
+	};
 
 	return (
 		<>
@@ -66,7 +65,7 @@ export default function LoginForm() {
 				className="flex min-h-screen flex-col items-center justify-center"
 				style={{ height: 'calc(100vh - 64px)' }}
 			>
-				<div className="flex items-center space-x-4 mb-8">
+				<div className="mb-8 flex items-center space-x-4">
 					<Image src="/admin_logo.png" alt="몇솔 로고" width={32} height={32} />
 					<h1 className="text-3xl font-semibold">solslab admin</h1>
 				</div>

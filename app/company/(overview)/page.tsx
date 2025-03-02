@@ -1,10 +1,11 @@
-import { fetchCompanyData } from '@/app/lib/data';
-import Container from '@/app/ui/container';
 import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import { BsThreeDots } from 'react-icons/bs';
 import { PaginationButtons } from '@/app/ui/paging/Pagination';
 import { Metadata } from 'next';
-import ScrollToTop from '@/app/ui/ScrollToTop';
+import ScrollToTop from '@/app/ui/common/ScrollToTop';
+import Container from '@/app/ui/common/container';
+import { fetchCompanyData } from '../../lib/server/queries/company';
+import FeedBackBtn from '@/app/ui/common/feedBackBtn';
 
 const PAGE_SIZE = 10;
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 		siteName: '몇솔',
 		images: [
 			{
-				url: 'https://sols.kr/og-company.png',
+				url: 'https://sols.kr/og.png',
 				width: 1200,
 				height: 628,
 				alt: '몇솔 기업 소개 OpenGraph 이미지'
@@ -72,7 +73,7 @@ export default async function Page({
 		<Container>
 			<ScrollToTop />
 			<div className="flex flex-col gap-[10px] py-5 md:gap-5">
-				{companies.map((company) => (
+				{companyData.companies.map((company) => (
 					<CompanyOverviewCard key={company.company_id} companyData={company} />
 				))}
 			</div>
@@ -81,6 +82,7 @@ export default async function Page({
 				totalPages={totalPages}
 				pageNumbers={pageNumbers}
 			/>
+			<FeedBackBtn />
 		</Container>
 	);
 }

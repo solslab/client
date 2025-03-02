@@ -4,13 +4,13 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/app/ui/shadcn/components/ui/dialog';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
 import { useState } from 'react';
-import { Company } from '@/app/lib/definitions';
-import { updateCompany } from '@/app/lib/data-admin';
+import { Company } from '@/app/lib/types/models/company';
+import { updateCompany } from '@/app/lib/server/mutations/company/index';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -19,9 +19,9 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle
-} from '@/components/ui/alert-dialog';
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 type IndustryType =
 	| 'IT 서비스'
@@ -37,7 +37,6 @@ type IndustryType =
 	| '중소기업'
 	| '공기업';
 
-
 type UpdateCompanyModalProps = {
 	companyId: string;
 	companyDetail: Company;
@@ -45,7 +44,12 @@ type UpdateCompanyModalProps = {
 	onSuccess?: () => void;
 };
 
-export default function UpdateCompanyModal({ companyId, companyDetail, onClose, onSuccess }: UpdateCompanyModalProps) {
+export default function UpdateCompanyModal({
+	companyId,
+	companyDetail,
+	onClose,
+	onSuccess
+}: UpdateCompanyModalProps) {
 	const [companyName, setCompanyName] = useState(companyDetail.company_name);
 	const [selectedIndustryTypes, setSelectedIndustryTypes] = useState<string[]>(
 		companyDetail.industry_type
@@ -57,14 +61,14 @@ export default function UpdateCompanyModal({ companyId, companyDetail, onClose, 
 
 	const router = useRouter();
 	const basePath = useIsAdminDomain() ? '' : '/admin';
-	
+
 	const handleClose = () => {
 		if (redirectLoginAfterClose) {
 			router.push(`${basePath}/login`);
 		} else if (alertMessage === '기업 수정이 완료되었습니다.') {
 			onSuccess?.();
 		}
-	}
+	};
 
 	const handleSave = async () => {
 		setAlertMessage('');
@@ -79,9 +83,9 @@ export default function UpdateCompanyModal({ companyId, companyDetail, onClose, 
 			if (response.status === 200) {
 				setAlertMessage('기업 수정이 완료되었습니다.');
 			} else {
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '기업 수정 실패. 다시 시도해주세요.');
 				if (response.status === 401) {
-					 setRedirectLoginAfterClose(true);
+					setRedirectLoginAfterClose(true);
 				}
 			}
 		} catch (error) {

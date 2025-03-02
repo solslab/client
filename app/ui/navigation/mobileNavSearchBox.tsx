@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchFilteredCompanys } from '@/app/lib/data';
-import { CompanyQuery } from '@/app/lib/definitions';
+
 import Link from 'next/link';
+import { fetchFilteredCompanys } from '@/app/lib/server/queries/company';
+import { CompanyQuery } from '@/app/lib/types/models';
 export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 	const [query, setQuery] = useState('');
 	const [value, setValue] = useState('');
@@ -78,14 +79,15 @@ export default function MobileNavSearchBox({ visible }: { visible: boolean }) {
 							</div>
 							<div>
 								<div className="absolute w-screen">
-									<div className="mx-auto max-h-56 w-full overflow-y-scroll bg-white scrollbar-hide shadow-customShadow">
+									<div className="mx-auto max-h-56 w-full overflow-y-scroll bg-white shadow-customShadow scrollbar-hide">
 										{companyList &&
 											companyList.map((el: CompanyQuery) => (
 												<Link href={`/company/${el.company_id}`} key={el.company_id}>
 													<div
-														onClick={()=>{
+														onClick={() => {
 															clearFeild();
-															setDropdownVisible(false);}}
+															setDropdownVisible(false);
+														}}
 														className="rounded-md px-4 py-2 hover:bg-gray-100"
 													>
 														{el.company_name}

@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchFilteredCompanys } from '@/app/lib/data';
-import { CompanyQuery } from '@/app/lib/definitions';
+
 import Link from 'next/link';
 import clsx from 'clsx';
+import { CompanyQuery } from '@/app/lib/types/models';
+import { fetchFilteredCompanys } from '@/app/lib/server/queries/company';
 export default function NavSearchBox({ visible }: { visible?: boolean }) {
 	const [query, setQuery] = useState('');
 	const [value, setValue] = useState('');
@@ -51,7 +52,7 @@ export default function NavSearchBox({ visible }: { visible?: boolean }) {
 						</div>
 						<input
 							className={clsx(
-								`block h-10 w-72 rounded-3xl border border-gray-50 bg-gray-5 px-8 py-3 text-sm focus:outline-none`,
+								`block h-10 w-72 rounded-3xl border border-gray-20 bg-gray-5 px-8 py-3 text-sm focus:outline-none`,
 								{
 									'rounded-b-none rounded-t-2.5xl border-b-0 bg-white outline-none':
 										companyList.length > 0

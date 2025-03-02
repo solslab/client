@@ -1,4 +1,4 @@
-import { CompanyOverviewData } from '@/app/lib/definitions';
+import { CompanyOverviewData } from '@/app/lib/types/models/company';
 import Image from 'next/image';
 import Link from 'next/link';
 

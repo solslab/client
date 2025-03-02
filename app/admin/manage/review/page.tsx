@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow
-} from '@/components/ui/table';
+} from '@/app/ui/shadcn/components/ui/table';
 import {
 	Pagination,
 	PaginationItem,
@@ -17,9 +17,9 @@ import {
 	PaginationPrevious,
 	PaginationEllipsis,
 	PaginationLink
-} from '@/components/ui/pagination';
-import { getAllReviews } from '@/app/lib/data-admin';
-import { AllReviewPage } from '@/app/lib/definitions';
+} from '@/app/ui/shadcn/components/ui/pagination';
+import { getAllReviews } from '@/app/lib/server/queries/admin';
+import { AllReviewPage } from '@/app/lib/types/models';
 import ReviewDetailModal from '../../components/review-detail';
 
 export default function ReviewOverviewPage() {
@@ -52,9 +52,7 @@ export default function ReviewOverviewPage() {
 
 	return (
 		<>
-			{selectedTrId && (
-				<ReviewDetailModal trId={selectedTrId} onClose={handleCloseModal} />
-			)}
+			{selectedTrId && <ReviewDetailModal trId={selectedTrId} onClose={handleCloseModal} />}
 			<div className="container mx-auto">
 				<div className="mb-4 flex h-10 items-center px-6">
 					<span className="text-l font-medium" style={{ marginLeft: '7%' }}>
@@ -77,7 +75,9 @@ export default function ReviewOverviewPage() {
 								className="cursor-pointer hover:bg-gray-100"
 							>
 								<TableCell className="font-medium">{review.member_name}</TableCell>
-								<TableCell className="overflow-hidden text-ellipsis">{review.company_name}</TableCell>
+								<TableCell className="overflow-hidden text-ellipsis">
+									{review.company_name}
+								</TableCell>
 								<TableCell>{review.created_date}</TableCell>
 							</TableRow>
 						))}

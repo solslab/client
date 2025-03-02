@@ -11,9 +11,9 @@ import {
 	SidebarMenuSub,
 	SidebarMenuSubItem,
 	SidebarMenuSubButton
-} from '@/components/ui/sidebar';
+} from '@/app/ui/shadcn/components/ui/sidebar';
 
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 export function AdminSidebar() {
 	const basePath = useIsAdminDomain() ? '' : '/admin';

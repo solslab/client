@@ -4,20 +4,21 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
+} from '@/app/ui/shadcn/components/ui/dialog';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+} from '@/app/ui/shadcn/components/ui/select';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 import { useState, useEffect } from 'react';
-import { getSuggestionDetails, updateSuggestionStatus } from '@/app/lib/data-admin';
-import { SuggestionDetail } from '@/app/lib/definitions';
-import { Label } from '@/components/ui/label';
-import { STATUS_OPTIONS } from '@/app/lib/constants';
+import { updateSuggestionStatus } from '@/app/lib/server/mutations/admin';
+import { getSuggestionDetails } from '@/app/lib/server/queries/admin';
+import { SuggestionDetail } from '@/app/lib/types/models';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
+import { STATUS_OPTIONS } from '@/app/lib/utils/constants';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -26,7 +27,7 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle
-} from '@/components/ui/alert-dialog';
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
 
 interface SuggestionDetailProps {
 	suggestionId: string;
@@ -55,7 +56,7 @@ const SuggestionDetailModal = ({ suggestionId, onClose, onRefresh }: SuggestionD
 			setAlertMessage(`처리상태가 '${selectedLabel}'(으)로 변경되었습니다.`);
 			onRefresh();
 		} else {
-			setAlertMessage(`오류: ${response.message}`);
+			setAlertMessage(`오류: ${response.message || '알 수 없는 오류가 발생했습니다.'}`);
 		}
 	};
 

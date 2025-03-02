@@ -1,10 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 const AdminPageLayout = () => {
-    const pathname = usePathname();
+	const pathname = usePathname();
 	const isAdminDomain = useIsAdminDomain();
 	const mainClass = isAdminDomain || pathname.startsWith('/admin') ? '' : 'pt-16';
 

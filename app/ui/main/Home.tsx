@@ -1,9 +1,9 @@
 'use client';
 
 import FullPageScroll from './FullPageScroll';
-import Container from '../container';
+import Container from '../common/container';
 import Float from '../interaction/float';
-import ClientSearchBox from '../clientSearchBox';
+import ClientSearchBox from '../common/clientSearchBox';
 import Script from 'next/script';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -12,7 +12,8 @@ import FadeIn from '@/app/ui/motion/FadeIn';
 import IndexTrLink from './IndexTrLink';
 import { useState } from 'react';
 import clsx from 'clsx';
-import TierGuard from '../tierGuard';
+import TierGuard from '../common/tierGuard';
+import FeedBackBtn from '../common/feedBackBtn';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -45,7 +46,7 @@ export default function Home() {
 					<div className="z-0 flex h-full flex-col items-center justify-between">
 						<div className="relative flex w-full flex-1 items-center justify-center">
 							<Float />
-							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
+							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-75 backdrop-blur-[7px]">
 								<FadeIn>
 									<Container className="relative flex h-46 max-w-7xl justify-center">
 										<div className="z-30 flex flex-col items-center justify-center">
@@ -78,7 +79,7 @@ export default function Home() {
 							<Image
 								className={clsx(
 									'transition-opacity duration-500 ease-in-out',
-									isMouseIconActive ?   'opacity-100':'pointer-events-none opacity-0'
+									isMouseIconActive ? 'opacity-100' : 'pointer-events-none opacity-0'
 								)}
 								src="/icons/scroll.svg"
 								alt="몇솔 스크롤 이미지"
@@ -90,16 +91,16 @@ export default function Home() {
 				</section>
 
 				<section className="flex h-full w-full flex-col items-center justify-between pt-16">
-					<div className="flex flex-1 flex-col items-center justify-center w-full">
+					<div className="flex w-full flex-1 flex-col items-center justify-center">
 						<article className="flex flex-col gap-2 text-center">
 							<h2 className="bg-gradient-text-1 bg-clip-text text-lg font-bold text-transparent md:text-2xl">
 								이 기업 코딩테스트, 내가 합격할 수 있을까?
 							</h2>
 							<span className="text-sm text-gray-80 md:text-base">
-								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
+								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
-						<div className="flex  w-full max-w-[692px] md:max-w-4xl flex-col items-center justify-center gap-8 py-8">
+						<div className="flex md:max-w-3xl flex-col items-center justify-center gap-8 py-8 max-w-[400px]">
 							<LogoCarousel />
 							<Link
 								className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"
@@ -114,7 +115,7 @@ export default function Home() {
 							<h2 className="bg-gradient-text-1 bg-clip-text text-xl font-bold text-transparent md:text-2xl">
 								여러분의 후기를 들려주세요!
 							</h2>
-							<TierGuard render={(checkTier)=><IndexTrLink onClick={checkTier} />} />
+							<TierGuard render={(checkTier) => <IndexTrLink onClick={checkTier} />} />
 						</div>
 						<div className="py-16">
 							<div className="text-center text-black">2024 © solslab Corp.</div>
@@ -122,6 +123,7 @@ export default function Home() {
 					</FadeIn>
 				</section>
 			</FullPageScroll>
+			<FeedBackBtn />
 		</div>
 	);
 }

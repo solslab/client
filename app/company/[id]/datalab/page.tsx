@@ -1,17 +1,20 @@
-import { fetchCompanyDetail, fetchDatalabData } from '@/app/lib/data';
-import { Company } from '@/app/lib/definitions';
 import CompanyMenu from '@/app/ui/company/CompanyMenu';
 import DataLabSection from '@/app/ui/company/DataLabSection';
-import Container from '@/app/ui/container';
-import FeedBackBtn from '@/app/ui/feedBackBtn';
+import Container from '@/app/ui/common/container';
+import FeedBackBtn from '@/app/ui/common/feedBackBtn';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { fetchCompanyDetail } from '@/app/lib/server/queries/company/index';
+import { Company } from '@/app/lib/types/models';
+import { fetchDatalabData } from '@/app/lib/server/queries/datalab';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const company_id = params.id;
 	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
 	const companyName = companyData ? companyData.company_name : '';
-	const metaTitle = companyData ? `${companyData.company_name} 코딩테스트 합격자 분석 | 몇솔` : '몇솔';
+	const metaTitle = companyData
+		? `${companyData.company_name} 코딩테스트 합격자 분석 | 몇솔`
+		: '몇솔';
 	const metaDesc = `${companyName} 코딩테스트 합격자들의 solved.ac 티어는? 통계를 확인해보세요!`;
 	const metaKeyword = `
 		${companyName} 코딩테스트, ${companyName} 코테, ${companyName} 합격컷, ${companyName} 합격자 정보, 
@@ -31,8 +34,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 		알고리즘 문제, 코딩테스트 문제, 후기, 코테 실력, 코딩테스트 통계, 합격자 점수, 난이도 평가, 난이도 분석, 
 		백준, 코딩테스트 통과, 코딩테스트 합격, 코딩테스트 불합격, 탈락, 코딩테스트 수준, 공채, 코딩테스트 느낌, 코테 시간초과
 	`;
-
-
 
 	return {
 		title: metaTitle,
@@ -60,15 +61,19 @@ export default async function DataLabPage({ params }: { params: { id: string } }
 		notFound();
 	}
 	const dataLabDetails = await fetchDatalabData(company_id);
-
 	return (
 		<>
-			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
-			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 bg-bg-base py-10 md:py-16">
+			<div className="relative h-32 w-full bg-gradient-to-b from-[#ECEEF6] to-[#F8F9FB] bg-cover bg-center md:h-64 lg:h-64"></div>
+			<div className="relative flex flex-col items-center justify-center border-b border-gray-30 bg-bg-base py-10 md:py-16">
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
-						style={{  backgroundImage:companyData.company_logo? `url(${companyData.company_logo})`:'url(/companyLogo/default_company_logo.png)',backgroundColor:'#F0F1F2'}}
+						style={{
+							backgroundImage: companyData.company_logo
+								? `url(${companyData.company_logo})`
+								: 'url(/companyLogo/default_company_logo.png)',
+							backgroundColor: '#F0F1F2'
+						}}
 					/>
 					<div className="flex flex-row items-center font-bold text-title-black">
 						<div className="pt-[0.625rem] text-xl md:pt-0 md:text-2xl">

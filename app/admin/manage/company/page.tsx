@@ -8,12 +8,16 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 	PaginationEllipsis
-} from '@/components/ui/pagination';
+} from '@/app/ui/shadcn/components/ui/pagination';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
 import { useEffect, useState } from 'react';
-import { fetchCompanyData, fetchFilteredCompanys } from '@/app/lib/data';
+import {
+	fetchCompanyData,
+	fetchFilteredCompany,
+	fetchFiltereAllCompany
+} from '@/app/lib/server/queries/company';
 import { useRouter } from 'next/navigation';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
 import { CirclePlus } from 'lucide-react';

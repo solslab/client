@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useMemo, useRef } from 'react';
-import { DataItem } from '@/app/lib/definitions';
+import { DataItem } from '@/app/lib/types/models';
 import TierDistributionChart from '@/app/ui/company/TierDistributionChart';
 import TrLink from '@/app/ui/company/trLink';
-import QuestionText from '@/app/ui/QuestionText';
+import QuestionText from '@/app/ui/common/QuestionText';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import ReviewButton from '../datalab/ReviewButton';
-import TierGuard from '../tierGuard';
+import TierGuard from '../common/tierGuard';
 
 type DataLabSectionProps = {
 	dataLabDetails: {
@@ -136,13 +136,16 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 		<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
 			{dataLabDetails.success === 404 ? (
 				<div className="mt-10 flex min-h-80 w-full flex-col items-center justify-center text-text-base">
-					<div className="mb-4 text-center text-xl max-sm:text-base">
+					<div className="mb-4 text-center text-base max-sm:text-base">
 						이 기업에 작성된 후기가 없어요. 😢
 					</div>
-					<div className="mb-10 text-center text-xl max-sm:text-base">
+					<div className="mb-10 text-center text-base max-sm:text-base">
 						여러분의 후기를 공유해주세요!
 					</div>
-					<TierGuard render={(checkTier)=><TrLink onClick={checkTier} />} company_id={company_id} />
+					<TierGuard
+						render={(checkTier) => <TrLink onClick={checkTier} />}
+						company_id={company_id}
+					/>
 				</div>
 			) : (
 				<>
@@ -222,7 +225,10 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 								<div className="flex w-full flex-col items-center gap-5 sm:flex-row">
 									<div className="flex h-[210px] w-full items-center justify-center rounded-[10px] border-[1px] border-gray-40 sm:w-2/3">
 										{dataLabDetails.success === 403 ? (
-											<TierGuard render={(checkTier)=><ReviewButton onClick={checkTier} />} company_id={company_id} />
+											<TierGuard
+												render={(checkTier) => <ReviewButton onClick={checkTier} />}
+												company_id={company_id}
+											/>
 										) : (
 											<TierDistributionChart
 												data={filteredData.filter((item) => item.tr_pass_status === '합격')}
@@ -273,7 +279,10 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 
 									<div className="flex h-[210px] flex-col items-center justify-center gap-2 rounded-[10px] border-[1px] border-gray-40">
 										{dataLabDetails.success === 403 ? (
-											<TierGuard render={(checkTier)=><ReviewButton onClick={checkTier} />} company_id={company_id} />
+											<TierGuard
+												render={(checkTier) => <ReviewButton onClick={checkTier} />}
+												company_id={company_id}
+											/>
 										) : (
 											<div className="flex w-3/4 flex-col items-center gap-8">
 												<div className="relative h-[3px] w-full rounded-full bg-main-light md:h-[6px]">

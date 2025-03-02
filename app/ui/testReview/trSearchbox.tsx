@@ -1,10 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchCompanyData, fetchCompanyDetail, fetchFiltereAllCompanys, fetchFilteredCompanys } from '@/app/lib/data';
-import { CompanyQuery } from '@/app/lib/definitions';
+
 import Link from 'next/link';
 import clsx from 'clsx';
+import { CompanyQuery } from '@/app/lib/types/models';
+import { fetchCompanyDetail } from '@/app/lib/server/queries/company';
+import { fetchFiltereAllCompanys } from '@/app/lib/server/queries/company';
 export default function TrSearchBox({
 	value,
 	setValue,
@@ -42,12 +44,11 @@ export default function TrSearchBox({
 	}, [value]);
 	useEffect(() => {
 		const fetchQuery = async () => {
-			try{
+			try {
 				const data = await fetchFiltereAllCompanys(query);
 				setCompanyList(data);
-			}
-			catch(error){
-				console.error('기업 쿼리중에 문제 발생.')
+			} catch (error) {
+				console.error('기업 쿼리중에 문제 발생.');
 			}
 		};
 		if (query != '') {
@@ -77,7 +78,7 @@ export default function TrSearchBox({
 					</div>
 					<input
 						className={clsx(
-							`shadow-customShadow" block h-9 w-full rounded-lg border border-gray-50 bg-gray-5 py-1 pl-4 pr-8 text-sm focus:outline-none`,
+							`shadow-customShadow" block h-9 w-full rounded-lg border border-gray-30 bg-gray-5 py-1 pl-4 pr-8 text-sm focus:outline-none`,
 							{
 								'rounded-b-none rounded-t-lg border-b-0 bg-white outline-none': query.length > 0
 							}
@@ -98,7 +99,7 @@ export default function TrSearchBox({
 				<div>
 					<div
 						className={clsx('absolute max-h-48 w-full max-w-80 overflow-y-scroll rounded-b-lg', {
-							'border-x border-b border-x-gray-50 border-b-gray-50': query.length > 0
+							'border-x border-b border-x-gray-30 border-b-gray-50 z-50': query.length > 0
 						})}
 					>
 						<div className={clsx(`mx-auto w-full bg-white`, {})}>

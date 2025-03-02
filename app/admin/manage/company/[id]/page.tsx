@@ -1,11 +1,11 @@
 'use client';
 
 import { FileEdit, LucideTrash } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 import { useEffect, useState } from 'react';
-import { fetchCompanyDetail } from '@/app/lib/data';
-import { Company } from '@/app/lib/definitions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { fetchCompanyDetail } from '@/app/lib/server/queries/company';
+import { Company } from '@/app/lib/types/models/company';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/shadcn/components/ui/card';
 import UpdateCompanyModal from '../../../components/update-company';
 import TestInfoModal from '../../../components/test-info';
 import CreatePositionModal from '@/app/admin/components/create-test-info';
@@ -14,8 +14,8 @@ import {
 	deleteCompany,
 	uploadCompanyLogo,
 	deleteCompanyLogo,
-	deleteTestInfo // ★ 새로 추가한 시험정보 삭제 API 임포트
-} from '@/app/lib/data-admin';
+	deleteTestInfo
+} from '@/app/lib/server/mutations/company/index';
 
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -28,8 +28,8 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogAction
-} from '@/components/ui/alert-dialog';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
 
 export default function CompanyDetailPage() {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
@@ -89,10 +89,10 @@ export default function CompanyDetailPage() {
 		try {
 			const response = await deleteCompany(companyId);
 			if (response.status === 204) {
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '기업 삭제가 완료되었습니다.');
 				setIsDeleted(true);
 			} else {
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '기업 삭제 실패');
 				if (response.status === 401) {
 					setRedirectLoginAfterClose(true);
 				}
@@ -109,12 +109,12 @@ export default function CompanyDetailPage() {
 			const response = await deleteTestInfo(testInfoIdToDelete);
 			if (response.status === 204) {
 				// 삭제 성공
-				setAlertMessage(response.message); // "시험정보 삭제가 완료되었습니다."
+				setAlertMessage(response.message || '시험정보 삭제가 완료되었습니다.');
 				// 목록 재조회
 				fetchData();
 			} else {
 				// 오류
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '시험정보 삭제 실패');
 				if (response.status === 401) {
 					setRedirectLoginAfterClose(true);
 				}
@@ -148,7 +148,7 @@ export default function CompanyDetailPage() {
 				setAlertMessage('로고 삭제가 완료되었습니다.');
 				fetchData();
 			} else {
-				setAlertMessage(response.message);
+				setAlertMessage(response.message || '로고 삭제 실패');
 				if (response.status === 401) {
 					setRedirectLoginAfterClose(true);
 				}

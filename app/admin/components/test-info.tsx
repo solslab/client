@@ -5,18 +5,18 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from '@/app/ui/shadcn/components/ui/dialog';
+import { Label } from '@/app/ui/shadcn/components/ui/label';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
+import { Textarea } from '@/app/ui/shadcn/components/ui/textarea';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from '@/components/ui/select';
+} from '@/app/ui/shadcn/components/ui/select';
 
 import {
 	AlertDialog,
@@ -26,13 +26,15 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle
-} from '@/components/ui/alert-dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useIsSmallScreen } from '@/hooks/useIsSmallScreen';
-import { getTestInfo, updateTestInfo } from '@/app/lib/data-admin';
-import { TestData } from '@/app/lib/definitions';
+} from '@/app/ui/shadcn/components/ui/alert-dialog';
+import { ScrollArea } from '@/app/ui/shadcn/components/ui/scroll-area';
+import { useIsSmallScreen } from '@/app/lib/hooks/useIsSmallScreen';
+
 import { useRouter } from 'next/navigation';
-import { useIsAdminDomain } from '@/hooks/useIsAdminDomain';
+import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
+import { TestData } from '@/app/lib/types/models/company';
+import { getTestInfo } from '@/app/lib/server/queries/admin';
+import { updateTestInfo } from '@/app/lib/server/mutations/company/index';
 
 type TestInfoModalProps = {
 	testInfoId: string;
@@ -75,7 +77,7 @@ export default function TestInfoModal({ testInfoId, onClose, onSuccess }: TestIn
 
 		try {
 			const response = await updateTestInfo(testInfoId, editData);
-			if (response.status === 200) {
+			if (response.status === 200 && response.data) {
 				setTestInfo(response.data);
 				setIsEditing(false);
 				setAlertMessage('코딩테스트 정보 수정이 완료되었습니다.');

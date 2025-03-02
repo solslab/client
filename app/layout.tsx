@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './ui/global.css';
 import Topnav from './ui/navigation/topNav';
-import LastPathSetter from './ui/lastPathSetter';
-import PrelineScript from './ui/PrelineScript';
+import LastPathSetter from './ui/common/lastPathSetter';
+import PrelineScript from './ui/common/PrelineScript';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
-import Footer from './ui/Footer';
+import Footer from './ui/common/Footer';
 import { headers } from 'next/headers';
 import AdminPageLayout from '@/app/admin/components/admin-page-layout';
 

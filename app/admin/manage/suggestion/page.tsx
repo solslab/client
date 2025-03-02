@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow
-} from '@/components/ui/table';
+} from '@/app/ui/shadcn/components/ui/table';
 import {
 	Pagination,
 	PaginationItem,
@@ -17,12 +17,11 @@ import {
 	PaginationPrevious,
 	PaginationEllipsis,
 	PaginationLink
-} from '@/components/ui/pagination';
-import { getAllSuggestions } from '@/app/lib/data-admin';
-import { AllSuggestionPage } from '@/app/lib/definitions';
+} from '@/app/ui/shadcn/components/ui/pagination';
+import { getAllSuggestions } from '@/app/lib/server/queries/admin';
+import { AllSuggestionPage } from '@/app/lib/types/models';
 import SuggestionDetailModal from '@/app/admin/components/suggestion-detail';
-import { STATUS_OPTIONS } from '@/app/lib/constants';
-
+import { STATUS_OPTIONS } from '@/app/lib/utils/constants';
 
 export default function SuggestionOverviewPage() {
 	const [suggestions, setSuggestions] = useState<AllSuggestionPage['suggestions']>([]);
@@ -55,7 +54,11 @@ export default function SuggestionOverviewPage() {
 	return (
 		<>
 			{selectedSuggestionId && (
-				<SuggestionDetailModal suggestionId={selectedSuggestionId} onClose={handleCloseModal} onRefresh={fetchSuggestions} />
+				<SuggestionDetailModal
+					suggestionId={selectedSuggestionId}
+					onClose={handleCloseModal}
+					onRefresh={fetchSuggestions}
+				/>
 			)}
 			<div className="container mx-auto">
 				<div className="mb-4 flex h-10 items-center px-6">

@@ -8,16 +8,18 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 	PaginationEllipsis
-} from '@/components/ui/pagination';
+} from '@/app/ui/shadcn/components/ui/pagination';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
+import { Input } from '@/app/ui/shadcn/components/ui/input';
 import { useEffect, useState } from 'react';
-import { getAllPrivateCompanyData, searchPrivateCompanies } from '@/app/lib/data-admin';
+
 import { useRouter } from 'next/navigation';
-import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
+
 import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../../components/create-company';
+import { CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models';
+import { getAllPrivateCompanyData, searchPrivateCompanies } from '@/app/lib/server/queries/admin';
 
 export default function PrivateCompanyOverviewPage() {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();

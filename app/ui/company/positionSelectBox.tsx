@@ -1,48 +1,67 @@
-"use client";
+'use client';
 
-import { Position } from "@/app/lib/definitions";
-import clsx from "clsx";
-import Image from "next/image";
-import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Position } from '@/app/lib/types/models';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/app/ui/shadcn/components/ui/select';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function PositionSelectBox({
-  positions,selected,isOfficial
+	positions,
+	selected,
+	isOfficial
 }: {
-  positions: Position[];
-  selected:string;
-  isOfficial:boolean;
+	positions: Position[];
+	selected: string;
+	isOfficial: boolean;
 }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const createPageURL = (position:string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("position", position);
-    return `${pathname}?${params}`;
-  };
-  const [value,setValue] = useState(selected);
-  const handleChange=(e: React.ChangeEvent<HTMLSelectElement>)=>{
-    setValue(e.target.value)
-    router.push(createPageURL(e.target.value))
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+	const router = useRouter();
 
-  }
-  return (
-    <select
-      value={value}
-      onChange={(e) =>handleChange(e)}
-      className={clsx("shadow-customShadow py-3 px-2  ps-2 sm:ps-2 pe-9 block    border text-text-base border-gray-30 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none0",
-        {
-          "w-3/4":isOfficial,
-          "w-full":!isOfficial
-        }
-      )}
-    >
-      {positions.map((position, index) => (
-        <option value={position.position_id} key={position.position_id}>
-          {position.position_name}
-        </option>
-      ))}
-    </select>
-  );
+	const createPageURL = (position: string) => {
+		const params = new URLSearchParams(searchParams);
+		params.set('position', position);
+		return `${pathname}?${params}`;
+	};
+
+	const handleChange = (value: string) => {
+		router.push(createPageURL(value));
+	};
+	return (
+		<div className={clsx("relative flex items-center", { 'w-4/5': isOfficial, 'w-full': !isOfficial })}>
+			<Select onValueChange={(value) => handleChange(value)} value={selected}>
+				<SelectTrigger
+					className={clsx(
+						'rounded-lg border border-gray-30 text-sm text-text-base shadow-customShadow',
+						{
+							'w-11/12': isOfficial,
+							'w-full': !isOfficial
+						}
+					)}
+				>
+					<SelectValue />
+				</SelectTrigger>
+				<SelectContent>
+					{positions.map((position) => (
+						<SelectItem value={position.position_id} key={position.position_id}>
+							{position.position_name}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+			
+			{isOfficial && (
+				<div className="w-full absolute top-1/2 -translate-y-1/2 transform sm:hidden" style={{ left: 'calc(90% + 20px)' }}>
+					<Image src={'/icons/verifyIcon.png'} width={18} height={18} alt="verified" />
+				</div>
+			)}
+		</div>
+	);
 }

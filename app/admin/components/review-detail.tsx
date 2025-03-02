@@ -4,12 +4,13 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+} from '@/app/ui/shadcn/components/ui/dialog';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 import { useState, useEffect } from 'react';
-import { getReviewDetails } from '@/app/lib/data-admin';
-import { Label } from '@/components/ui/label';
-import { ReviewDetail } from '@/app/lib/definitions';
+
+import { Label } from '@/app/ui/shadcn/components/ui/label';
+import { ReviewDetail } from '@/app/lib/types/models';
+import { getReviewDetails } from '@/app/lib/server/queries/admin';
 
 interface ReviewDetailProps {
 	trId: string;
