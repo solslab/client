@@ -15,11 +15,11 @@ import { Input } from '@/app/ui/shadcn/components/ui/input';
 import { useEffect, useState } from 'react';
 import {
 	fetchCompanyData,
-	fetchFilteredCompany,
-	fetchFiltereAllCompany
+	fetchFilteredCompanys,
+	fetchFiltereAllCompanys
 } from '@/app/lib/server/queries/company';
 import { useRouter } from 'next/navigation';
-import { CompanyPageResponse, CompanyQuery } from '@/app/lib/definitions';
+import { CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models/company';
 import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../components/create-company';
 
