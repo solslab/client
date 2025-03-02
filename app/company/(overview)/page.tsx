@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 		siteName: '몇솔',
 		images: [
 			{
-				url: 'https://sols.kr/og-company.png',
+				url: 'https://sols.kr/og.png',
 				width: 1200,
 				height: 628,
 				alt: '몇솔 기업 소개 OpenGraph 이미지'

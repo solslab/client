@@ -1,4 +1,3 @@
-import { Position, TestData } from '@/app/lib/definitions';
 import Container from '../common/container';
 import PositionSelectBox from './positionSelectBox';
 import Image from 'next/image';
@@ -6,6 +5,7 @@ import InfoItem from './infoItem';
 import LanguageBox from '../common/languageBox';
 import Link from 'next/link';
 import VerifyMark from './verifyMark';
+import { Position, TestData } from '@/app/lib/types/models';
 
 export default function TestInfo({
 	positions,
@@ -31,10 +31,6 @@ export default function TestInfo({
 								/>
 								{data.is_official ? (
 									<>
-										{' '}
-										<div className="absolute -left-7 top-1/2 flex -translate-y-1/2 transform sm:hidden">
-											<Image src={'/icons/verifyIcon.png'} width={18} height={18} alt="verifyed" />
-										</div>
 										<VerifyMark />
 									</>
 								) : (
@@ -43,7 +39,7 @@ export default function TestInfo({
 							</div>
 						</div>
 						<div className="flex w-full flex-row flex-wrap">
-							<div className="my-auto w-full text-base md:w-1/4">지원언어</div>
+							<div className="my-auto mb-4 w-full text-base sm:mb-0 md:w-1/4">지원언어</div>
 							<div className="flex w-full flex-wrap md:w-3/4">
 								{data.support_languages.length > 0 ? (
 									data.support_languages.map((language) => (

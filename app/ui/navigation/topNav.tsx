@@ -27,8 +27,8 @@ export default function Topnav() {
 					<div className="flex flex-1 items-stretch justify-start">
 						<Link href="/" className="flex flex-shrink-0 items-center">
 							<Image
-								width={48}
-								height={24}
+								width={42}
+								height={32}
 								className="hidden sm:block"
 								src="/icons/logo_light.png"
 								alt="몇솔"

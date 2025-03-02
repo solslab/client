@@ -1,6 +1,6 @@
 'use client';
 
-import { Position } from '@/app/lib/definitions';
+import { Position } from '@/app/lib/types/models';
 import {
 	Select,
 	SelectContent,
@@ -47,6 +47,11 @@ export default function PositionSelectBox({
 				)}
 			>
 				<SelectValue />
+				{isOfficial && (
+					<div className="absolute right-10 top-1/2 flex -translate-y-1/2 transform sm:hidden">
+						<Image src={'/icons/verifyIcon.png'} width={18} height={18} alt="verifyed" />
+					</div>
+				)}
 			</SelectTrigger>
 			<SelectContent>
 				{positions.map((position) => (

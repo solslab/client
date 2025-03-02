@@ -65,8 +65,8 @@ export default async function Page({
 
 	return (
 		<>
-			<div className="relative h-32 w-full bg-[url('/company_sm.png')] bg-cover bg-center sm:bg-[url('/company_30.png')] md:h-64 lg:h-64"></div>
-			<div className="relative flex flex-col items-center justify-center border-b border-t border-gray-30 bg-bg-base py-10 md:py-16">
+			<div className="relative h-32 w-full bg-gradient-to-b from-[#ECEEF6] to-[#F8F9FB] bg-cover bg-center md:h-64 lg:h-64"></div>
+			<div className="relative flex flex-col items-center justify-center border-b border-gray-30 bg-bg-base py-10 md:py-16">
 				<Container>
 					<div
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"

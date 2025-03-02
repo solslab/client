@@ -1,8 +1,6 @@
-'use server';
-
-import { SPRING_URL } from '@/app/lib/utils/constants';
-import { deleteToken, getToken, updateToken } from '@/app/lib/utils/cookie';
 import { DataLabDetail } from '@/app/lib/types/models';
+import { SPRING_URL } from '@/app/lib/utils/constants';
+import { deleteToken, getToken } from '@/app/lib/utils/cookie';
 
 export const fetchDatalabData = async (id: string) => {
 	const headers: { 'Content-Type': string; 'Cache-Control'?: string; Authorization?: string } = {
