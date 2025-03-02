@@ -238,7 +238,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 						</div>
 					</div>
 				</div>
-				<Button className="w-full bg-main-base" type="submit">
+				<Button className="w-full" type="submit" variant="main">
 					제출하기
 				</Button>
 				<div className="flex h-6 w-full items-center justify-end">

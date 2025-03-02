@@ -44,7 +44,6 @@ export default function Topnav() {
 						<div className="hidden sm:ml-6 sm:block md:ml-32">
 							<div className="flex space-x-8">
 								<InteractiveLink href="/company">전체 기업</InteractiveLink>
-								<InteractiveLink href="/testReview">리뷰 작성</InteractiveLink>
 							</div>
 						</div>
 					</div>

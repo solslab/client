@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { Position, TestData } from '@/app/lib/types/models/company';
 import { Company } from '@/app/lib/types/models/company';
 import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/server/queries/company';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const company_id = params.id;
@@ -112,9 +113,10 @@ export default async function Page({
 										</div>
 										<Link
 											href={`/company/${company_id}/suggestion?position=${position_id}`}
-											className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base"
 										>
-											정보 수정 요청
+											<Button variant="light" className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base">
+												정보 수정 요청
+											</Button>
 										</Link>
 									</div>
 								</div>

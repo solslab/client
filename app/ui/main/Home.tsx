@@ -45,7 +45,7 @@ export default function Home() {
 					<div className="z-0 flex h-full flex-col items-center justify-between">
 						<div className="relative flex w-full flex-1 items-center justify-center">
 							<Float />
-							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-sm">
+							<div className="flex h-full w-full items-center justify-center bg-white bg-opacity-65 backdrop-blur-[7px]">
 								<FadeIn>
 									<Container className="relative flex h-46 max-w-7xl justify-center">
 										<div className="z-30 flex flex-col items-center justify-center">
@@ -99,7 +99,7 @@ export default function Home() {
 								몇솔에서 응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
-						<div className="flex w-full max-w-[692px] flex-col items-center justify-center gap-8 py-8 md:max-w-4xl">
+						<div className="flex md:max-w-3xl flex-col items-center justify-center gap-8 py-8 max-w-[400px]">
 							<LogoCarousel />
 							<Link
 								className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"

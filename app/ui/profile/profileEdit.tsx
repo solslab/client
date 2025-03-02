@@ -86,7 +86,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 		<Form {...form}>
 			<form onSubmit={handleSubmit} className="space-y-8">
 				<div className="text-2xl font-bold text-title-black">정보 수정</div>
-				<div className="space-y-6 px-5 py-16">
+				<div className="space-y-6 px-5 pt-16">
 					<div className="flex w-full flex-wrap py-4 text-base">
 						<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
 							이름
@@ -161,7 +161,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 						</div>
 					</div>
 				</div>
-				<Button className="w-full bg-main-base" type="submit">
+				<Button className="w-full" type="submit" variant="main">
 					저장하기
 				</Button>
 			</form>
