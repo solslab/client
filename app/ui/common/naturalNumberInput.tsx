@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-
+import { Input } from '@/app/ui/shadcn/components/ui/input';
 export default function NaturalNumberInput({
 	defaultValue,
 	required,
@@ -32,10 +32,9 @@ export default function NaturalNumberInput({
 	};
 	return (
 		<div className="w-full max-w-80">
-			<input
+			<Input
 				id={id && id}
 				name={name && name}
-				className="w-full rounded-lg border border-gray-50 px-2 py-1 shadow-customShadow"
 				type={type}
 				defaultValue={defaultValue}
 				value={value}
