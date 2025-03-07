@@ -3,10 +3,12 @@
 import { redirect } from 'next/navigation';
 import { getToken, updateToken } from '@/app/lib/utils/cookie';
 import { SPRING_URL } from '@/app/lib/utils/constants';
-import { TestReviewFormSchema } from '../../schemas/review';
-import { TestReviewState } from '@/app/lib/types/actions/review';
+import { TestReviewFormSchema, TestReviewState } from '../../schemas/review';
 
-export async function createTestReview(prevState: TestReviewState, formData: FormData) {
+export async function createTestReview(
+	prevState: TestReviewState,
+	formData: FormData
+): Promise<TestReviewState> {
 	let flag = false;
 
 	const validatedFields = TestReviewFormSchema.safeParse({
@@ -25,8 +27,9 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 
 	if (!validatedFields.success) {
 		return {
+			message: '잘못된 필드가 있습니다.',
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: '잘못된 필드가 있습니다.'
+			fullfilled: false
 		};
 	}
 
@@ -57,22 +60,25 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 		flag = true;
 		const data = await response.json();
 		return {
+			message: '제출이 완료되었습니다.',
+			errors: {},
 			fullfilled: true
 		};
 	} catch (error) {
 		if (error instanceof Error) {
-			console.log('createTestReview중 오류 발생:', typeof error);
 			const parsedError: { error_code: string; message: string } = JSON.parse(error.message);
-			return { message: parsedError.message || '알 수 없는 오류 발생' };
+			console.log('createTestReview중 오류 발생:', parsedError);
+			return {
+				message: parsedError.message || '알 수 없는 오류 발생',
+				errors: {},
+				fullfilled: false
+			};
 		} else {
 			return {
-				message: '제출 중 문제가 발생했습니다.'
+				message: '제출 중 문제가 발생했습니다.',
+				errors: {},
+				fullfilled: false
 			};
 		}
 	}
-	// finally {
-	//     if (flag) {
-	//         await redirectToPrev();
-	//     }
-	// }
 }

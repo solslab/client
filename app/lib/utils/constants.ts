@@ -37,6 +37,7 @@ export const SKILLS_LOGO: {
 export const SOLVEDACLEVEL = {
 	platform: 'solved.ac',
 	level: [
+		{ label: 'Unrated', value: 0 },
 		{ label: '브론즈 5', value: 1 },
 		{ label: '브론즈 4', value: 2 },
 		{ label: '브론즈 3', value: 3 },
@@ -57,18 +58,60 @@ export const SOLVEDACLEVEL = {
 		{ label: '플레 3', value: 18 },
 		{ label: '플레 2', value: 19 },
 		{ label: '플레 1', value: 20 },
-		{ label: '다이아 5', value: 26 },
-		{ label: '다이아 4', value: 27 },
-		{ label: '다이아 3', value: 28 },
-		{ label: '다이아 2', value: 29 },
-		{ label: '다이아 1', value: 30 },
-		{ label: '루비 5', value: 31 },
-		{ label: '루비 4', value: 32 },
-		{ label: '루비 3', value: 33 },
-		{ label: '루비 2', value: 34 },
-		{ label: '루비 1', value: 35 },
-		{ label: '마스터', value: 36 }
+		{ label: '다이아 5', value: 21 },
+		{ label: '다이아 4', value: 22 },
+		{ label: '다이아 3', value: 23 },
+		{ label: '다이아 2', value: 24 },
+		{ label: '다이아 1', value: 25 },
+		{ label: '루비 5', value: 26 },
+		{ label: '루비 4', value: 27 },
+		{ label: '루비 3', value: 28 },
+		{ label: '루비 2', value: 29 },
+		{ label: '루비 1', value: 30 },
+		{ label: '마스터', value: 31 }
+	],
+	englishLevel: [
+		{ label: 'Unrated', value: 0 },
+		{ label: 'Bronze 5', value: 1 },
+		{ label: 'Bronze 4', value: 2 },
+		{ label: 'Bronze 3', value: 3 },
+		{ label: 'Bronze 2', value: 4 },
+		{ label: 'Bronze 1', value: 5 },
+		{ label: 'Silver 5', value: 6 },
+		{ label: 'Silver 4', value: 7 },
+		{ label: 'Silver 3', value: 8 },
+		{ label: 'Silver 2', value: 9 },
+		{ label: 'Silver 1', value: 10 },
+		{ label: 'Gold 5', value: 11 },
+		{ label: 'Gold 4', value: 12 },
+		{ label: 'Gold 3', value: 13 },
+		{ label: 'Gold 2', value: 14 },
+		{ label: 'Gold 1', value: 15 },
+		{ label: 'Platinum 5', value: 16 },
+		{ label: 'Platinum 4', value: 17 },
+		{ label: 'Platinum 3', value: 18 },
+		{ label: 'Platinum 2', value: 19 },
+		{ label: 'Platinum 1', value: 20 },
+		{ label: 'Diamond 5', value: 21 },
+		{ label: 'Diamond 4', value: 22 },
+		{ label: 'Diamond 3', value: 23 },
+		{ label: 'Diamond 2', value: 24 },
+		{ label: 'Diamond 1', value: 25 },
+		{ label: 'Ruby 5', value: 26 },
+		{ label: 'Ruby 4', value: 27 },
+		{ label: 'Ruby 3', value: 28 },
+		{ label: 'Ruby 2', value: 29 },
+		{ label: 'Ruby 1', value: 30 },
+		{ label: 'Master', value: 31 }
 	]
+};
+export const TIER_COLOR = {
+	브론즈: ['#CD7F32', '#8B4513'],
+	실버: ['#dbe1e3', '#A5A9AB'],
+	골드: ['#FFD700', '#b99e16'],
+	플래티넘: ['#abf5e1', '#2fd1ae'],
+	다이아: ['#bdeffa', '#7bceff'],
+	루비: ['#E0115F', '#9B111E']
 };
 export const PLATFORMLIST = [
 	{
@@ -104,7 +147,7 @@ export const PLATFORMLIST = [
 			{ label: '루비 3', value: 33 },
 			{ label: '루비 2', value: 34 },
 			{ label: '루비 1', value: 35 },
-			{ label: '마스터 (이상)', value: 36 }
+			{ label: '마스터', value: 36 }
 		],
 		code: 'SV'
 	},

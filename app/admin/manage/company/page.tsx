@@ -19,7 +19,7 @@ import {
 	fetchFiltereAllCompanys
 } from '@/app/lib/server/queries/company';
 import { useRouter } from 'next/navigation';
-import { CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models/company';
+import { CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models';
 import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../components/create-company';
 

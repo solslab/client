@@ -1,7 +1,7 @@
 'use client';
 
 import { fetchProfile } from '@/app/lib/server/queries/user';
-import { findPlatformAndLabel } from '@/app/lib/utils/helpers';
+import { findTierLabel } from '@/app/lib/utils/helpers';
 import LanguageBox from '../common/languageBox';
 import FieldBox from '../common/fieldBox';
 import { useEffect, useState } from 'react';
@@ -27,7 +27,7 @@ export default function ProfileContents() {
 		const fetchProfileData = async () => {
 			try {
 				const data = await fetchProfile();
-				const tierLabelData = findPlatformAndLabel(Number(data.member_tier)) || {
+				const tierLabelData = findTierLabel(Number(data.member_tier)) || {
 					label: null
 				};
 				setProfileData(data);

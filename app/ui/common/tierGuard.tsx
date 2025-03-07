@@ -1,17 +1,9 @@
 'use client';
 import { infoCheck } from '@/app/lib/server/queries/auth/check';
-import {
-	Children,
-	cloneElement,
-	isValidElement,
-	ReactElement,
-	useCallback,
-	useEffect,
-	useState
-} from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import TierModal from '../company/tierModal';
 import { getToken } from '@/app/lib/utils/cookie';
+import TierModal from './tierModal';
 
 interface WithOnClickProps {
 	onClick?: (e: React.MouseEvent) => void;
@@ -45,22 +37,7 @@ export default function TierGuard(props: {
 			}
 		}
 	};
-	// const childrenWithProps = Children.map(children, (child) => {
-	// 	if (isValidElement(child)) {
-	// 		const typedChild = child as ReactElement<WithOnClickProps>;
-	// 		return cloneElement(typedChild, {
-	// 			onClick: async (e: React.MouseEvent) => {
-	// 				console.log('typedChild.props.onClick', typedChild.props.onClick);
-	// 				if (typedChild.props.onClick) {
-	// 					typedChild.props.onClick(e);
-	// 				}
-	// 				await checkTier();
-	// 			}
-	// 		});
-	// 	}
 
-	// 	return child;
-	// });
 	return (
 		<>
 			<div className="flex flex-row justify-center">{props.render(checkTier)}</div>

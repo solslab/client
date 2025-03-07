@@ -12,7 +12,6 @@ export async function updateTier(formData: FormData) {
 	let redirectFlag = false;
 
 	const validatedFields = TierFormSchema.safeParse({
-		al_platform: formData.get('al_platform'),
 		member_tier: formData.get('member_tier')
 	});
 	if (!validatedFields.success) {

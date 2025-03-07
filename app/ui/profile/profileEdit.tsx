@@ -1,7 +1,7 @@
 'use client';
 import { Profile } from '@/app/lib/types/models';
 import { findPlatformIndex } from '@/app/lib/utils/helpers';
-import { FEILDLIST, PLATFORMLIST, SKILLS } from '@/app/lib/utils/constants';
+import { FEILDLIST, PLATFORMLIST, SKILLS, SOLVEDACLEVEL } from '@/app/lib/utils/constants';
 import { startTransition, useActionState, useState } from 'react';
 import FieldToggleButton from './fieldTogglebutton';
 import LanguageToggleButton from './languageToggleButton';
@@ -26,12 +26,16 @@ import {
 	FormMessage
 } from '@/app/ui/shadcn/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { AdditionalInformationFormSchema } from '@/app/lib/server/schemas/user';
+
+type FormData = z.infer<typeof AdditionalInformationFormSchema>;
 
 export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	const platformIndex = findPlatformIndex(profileData.al_platform) || 0;
 	const [skills, setSkills] = useState<Set<string>>(new Set(profileData.prefer_languages));
 	const [platform, setPlatform] = useState(platformIndex);
-	const [level, setLevel] = useState(profileData.member_tier || 0);
 	const [field, setFeild] = useState<string[]>(profileData.prefer_industries || []);
 	const initialState: AdditionalInformationState = {
 		message: null,
@@ -39,9 +43,13 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	};
 	const [state, formAction] = useActionState(updateAdditionalInformation, initialState);
 
-	const form = useForm({
+	const form = useForm<FormData>({
+		resolver: zodResolver(AdditionalInformationFormSchema),
 		defaultValues: {
-			nickname: profileData.nickname
+			nickname: profileData.nickname || '',
+			member_tier: Number(profileData.member_tier) || 0,
+			prefer_languages: profileData.prefer_languages || [],
+			prefer_industries: profileData.prefer_industries || []
 		}
 	});
 
@@ -69,11 +77,11 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 		setSkills(newSet);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const formData = new FormData(e.currentTarget);
+	const onSubmit = async (data: FormData) => {
+		const formData = new FormData();
+		formData.append('nickname', data.nickname || '');
 		formData.append('al_platform', PLATFORMLIST[platform].code);
-		formData.append('member_tier', level.toString());
+		formData.append('member_tier', data.member_tier.toString());
 		formData.append('prefer_languages', Array.from(skills).toString());
 		formData.append('prefer_industries', field.toString());
 
@@ -84,7 +92,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={handleSubmit} className="space-y-8">
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 				<div className="text-2xl font-bold text-title-black">정보 수정</div>
 				<div className="space-y-6 px-5 pt-16">
 					<div className="flex w-full flex-wrap py-4 text-base">
@@ -117,49 +125,77 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 						)}
 					/>
 
-					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="w-full font-bold text-gray-80 md:w-1/5">solved.ac 티어</div>
-						<div className="mt-4 w-full md:mt-0 md:w-4/5">
-							<Select value={level.toString()} onValueChange={(value) => setLevel(Number(value))}>
-								<SelectTrigger className="w-full max-w-80">
-									<SelectValue placeholder="티어를 선택해주세요" />
-								</SelectTrigger>
-								<SelectContent className="max-h-60 overflow-y-auto">
-									{PLATFORMLIST[platform].level.map((platform) => (
-										<SelectItem value={platform.value.toString()} key={platform.label}>
-											{platform.label}
-										</SelectItem>
+					<FormField
+						control={form.control}
+						name="member_tier"
+						render={({ field }) => (
+							<FormItem className="flex w-full flex-wrap py-4 text-base">
+								<FormLabel className="w-full font-bold text-gray-80 md:w-1/5">
+									solved.ac 티어
+								</FormLabel>
+								<FormControl className="mt-4 w-full md:mt-0 md:w-4/5">
+									<Select
+										value={field.value.toString()}
+										onValueChange={(value) => field.onChange(Number(value))}
+									>
+										<SelectTrigger className="w-full max-w-80">
+											<SelectValue placeholder="티어를 선택해주세요" />
+										</SelectTrigger>
+										<SelectContent className="max-h-60 overflow-y-auto">
+											{SOLVEDACLEVEL.level.map((platform) => (
+												<SelectItem value={platform.value.toString()} key={platform.label}>
+													{platform.label}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
+						name="prefer_languages"
+						render={({ field }) => (
+							<FormItem className="flex w-full flex-wrap py-4 text-base">
+								<FormLabel className="w-full font-bold text-gray-80 md:w-1/5">선호 언어</FormLabel>
+								<div className="mt-4 flex w-full flex-col text-text-base md:mt-0 md:w-4/5">
+									<ComboBox list={SKILLS} onClick={addSkills} />
+									<div className="mt-2 flex flex-wrap gap-2">
+										{Array.from(skills).map((el: string) => (
+											<LanguageToggleButton key={el} text={el} onClick={() => removeSkills(el)} />
+										))}
+									</div>
+								</div>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
+						name="prefer_industries"
+						render={({ field }) => (
+							<FormItem className="flex w-full flex-wrap py-4 text-base">
+								<FormLabel className="w-full font-bold text-gray-80 md:w-1/5">
+									취업 희망 분야
+								</FormLabel>
+								<div className="mt-4 flex w-full flex-wrap gap-2 text-text-base md:mt-0 md:w-4/5">
+									{FEILDLIST.map((el) => (
+										<FieldToggleButton
+											key={el}
+											text={el}
+											onClick={() => handleFeild(el)}
+											active={field.value.includes(el)}
+										/>
 									))}
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-
-					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="w-full font-bold text-gray-80 md:w-1/5">선호 언어</div>
-						<div className="mt-4 flex w-full flex-col text-text-base md:mt-0 md:w-4/5">
-							<ComboBox list={SKILLS} onClick={addSkills} />
-							<div className="mt-2 flex flex-wrap gap-2">
-								{Array.from(skills).map((el: string) => (
-									<LanguageToggleButton key={el} text={el} onClick={() => removeSkills(el)} />
-								))}
-							</div>
-						</div>
-					</div>
-
-					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="w-full font-bold text-gray-80 md:w-1/5">취업 희망 분야</div>
-						<div className="mt-4 flex w-full flex-wrap gap-2 text-text-base md:mt-0 md:w-4/5">
-							{FEILDLIST.map((el) => (
-								<FieldToggleButton
-									key={el}
-									text={el}
-									onClick={() => handleFeild(el)}
-									active={field.includes(el)}
-								/>
-							))}
-						</div>
-					</div>
+								</div>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</div>
 				<Button className="w-full" type="submit" variant="main">
 					저장하기
