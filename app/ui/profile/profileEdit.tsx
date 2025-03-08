@@ -2,7 +2,7 @@
 import { Profile } from '@/app/lib/types/models';
 import { findPlatformIndex } from '@/app/lib/utils/helpers';
 import { FEILDLIST, PLATFORMLIST, SKILLS, SOLVEDACLEVEL } from '@/app/lib/utils/constants';
-import { startTransition, useActionState, useState } from 'react';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import FieldToggleButton from './fieldTogglebutton';
 import LanguageToggleButton from './languageToggleButton';
 import ComboBox from '../common/comboBox';
@@ -30,20 +30,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { AdditionalInformationFormSchema } from '@/app/lib/server/schemas/user';
 
-type FormData = z.infer<typeof AdditionalInformationFormSchema>;
+type AdditionalInformationFormData = z.infer<typeof AdditionalInformationFormSchema>;
 
 export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	const platformIndex = findPlatformIndex(profileData.al_platform) || 0;
 	const [skills, setSkills] = useState<Set<string>>(new Set(profileData.prefer_languages));
 	const [platform, setPlatform] = useState(platformIndex);
-	const [field, setFeild] = useState<string[]>(profileData.prefer_industries || []);
-	const initialState: AdditionalInformationState = {
-		message: null,
-		errors: {}
-	};
-	const [state, formAction] = useActionState(updateAdditionalInformation, initialState);
+	const [industryField, setIndustryFeild] = useState<string[]>(profileData.prefer_industries || []);
 
-	const form = useForm<FormData>({
+	const form = useForm<AdditionalInformationFormData>({
 		resolver: zodResolver(AdditionalInformationFormSchema),
 		defaultValues: {
 			nickname: profileData.nickname || '',
@@ -54,16 +49,22 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	});
 
 	const handleFeild = (value: string) => {
-		const list: string[] = [...field];
+		const list: string[] = [...industryField];
 
 		if (list.includes(value)) {
 			const filteredList = list.filter((el) => el !== value);
-			setFeild(filteredList);
+			setIndustryFeild(filteredList);
 		} else if (list.length < 5) {
 			list.push(value);
-			setFeild(list);
+			setIndustryFeild(list);
 		}
 	};
+	useEffect(() => {
+		form.setValue('prefer_industries', industryField);
+	}, [industryField]);
+	useEffect(() => {
+		form.setValue('prefer_languages', Array.from(skills));
+	}, [skills]);
 
 	const addSkills = (skill: string) => {
 		const newSet = new Set(skills);
@@ -77,18 +78,28 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 		setSkills(newSet);
 	};
 
-	const onSubmit = async (data: FormData) => {
-		const formData = new FormData();
-		formData.append('nickname', data.nickname || '');
-		formData.append('al_platform', PLATFORMLIST[platform].code);
-		formData.append('member_tier', data.member_tier.toString());
-		formData.append('prefer_languages', Array.from(skills).toString());
-		formData.append('prefer_industries', field.toString());
+	async function onSubmit(data: AdditionalInformationFormData) {
+		try {
+			const result = await updateAdditionalInformation({ message: '', errors: {} }, data);
 
-		startTransition(() => {
-			formAction(formData);
-		});
-	};
+			if (result?.errors && Object.keys(result.errors).length > 0) {
+				// 서버 에러 처리
+				if (result.errors && Object.keys(result.errors).length > 0) {
+					// 필드별 에러 설정
+					Object.entries(result.errors).forEach(([field, messages]) => {
+						if (Array.isArray(messages) && messages.length > 0) {
+							form.setError(field as any, { message: messages[0] });
+						}
+					});
+				} else {
+					form.setError('root', { message: result.message });
+				}
+			}
+		} catch (error) {
+			console.error('폼 제출 중 오류 발생:', error);
+			form.setError('root', { message: '폼 제출 중 오류가 발생했습니다.' });
+		}
+	}
 
 	return (
 		<Form {...form}>
@@ -188,7 +199,7 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 											key={el}
 											text={el}
 											onClick={() => handleFeild(el)}
-											active={field.value.includes(el)}
+											active={industryField.includes(el)}
 										/>
 									))}
 								</div>

@@ -5,19 +5,20 @@ import { getLastRoute, getToken, updateToken } from '@/app/lib/utils/cookie';
 import { SPRING_URL } from '@/app/lib/utils/constants';
 import { AdditionalInformationFormSchema } from '@/app/lib/server/schemas/user';
 import { AdditionalInformationState } from '@/app/lib/types/actions/user';
+import { z } from 'zod';
 
+type AdditionalInformationFormData = z.infer<typeof AdditionalInformationFormSchema>;
 export async function updateAdditionalInformation(
 	prevState: AdditionalInformationState,
-	formData: FormData
+	formData: AdditionalInformationFormData
 ) {
 	let redirectFlag = false;
 
 	const validatedFields = AdditionalInformationFormSchema.safeParse({
-		nickname: formData.get('nickname') || undefined,
-		al_platform: formData.get('al_platform'),
-		member_tier: formData.get('member_tier'),
-		prefer_languages: formData.get('prefer_languages'),
-		prefer_industries: formData.get('prefer_industries')
+		nickname: formData.nickname,
+		member_tier: formData.member_tier,
+		prefer_languages: formData.prefer_languages,
+		prefer_industries: formData.prefer_industries
 	});
 	if (!validatedFields.success) {
 		return {
@@ -55,7 +56,12 @@ export async function updateAdditionalInformation(
 		redirectFlag = true;
 		return data;
 	} catch (error) {
-		console.error(error);
+		return {
+			message: '오류가 발생했습니다.',
+			errors: {
+				root: ['오류가 발생했습니다.']
+			}
+		};
 	} finally {
 		if (redirectFlag) {
 			redirect(path);
