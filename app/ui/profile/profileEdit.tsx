@@ -96,16 +96,16 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 				<div className="text-2xl font-bold text-title-black">정보 수정</div>
 				<div className="space-y-6 px-5 pt-16">
 					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+						<FormLabel className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
 							이름
-						</div>
+						</FormLabel>
 						<div className="mt-4 w-full text-gray-70 md:mt-0 md:w-4/5">{profileData.name}</div>
 					</div>
 
 					<div className="flex w-full flex-wrap py-4 text-base">
-						<div className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
+						<FormLabel className="flex w-full flex-col justify-center font-bold text-gray-80 md:w-1/5">
 							이메일
-						</div>
+						</FormLabel>
 						<div className="mt-4 w-full text-gray-70 md:mt-0 md:w-4/5">{profileData.email}</div>
 					</div>
 

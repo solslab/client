@@ -35,34 +35,44 @@ import { Slider } from '@/app/ui/shadcn/components/ui/slider';
 
 // Utils
 import { redirectToPrev } from '@/app/lib/utils/cookie';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../shadcn/components/ui/hover-card';
+import Image from 'next/image';
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: currentYear - 2013 }, (_, i) => currentYear - i);
 
-type FormData = z.infer<typeof TestReviewFormSchema>;
+type TrFormData = z.infer<typeof TestReviewFormSchema>;
 
 export default function TrForm({ company_id }: { company_id: string | undefined }) {
 	// Local state
+	const [companyId, setCompanyId] = useState(company_id);
 	const [problems, setProblems] = useState<Set<string>>(new Set());
 	const [solvedProblemOptions, setSolvedProblemOptions] = useState<number[]>([]);
-	const [difficulty, setDifficulty] = useState<number>(0);
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
 
 	// Form initialization
-	const form = useForm<FormData>({
+	const form = useForm<TrFormData>({
 		resolver: zodResolver(TestReviewFormSchema),
 		defaultValues: {
-			company_name: '',
-			tr_position: '',
-			tr_career: '',
-			tr_year: '',
-			tr_problem_num: '',
-			tr_solved_num: '',
-			tr_pass_status: '',
-			tr_comment: '',
-			tr_problem_type: ''
+			company_id: companyId,
+			company_name: undefined,
+			tr_position: undefined,
+			tr_career: undefined,
+			tr_year: undefined,
+			tr_problem_num: 0,
+			tr_solved_num: undefined,
+			tr_pass_status: undefined,
+			tr_comment: undefined,
+			tr_problem_type: [] as string[],
+			difficulty: 0
 		}
 	});
+	useEffect(() => {
+		form.setValue('tr_problem_type', Array.from(problems));
+	}, [problems]);
+	useEffect(() => {
+		form.setValue('company_id', companyId);
+	}, [companyId]);
 
 	// Handlers
 	const updateSolvedProblemOptions = (totalProblems: number) => {
@@ -82,33 +92,12 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 		});
 	};
 
-	async function onSubmit(data: FormData) {
+	async function onSubmit(data: TrFormData) {
 		try {
-			if (problems.size === 0) {
-				form.setError('tr_problem_type', { message: '문제 유형을 하나 이상 선택해주세요.' });
-				return;
-			}
-
-			const formData = new FormData();
-			Object.entries(data).forEach(([key, value]) => {
-				formData.append(key, value.toString());
-			});
-
-			// problems Set을 배열로 변환
-			const problemTypes = Array.from(problems);
-
-			// 문제 유형을 쉼표로 구분된 문자열로 변환
-			formData.append('tr_problem_type', problemTypes.join(','));
-			formData.append('difficulty', (difficulty + 1).toString());
-
-			const result = await createTestReview(
-				{ message: '', errors: {}, fullfilled: false },
-				formData
-			);
+			const result = await createTestReview({ message: '', errors: {}, fullfilled: false }, data);
 
 			if (result.fullfilled) {
 				setIsSubmitSuccessful(true);
-				await redirectToPrev();
 			} else {
 				// 서버 에러 처리
 				if (result.errors && Object.keys(result.errors).length > 0) {
@@ -134,7 +123,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 		const subscription = form.watch((value, { name }) => {
 			if (name === 'tr_problem_num' && value.tr_problem_num) {
 				updateSolvedProblemOptions(Number(value.tr_problem_num));
-				form.setValue('tr_solved_num', '');
+				form.setValue('tr_solved_num', 0);
 			}
 		});
 
@@ -155,236 +144,276 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 								name="company_name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className="font-bold">
-											기업명<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<TrSearchBox
-												value={field.value}
-												setValue={(value) => field.onChange(value)}
-												companyId={company_id}
-												setCompanyId={() => {}}
-											/>
-										</FormControl>
-										<FormDescription>검색을 통해 기업을 선택해주세요.</FormDescription>
+										<div className="flex justify-between gap-2">
+											<FormLabel className="font-bold">
+												기업명<span className="text-main-base"> *</span>
+											</FormLabel>
+											<FormControl>
+												<TrSearchBox
+													value={field.value}
+													setValue={(value) => field.onChange(value)}
+													companyId={company_id}
+													setCompanyId={setCompanyId}
+												/>
+											</FormControl>
+										</div>
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
-
-							<FormField
-								control={form.control}
-								name="tr_position"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											지원직무<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<Select onValueChange={field.onChange} value={field.value}>
-												<SelectTrigger className="w-full max-w-80">
-													<SelectValue placeholder="선택" />
-												</SelectTrigger>
-												<SelectContent className="max-h-60 overflow-y-auto">
-													{TR_POSITIONS.map((el) => (
-														<SelectItem value={el.toString()} key={el}>
-															{el}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={form.control}
-								name="tr_career"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											채용형태<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<Select onValueChange={field.onChange} value={field.value}>
-												<SelectTrigger className="w-full max-w-80">
-													<SelectValue placeholder="선택" />
-												</SelectTrigger>
-												<SelectContent>
-													{TR_CAREER.map((el) => (
-														<SelectItem value={el.toString()} key={el}>
-															{el}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={form.control}
-								name="tr_year"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											응시년도<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<Select onValueChange={field.onChange} value={field.value}>
-												<SelectTrigger className="w-full max-w-80">
-													<SelectValue placeholder="선택" />
-												</SelectTrigger>
-												<SelectContent>
-													{years.map((year) => (
-														<SelectItem value={year.toString()} key={year}>
-															{year}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_position"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<FormLabel className="font-bold">
+													지원직무<span className="text-main-base"> *</span>
+												</FormLabel>
+												<FormControl>
+													<Select onValueChange={field.onChange} value={field.value}>
+														<SelectTrigger className="w-full max-w-80">
+															<SelectValue placeholder="선택" />
+														</SelectTrigger>
+														<SelectContent className="max-h-60 overflow-y-auto">
+															{TR_POSITIONS.map((el) => (
+																<SelectItem value={el.toString()} key={el}>
+																	{el}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_career"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<FormLabel className="font-bold">
+													채용형태<span className="text-main-base"> *</span>
+												</FormLabel>
+												<FormControl>
+													<Select onValueChange={field.onChange} value={field.value}>
+														<SelectTrigger className="w-full max-w-80">
+															<SelectValue placeholder="선택" />
+														</SelectTrigger>
+														<SelectContent>
+															{TR_CAREER.map((el) => (
+																<SelectItem value={el.toString()} key={el}>
+																	{el}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_year"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<FormLabel className="font-bold">
+													응시년도<span className="text-main-base"> *</span>
+												</FormLabel>
+												<FormControl>
+													<Select onValueChange={field.onChange} value={field.value}>
+														<SelectTrigger className="w-full max-w-80">
+															<SelectValue placeholder="선택" />
+														</SelectTrigger>
+														<SelectContent>
+															{years.map((year) => (
+																<SelectItem value={year.toString()} key={year}>
+																	{year}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
 						</div>
 
 						{/* 문제 정보 섹션 */}
 						<div className="border-b border-gray-30 py-6">
-							<FormField
-								control={form.control}
-								name="tr_problem_num"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											전체 문제 수<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<NaturalNumberInput
-												id="tr_problem_num"
-												value={field.value}
-												onChange={field.onChange}
-												callBack={(value) => updateSolvedProblemOptions(value)}
-											/>
-										</FormControl>
-										<FormDescription>코딩테스트의 전체 문제 수를 입력해주세요.</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_problem_num"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<FormLabel className="font-bold">
+													전체 문제 수<span className="text-main-base"> *</span>
+												</FormLabel>
+												<FormControl>
+													<NaturalNumberInput
+														id="tr_problem_num"
+														value={field.value?.toString()}
+														onChange={field.onChange}
+														callBack={(value) => updateSolvedProblemOptions(value)}
+													/>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_solved_num"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<div className="flex">
+													<FormLabel className="font-bold">
+														푼 문제 수<span className="text-main-base"> *</span>
+													</FormLabel>
+													<div className="ml-1 flex">
+														<SolvedProblemHoverCard />
+													</div>
+												</div>
 
-							<FormField
-								control={form.control}
-								name="tr_solved_num"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											푼 문제 수<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<Select onValueChange={field.onChange} value={field.value}>
-												<SelectTrigger className="w-full max-w-80">
-													<SelectValue placeholder="선택" />
-												</SelectTrigger>
-												<SelectContent>
-													{solvedProblemOptions.map((el) => (
-														<SelectItem value={el.toString()} key={el}>
-															{el}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormDescription>푼 문제 수를 선택해주세요.</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={form.control}
-								name="tr_pass_status"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-bold">
-											합격 여부<span className="text-main-base">*</span>
-										</FormLabel>
-										<FormControl>
-											<Select onValueChange={field.onChange} value={field.value}>
-												<SelectTrigger className="w-full max-w-80">
-													<SelectValue placeholder="선택" />
-												</SelectTrigger>
-												<SelectContent>
-													{PASS_STATUS.map((el) => (
-														<SelectItem value={el.toString()} key={el}>
-															{el}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+												<FormControl>
+													<Select onValueChange={field.onChange} value={field.value?.toString()}>
+														<SelectTrigger className="w-full max-w-80">
+															<SelectValue placeholder="선택" />
+														</SelectTrigger>
+														<SelectContent>
+															{solvedProblemOptions.map((el) => (
+																<SelectItem value={el.toString()} key={el}>
+																	{el}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<div className="pt-6">
+								<FormField
+									control={form.control}
+									name="tr_pass_status"
+									render={({ field }) => (
+										<FormItem>
+											<div className="flex justify-between gap-2">
+												<FormLabel className="font-bold">
+													합격 여부
+													<span className="text-main-base"> *</span>
+												</FormLabel>
+												<FormControl>
+													<Select onValueChange={field.onChange} value={field.value}>
+														<SelectTrigger className="w-full max-w-80">
+															<SelectValue placeholder="선택" />
+														</SelectTrigger>
+														<SelectContent>
+															{PASS_STATUS.map((el) => (
+																<SelectItem value={el.toString()} key={el}>
+																	{el}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</FormControl>
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
 						</div>
 
 						{/* 문제 유형 섹션 */}
-						<div className="border-b border-gray-30 py-6">
-							<div className="flex w-full flex-wrap py-4 text-base">
-								<div className="w-full font-bold text-gray-80">
-									문제 유형<span className="textsm text-main-base"> *</span>
-								</div>
-								<div className="mt-4 flex w-full justify-end text-text-base">
-									<div className="mt-4 flex w-full flex-col text-text-base">
-										<TrComboBox
-											className="max-w-full"
-											list={PROBLEM_TYPE}
-											onClick={handleProblemAdd}
-										/>
-										<div>
-											{Array.from(problems).map((el: string) => (
-												<LanguageToggleButton
-													key={el}
-													text={el}
-													onClick={() => handleProblemRemove(el)}
+						<FormField
+							control={form.control}
+							name="tr_problem_type"
+							render={({ field }) => (
+								<div className="border-b border-gray-30 py-6">
+									<div className="flex w-full flex-wrap py-4 text-base">
+										<FormLabel className="w-full font-bold">
+											문제 유형<span className="textsm text-main-base"> *</span>
+										</FormLabel>
+										<div className="mt-4 flex w-full justify-end text-text-base">
+											<div className="mt-4 flex w-full flex-col text-text-base">
+												<TrComboBox
+													className="max-w-full"
+													list={PROBLEM_TYPE}
+													onClick={handleProblemAdd}
 												/>
-											))}
+												<div>
+													{Array.from(problems).map((el: string) => (
+														<LanguageToggleButton
+															key={el}
+															text={el}
+															onClick={() => handleProblemRemove(el)}
+														/>
+													))}
+												</div>
+											</div>
 										</div>
-										<FormMessage>{form.formState.errors.tr_problem_type?.message}</FormMessage>
 									</div>
+									<FormMessage>{form.formState.errors.tr_problem_type?.message}</FormMessage>
 								</div>
-							</div>
-						</div>
+							)}
+						/>
 
 						{/* 난이도 섹션 */}
-						<div className="border-b border-gray-30 py-6">
-							<div className="flex w-full flex-wrap py-4 text-base">
-								<div className="mt-4 w-full font-bold text-gray-80">
-									난이도<span className="textsm text-main-base"> *</span>
-								</div>
-								<div className="mt-8 flex w-full items-center justify-between text-text-base">
-									<div className="w-full">
-										<Slider
-											defaultValue={[0]}
-											max={4}
-											step={1}
-											onValueChange={(value) => setDifficulty(value[0])}
-										/>
-										<div className="mt-4 flex justify-between text-sm text-text-base">
-											<span>쉬움</span>
-											<span>보통</span>
-											<span>어려움</span>
-										</div>
+						<FormField
+							control={form.control}
+							name="difficulty"
+							render={({ field }) => (
+								<div className="border-b border-gray-30 py-6">
+									<div className="flex w-full flex-wrap py-4">
+										<FormLabel className="mt-4 w-full font-bold">
+											난이도<span className="textsm text-main-base"> *</span>
+										</FormLabel>
+										<FormControl>
+											<div className="mt-8 flex w-full items-center justify-between text-text-base">
+												<div className="w-full">
+													<Slider
+														value={[field.value]}
+														onValueChange={(val) => field.onChange(val[0])}
+														max={4}
+														step={1}
+													/>
+													<div className="mt-4 flex justify-between text-sm text-text-base">
+														<span>쉬움</span>
+														<span>보통</span>
+														<span>어려움</span>
+													</div>
+												</div>
+											</div>
+										</FormControl>
+										<FormMessage />
 									</div>
 								</div>
-							</div>
-						</div>
+							)}
+						/>
 
 						{/* 후기 섹션 */}
 						<FormField
@@ -393,7 +422,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							render={({ field }) => (
 								<FormItem className="py-6">
 									<FormLabel className="font-bold">
-										한줄 후기<span className="text-main-base">*</span>
+										한줄 후기<span className="text-main-base"> *</span>
 									</FormLabel>
 									<FormControl>
 										<textarea
@@ -423,5 +452,26 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 				</BasicAlert>
 			)}
 		</>
+	);
+}
+function SolvedProblemHoverCard() {
+	return (
+		<HoverCard>
+			<HoverCardTrigger asChild>
+				<Button variant="ghost" className="h-4 w-4 p-0">
+					<Image src="/icons/interrogation1.png" alt="hover-icon" width={14} height={14} />
+				</Button>
+			</HoverCardTrigger>
+			<HoverCardContent className="w-80">
+				<div className="flex justify-between space-x-4">
+					<div className="space-y-1">
+						<h4 className="text-sm font-semibold">소수점 응답은 무엇인가요?</h4>
+						<p className="text-sm text-text-base">
+							일부 테스트 케이스를 통과했지만 정답 여부가 확실하지 않을 때 선택해주세요.
+						</p>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
 	);
 }
