@@ -27,9 +27,8 @@ export default function ProfileContents() {
 		const fetchProfileData = async () => {
 			try {
 				const data = await fetchProfile();
-				const tierLabelData = findTierLabel(Number(data.member_tier)) || {
-					label: null
-				};
+				const tierLabelData =
+					data.member_tier === null ? { label: '-' } : findTierLabel(Number(data.member_tier));
 				setProfileData(data);
 				setTierLabel(tierLabelData);
 			} catch (error) {

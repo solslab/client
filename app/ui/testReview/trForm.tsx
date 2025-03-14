@@ -143,9 +143,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 								control={form.control}
 								name="company_name"
 								render={({ field }) => (
-									<FormItem>
+									<FormItem className="text-gray-80">
 										<div className="flex justify-between gap-2">
-											<FormLabel className="flex items-center font-bold">
+											<FormLabel className="flex items-center font-bold text-gray-80">
 												기업명<span className="text-main-base"> *</span>
 											</FormLabel>
 											<FormControl>
@@ -157,7 +157,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 												/>
 											</FormControl>
 										</div>
-										<FormMessage />
+										<div className="text-sm font-medium text-red-500">
+											<FormMessage />
+										</div>
 									</FormItem>
 								)}
 							/>
@@ -168,7 +170,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									render={({ field }) => (
 										<FormItem>
 											<div className="flex justify-between gap-2">
-												<FormLabel className="flex items-center font-bold">
+												<FormLabel className="flex items-center font-bold text-gray-80">
 													지원직무<span className="text-main-base"> *</span>
 												</FormLabel>
 												<FormControl>
@@ -186,7 +188,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													</Select>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -198,7 +202,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									render={({ field }) => (
 										<FormItem>
 											<div className="flex justify-between gap-2">
-												<FormLabel className="flex items-center font-bold">
+												<FormLabel className="flex items-center font-bold text-gray-80">
 													채용형태<span className="text-main-base"> *</span>
 												</FormLabel>
 												<FormControl>
@@ -216,7 +220,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													</Select>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -228,7 +234,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									render={({ field }) => (
 										<FormItem>
 											<div className="flex justify-between gap-2">
-												<FormLabel className="flex items-center font-bold">
+												<FormLabel className="flex items-center font-bold text-gray-80">
 													응시년도<span className="text-main-base"> *</span>
 												</FormLabel>
 												<FormControl>
@@ -246,7 +252,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													</Select>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -262,7 +270,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									render={({ field }) => (
 										<FormItem>
 											<div className="flex justify-between gap-2">
-												<FormLabel className="flex items-center font-bold">
+												<FormLabel className="flex items-center font-bold text-gray-80">
 													전체 문제 수<span className="text-main-base"> *</span>
 												</FormLabel>
 												<FormControl>
@@ -274,7 +282,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													/>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -287,7 +297,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 										<FormItem>
 											<div className="flex justify-between gap-2">
 												<div className="flex">
-													<FormLabel className="flex items-center font-bold">
+													<FormLabel className="flex items-center font-bold text-gray-80">
 														푼 문제 수<span className="text-main-base"> *</span>
 													</FormLabel>
 													<div className="ml-1 flex items-center">
@@ -310,7 +320,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													</Select>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -322,9 +334,8 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 									render={({ field }) => (
 										<FormItem>
 											<div className="flex justify-between gap-2">
-												<FormLabel className="flex items-center font-bold">
-													합격 여부
-													<span className="text-main-base"> *</span>
+												<FormLabel className="flex items-center font-bold text-gray-80">
+													합격 여부<span className="text-main-base"> *</span>
 												</FormLabel>
 												<FormControl>
 													<Select onValueChange={field.onChange} value={field.value}>
@@ -341,7 +352,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 													</Select>
 												</FormControl>
 											</div>
-											<FormMessage />
+											<div className="text-sm font-medium text-red-500">
+												<FormMessage />
+											</div>
 										</FormItem>
 									)}
 								/>
@@ -355,7 +368,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							render={({ field }) => (
 								<div className="border-b border-gray-30 py-12">
 									<div className="flex w-full flex-wrap py-4 text-base">
-										<FormLabel className="w-full font-bold">
+										<FormLabel className="w-full font-bold text-gray-80">
 											문제 유형<span className="textsm text-main-base"> *</span>
 										</FormLabel>
 										<div className="mt-4 flex w-full justify-end text-text-base">
@@ -377,7 +390,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 											</div>
 										</div>
 									</div>
-									<FormMessage>{form.formState.errors.tr_problem_type?.message}</FormMessage>
+									<div className="text-sm font-medium text-red-500">
+										<FormMessage />
+									</div>
 								</div>
 							)}
 						/>
@@ -421,7 +436,7 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 							name="tr_comment"
 							render={({ field }) => (
 								<FormItem className="py-12">
-									<FormLabel className="font-bold">
+									<FormLabel className="font-bold text-gray-80">
 										한줄 후기<span className="text-main-base"> *</span>
 									</FormLabel>
 									<FormControl>
@@ -432,7 +447,9 @@ export default function TrForm({ company_id }: { company_id: string | undefined 
 											placeholder="간단한 시험 후기를 들려주세요! 직접적으로 시험의 지문, 테스트케이스, 힌트 등을 게시하게 되면 문제 유출로 간주될 수 있으니 조심해주세요!"
 										/>
 									</FormControl>
-									<FormMessage />
+									<div className="text-sm font-medium text-red-500">
+										<FormMessage />
+									</div>
 								</FormItem>
 							)}
 						/>
@@ -458,7 +475,7 @@ function SolvedProblemHoverCard() {
 	return (
 		<HoverCard>
 			<HoverCardTrigger asChild>
-				<Button variant="ghost" className="h-4 w-4 p-0">
+				<Button variant="ghost" type="button" className="h-4 w-4 p-0">
 					<Image src="/icons/interrogation1.png" alt="hover-icon" width={14} height={14} />
 				</Button>
 			</HoverCardTrigger>
