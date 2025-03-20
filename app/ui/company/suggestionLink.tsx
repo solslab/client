@@ -1,8 +1,6 @@
 'use client';
-import { getToken } from '@/app/lib/utils/cookie';
-import { infoCheck } from '@/app/lib/server/queries/auth/check';
+
 import { useState } from 'react';
-import TierModal from './tierModal';
 import { useRouter } from 'next/navigation';
 
 export default function SuggestionLink({

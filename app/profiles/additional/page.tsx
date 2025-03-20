@@ -52,9 +52,7 @@ export default function Page() {
 		formData.append('prefer_languages', Array.from(skills).toString());
 		formData.append('prefer_industries', field.toString());
 
-		startTransition(() => {
-			formAction(formData);
-		});
+		startTransition(() => {});
 	};
 
 	useEffect(() => {

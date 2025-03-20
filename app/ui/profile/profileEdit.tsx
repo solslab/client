@@ -28,6 +28,84 @@ import { AdditionalInformationFormSchema } from '@/app/lib/server/schemas/user';
 type AdditionalInformationFormData = z.infer<typeof AdditionalInformationFormSchema>;
 type TierStep = 'input' | 'loading' | 'result' | 'error';
 
+interface TierFieldProps {
+	field: any;
+	step: 'input' | 'loading' | 'result' | 'error';
+	solvedId: string;
+	setSolvedId: (value: string) => void;
+	handleTierCheck: () => void;
+	resetTierState: () => void;
+}
+
+const TierField = ({
+	field,
+	step,
+	solvedId,
+	setSolvedId,
+	handleTierCheck,
+	resetTierState
+}: TierFieldProps) => {
+	const tierInfo = useMemo(() => {
+		const label = findEnglishTierLabel(Number(field.value))?.label || 'Unrated';
+		return {
+			label,
+			style: getTierStyle(label)
+		};
+	}, [field.value]);
+
+	return (
+		<FormItem className="flex w-full flex-wrap py-4 text-base">
+			<FormLabel className="flex w-full items-center font-bold text-gray-80 md:w-1/5">
+				solved.ac 티어
+			</FormLabel>
+			<div className="mt-0 w-full md:w-4/5">
+				{step === 'input' && (
+					<div className="flex items-center space-x-2">
+						<Input
+							className="max-w-44"
+							placeholder="solved.ac 아이디 입력"
+							value={solvedId}
+							onChange={(e) => setSolvedId(e.target.value)}
+						/>
+						<Button
+							type="button"
+							onClick={handleTierCheck}
+							className="whitespace-nowrap bg-text-base text-[13px]"
+						>
+							티어 불러오기
+						</Button>
+					</div>
+				)}
+				{step === 'loading' && (
+					<div className="flex items-center space-x-2">
+						<Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+						<span className="text-sm">티어 정보를 불러오는 중입니다...</span>
+					</div>
+				)}
+				{step === 'result' && (
+					<div className="flex items-center space-x-4">
+						<span className="text-lg font-bold" style={tierInfo.style}>
+							{tierInfo.label}
+						</span>
+						<Button type="button" variant="outline" onClick={resetTierState}>
+							다시 불러오기
+						</Button>
+						<input type="hidden" {...field} />
+					</div>
+				)}
+				{step === 'error' && (
+					<div className="flex flex-col space-x-4">
+						<Button type="button" className="max-w-44" variant="outline" onClick={resetTierState}>
+							다시 시도하기
+						</Button>
+					</div>
+				)}
+			</div>
+			<FormMessage />
+		</FormItem>
+	);
+};
+
 export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	const [skills, setSkills] = useState<Set<string>>(new Set(profileData.prefer_languages));
 	const [industryField, setIndustryFeild] = useState<string[]>(profileData.prefer_industries || []);
@@ -95,10 +173,10 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 	};
 	useEffect(() => {
 		form.setValue('prefer_industries', industryField);
-	}, [industryField]);
+	}, [industryField, form]);
 	useEffect(() => {
 		form.setValue('prefer_languages', Array.from(skills));
-	}, [skills]);
+	}, [skills, form]);
 
 	const addSkills = (skill: string) => {
 		const newSet = new Set(skills);
@@ -175,75 +253,16 @@ export default function ProfileEdit({ profileData }: { profileData: Profile }) {
 					<FormField
 						control={form.control}
 						name="member_tier"
-						render={({ field }) => {
-							const tierInfo = useMemo(() => {
-								const label = findEnglishTierLabel(Number(field.value))?.label || 'Unrated';
-								return {
-									label,
-									style: getTierStyle(label)
-								};
-							}, [field.value]);
-
-							return (
-								<FormItem className="flex w-full flex-wrap py-4 text-base">
-									<div className="flex w-full items-center">
-										<FormLabel className="flex w-full items-center font-bold text-gray-80 md:w-1/5">
-											solved.ac 티어
-										</FormLabel>
-										<div className="mt-0 w-full md:w-4/5">
-											{step === 'input' && (
-												<div className="flex items-center space-x-2">
-													<Input
-														className="max-w-44"
-														placeholder="solved.ac 아이디 입력"
-														value={solvedId}
-														onChange={(e) => setSolvedId(e.target.value)}
-													/>
-													<Button
-														type="button"
-														onClick={handleTierCheck}
-														className="whitespace-nowrap bg-text-base text-[13px]"
-													>
-														티어 불러오기
-													</Button>
-												</div>
-											)}
-											{step === 'loading' && (
-												<div className="flex items-center space-x-2">
-													<Loader2 className="h-5 w-5 animate-spin text-blue-500" />
-													<span className="text-sm">티어 정보를 불러오는 중입니다...</span>
-												</div>
-											)}
-											{step === 'result' && (
-												<div className="flex items-center space-x-4">
-													<span className="text-lg font-bold" style={tierInfo.style}>
-														{tierInfo.label}
-													</span>
-													<Button type="button" variant="outline" onClick={resetTierState}>
-														다시 불러오기
-													</Button>
-													<input type="hidden" {...field} />
-												</div>
-											)}
-											{step === 'error' && (
-												<div className="flex flex-col space-x-4">
-													<Button
-														type="button"
-														className="max-w-44"
-														variant="outline"
-														onClick={resetTierState}
-													>
-														다시 시도하기
-													</Button>
-												</div>
-											)}
-										</div>
-									</div>
-
-									<FormMessage />
-								</FormItem>
-							);
-						}}
+						render={({ field }) => (
+							<TierField
+								field={field}
+								step={step}
+								solvedId={solvedId}
+								setSolvedId={setSolvedId}
+								handleTierCheck={handleTierCheck}
+								resetTierState={resetTierState}
+							/>
+						)}
 					/>
 
 					<FormField
