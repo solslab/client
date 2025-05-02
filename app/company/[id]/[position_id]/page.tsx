@@ -3,17 +3,16 @@ import SuggestionLink from '@/app/ui/company/suggestionLink';
 import TestInfo from '@/app/ui/company/testInfo';
 import Container from '@/app/ui/common/container';
 import FeedBackBtn from '@/app/ui/common/feedBackBtn';
-import { GetStaticPaths, GetStaticProps, Metadata } from 'next';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Position, TestData } from '@/app/lib/types/models/company';
 import { Company } from '@/app/lib/types/models/company';
 import {
-	fetchCompanyDetail,
-	fetchPublicPositionData,
 	fetchAllCompanies,
-	fetchPositionData
+	fetchCompanyDetail,
+	fetchPublicPositionData
 } from '@/app/lib/server/queries/company/index';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -47,30 +46,45 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 	};
 }
 
+export const revalidate = 24 * 60 * 60;
+
 export async function generateStaticParams() {
-	const companies: { company_id: string }[] = await fetchAllCompanies();
-	return companies.map((company) => ({
-		id: company.company_id
-	}));
+	const companies = await fetchAllCompanies();
+	const params = [];
+
+	for (const company of companies) {
+		const companyData = await fetchCompanyDetail(company.company_id);
+		if (companyData?.public) {
+			const positions = companyData.positions;
+			for (const position of positions) {
+				params.push({
+					id: company.company_id,
+					position_id: position.position_id
+				});
+			}
+		}
+	}
+
+	return params;
 }
 
-export const revalidate = 86400;
-
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-	const { id: company_id } = await params;
-	const companyData = await fetchCompanyDetail(company_id);
-
+export default async function Page({ params }: { params: { id: string; position_id: string } }) {
+	const { id: company_id, position_id } = await params;
+	const companyData: Company | undefined = await fetchCompanyDetail(company_id);
 	if (!companyData?.public) {
 		notFound();
 	}
-
-	const positions = companyData.positions || [];
-	const position_id = positions[0]?.position_id;
-	const testData = position_id ? await fetchPublicPositionData(position_id) : undefined;
+	const positions: Position[] = companyData.positions;
+	let data: TestData | undefined;
+	if (!params.position_id) {
+		data = undefined;
+	} else {
+		data = await fetchPublicPositionData(params.position_id);
+	}
 
 	return (
 		<>
-			<div className="relative h-32 w-full bg-gradient-to-b from-[#ECEEF6] to-[#F8F9FB] bg-cover bg-center md:h-64 lg:h-64"></div>
+			<div className="relative h-32 w-full bg-gradient-to-b from-[#F8F9FB] to-[#ECEEF6] bg-cover bg-center md:h-64 lg:h-64"></div>
 			<div className="relative flex flex-col items-center justify-center border-b border-gray-30 bg-bg-base py-10 md:py-16">
 				<Container>
 					<div
@@ -95,13 +109,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 				</Container>
 			</div>
 			<div className="md:my-12">
-				{testData ? (
+				{data ? (
 					<>
 						<TestInfo
 							company_id={company_id}
 							positions={positions}
 							position_id={position_id}
-							data={testData}
+							data={data}
 						/>
 						<Container>
 							<div className="flex w-full flex-wrap justify-between py-7 text-gray-70">

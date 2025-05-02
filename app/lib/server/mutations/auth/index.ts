@@ -7,9 +7,8 @@ import { DeletionState } from '@/app/lib/types/actions/auth';
 
 export async function logOut(path: string) {
 	try {
-		const headers: { 'Content-Type': string; 'Cache-Control': string; Authorization?: string } = {
-			'Content-Type': 'application/json',
-			'Cache-Control': 'no-cache'
+		const headers: { 'Content-Type': string; Authorization?: string } = {
+			'Content-Type': 'application/json'
 		};
 		const token = await getToken();
 		if (!token) {
@@ -35,9 +34,8 @@ export async function logOut(path: string) {
 }
 
 export async function deleteMember(prevState: DeletionState, formData: FormData) {
-	const headers: { 'Content-Type': string; 'Cache-Control': string; Authorization?: string } = {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'no-cache'
+	const headers: { 'Content-Type': string; Authorization?: string } = {
+		'Content-Type': 'application/json'
 	};
 	const token = await getToken();
 	if (!token) {

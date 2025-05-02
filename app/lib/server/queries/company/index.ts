@@ -2,7 +2,7 @@
 
 import { SPRING_URL } from '@/app/lib/utils/constants';
 import { deleteToken, getToken, updateToken } from '@/app/lib/utils/cookie';
-import { Company, CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models';
+import { Company, CompanyPageResponse, CompanyQuery, TestData } from '@/app/lib/types/models';
 import { cookies } from 'next/headers';
 
 export const fetchRandomCompany = async (): Promise<CompanyQuery[] | null> => {
@@ -118,10 +118,12 @@ export const fetchCompanyDetail = async (id: string): Promise<Company | undefine
 		const response = await fetch(`${SPRING_URL}/company/${id}`, {
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json',
-				'Cache-Control': 'no-cache'
-			}
+				'Content-Type': 'application/json'
+			},
+			cache: 'force-cache'
 		});
+
+		// 모든 헤더 출력
 
 		if (!response.ok) {
 			throw new Error(`${response.status}`);
@@ -131,13 +133,37 @@ export const fetchCompanyDetail = async (id: string): Promise<Company | undefine
 		return data;
 	} catch (error) {
 		console.error('fetchCompanyDetail중 오류 발생:', error);
+		return undefined;
+	}
+};
+
+export const fetchPublicPositionData = async (id: string): Promise<TestData | undefined> => {
+	try {
+		const response = await fetch(`${SPRING_URL}/dev/testInfo/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			cache: 'force-cache'
+		});
+
+		// 모든 헤더 출력
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('fetchPublicPositionData중 오류 발생:', error);
+		return undefined;
 	}
 };
 
 export const fetchPositionData = async (id: string) => {
-	const headers: { 'Content-Type': string; 'Cache-Control': string; Authorization?: string } = {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'no-cache'
+	const headers: { 'Content-Type': string; Authorization?: string } = {
+		'Content-Type': 'application/json'
 	};
 	const token = await getToken();
 	const value = token?.value;

@@ -6,12 +6,15 @@ import LanguageBox from '../common/languageBox';
 import Link from 'next/link';
 import VerifyMark from './verifyMark';
 import { Position, TestData } from '@/app/lib/types/models';
+import LanguageSection from './LanguageSection';
 
 export default function TestInfo({
+	company_id,
 	positions,
 	position_id,
 	data
 }: {
+	company_id: string;
 	positions: Position[];
 	position_id: string;
 	data: TestData;
@@ -25,6 +28,7 @@ export default function TestInfo({
 							<div className="my-auto w-full text-base md:w-1/4">시기/직무구분</div>
 							<div className="relative mt-4 flex w-full md:mt-0 md:w-3/4">
 								<PositionSelectBox
+									company_id={company_id}
 									positions={positions}
 									selected={position_id}
 									isOfficial={data.is_official}
@@ -41,28 +45,7 @@ export default function TestInfo({
 						<div className="flex w-full flex-row flex-wrap">
 							<div className="my-auto mb-4 w-full text-base sm:mb-0 md:w-1/4">지원 언어</div>
 							<div className="flex w-full flex-wrap md:w-3/4">
-								{data.support_languages.length > 0 ? (
-									data.support_languages.map((language) => (
-										<LanguageBox key={language} language={language} />
-									))
-								) : (
-									<>
-										<div className="mt-4 flex rounded-3xl bg-gray-5 px-6 py-2 md:mt-0">
-											<div className="flex items-center">
-												<Image src={'/icons/lock.png'} width={24} height={24} alt="time icon" />
-											</div>
-											<div className="my-auto ml-4 text-sm text-gray-70">
-												회원에게만 공개된 정보입니다.
-											</div>
-										</div>
-										<Link
-											href="/login"
-											className="ml:0 mt-4 rounded-md border-2 border-main-base px-6 py-3 font-semibold text-main-base sm:ml-6 sm:mt-0"
-										>
-											3초만에 가입하기!
-										</Link>
-									</>
-								)}
+								<LanguageSection support_languages={data.support_languages} />
 							</div>
 						</div>
 					</div>
