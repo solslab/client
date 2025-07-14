@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, startTransition, useActionState, useState } from 'react';
+import { startTransition, useActionState, useState } from 'react';
 import { FeedBackState } from '@/app/lib/types/actions/review';
 import { createFeedBack } from '@/app/lib/server/mutations/review/feedback';
 import clsx from 'clsx';
@@ -15,9 +15,11 @@ const STARS = [
 ];
 
 export default function FeedBackModal({
+	fadeOut,
 	setVisible
 }: {
-	setVisible: Dispatch<SetStateAction<boolean>>;
+	fadeOut: boolean;
+	setVisible: () => void;
 }) {
 	const [rating, setRating] = useState(0);
 	const [active, setActive] = useState(0);
@@ -40,17 +42,17 @@ export default function FeedBackModal({
 	};
 
 	return (
-		<div className="z-50">
+		<div className={`z-50 transition-all duration-200 ease-in-out ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
 			<div
 				className={clsx(`max-w-512 rounded-xl text-text-base shadow-lg`, {
-					'relative border border-gray-50 bg-white text-text-base': state.fullfiled?.value == false,
+					'relative border border-gray-30 bg-white text-text-base': state.fullfiled?.value == false,
 					'fixed right-0 top-20 bg-green-success text-white':
 						state.fullfiled?.value == true && state.fullfiled?.status == true,
 					'fixed right-0 top-20 bg-red-warning text-white':
 						state.fullfiled?.value == true && state.fullfiled?.status == false
 				})}
 			>
-				<button onClick={() => setVisible(false)} className="absolute right-4 top-4">
+				<button onClick={setVisible} className="absolute right-4 top-4">
 					<Image
 						src={state.fullfiled?.value == false ? '/icons/ex.png' : '/icons/ex_white.png'}
 						width={14}
@@ -62,8 +64,8 @@ export default function FeedBackModal({
 				{!state.fullfiled?.value == true ? (
 					<div className="px-16 pb-2 pt-10">
 						<form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-							<div className="pb-4 text-xl font-semibold">Send Feedback!</div>
-							<div className="text-base">
+							<div className="pb-4 text-xl font-bold">Send Feedback!</div>
+							<div className="text-sm">
 								더 나은 서비스 제공을 위해 평가를 남겨주세요!
 							</div>
 							<div className="pb-2 pt-10">
@@ -80,8 +82,8 @@ export default function FeedBackModal({
 											}}
 											src={active >= star.value ? '/yellowStar.png' : '/grayStar.png'}
 											alt="star"
-											width={56}
-											height={56}
+											width={52}
+											height={52}
 										/>
 									))}
 								</div>
