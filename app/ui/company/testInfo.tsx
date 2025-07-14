@@ -57,7 +57,7 @@ export default function TestInfo({
 										</div>
 										<Link
 											href="/login"
-											className="ml:0 mt-4 rounded-md border-2 border-main-base px-6 py-3 font-semibold text-main-base sm:ml-6 sm:mt-0"
+											className="ml:0 mt-4 rounded-md border-2 border-main-base px-6 py-3 font-semibold text-main-base sm:ml-6 sm:mt-0 hover:bg-main-base hover:text-white transition-all ease-in"
 										>
 											3초만에 가입하기!
 										</Link>
