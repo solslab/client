@@ -5,22 +5,24 @@ import { getToken, updateToken } from '@/app/lib/utils/cookie';
 import { SPRING_URL } from '@/app/lib/utils/constants';
 import { TestReviewFormSchema } from '../../schemas/review';
 import { TestReviewState } from '@/app/lib/types/actions/review';
+import { z } from 'zod';
+type TrFormData = z.infer<typeof TestReviewFormSchema>;
 
-export async function createTestReview(prevState: TestReviewState, formData: FormData) {
+export async function createTestReview(prevState: TestReviewState, formData: TrFormData) {
 	let flag = false;
 
 	const validatedFields = TestReviewFormSchema.safeParse({
-		company_id: formData.get('company_id'),
-		company_name: formData.get('company_name'),
-		tr_year: formData.get('tr_year'),
-		tr_position: formData.get('tr_position'),
-		tr_career: formData.get('tr_career'),
-		tr_problem_num: formData.get('tr_problem_num'),
-		tr_solved_num: formData.get('tr_solved_num'),
-		tr_pass_status: formData.get('tr_pass_status'),
-		tr_problem_type: formData.get('tr_problem_type'),
-		difficulty: formData.get('difficulty'),
-		tr_comment: formData.get('tr_comment')
+		company_id: formData.company_id,
+		company_name: formData.company_name,
+		tr_year: formData.tr_year,
+		tr_position: formData.tr_position,
+		tr_career: formData.tr_career,
+		tr_problem_num: formData.tr_problem_num,
+		tr_solved_num: formData.tr_solved_num,
+		tr_pass_status: formData.tr_pass_status,
+		tr_problem_type: formData.tr_problem_type,
+		difficulty: formData.difficulty,
+		tr_comment: formData.tr_comment
 	});
 
 	if (!validatedFields.success) {
@@ -70,9 +72,4 @@ export async function createTestReview(prevState: TestReviewState, formData: For
 			};
 		}
 	}
-	// finally {
-	//     if (flag) {
-	//         await redirectToPrev();
-	//     }
-	// }
 }

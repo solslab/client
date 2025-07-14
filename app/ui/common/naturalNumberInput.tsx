@@ -9,7 +9,9 @@ export default function NaturalNumberInput({
 	placeHolder,
 	id,
 	name,
-    callBack
+	callBack,
+	value: propValue,
+	onChange: propOnChange
 }: {
 	defaultValue?: string;
 	required?: boolean;
@@ -17,30 +19,33 @@ export default function NaturalNumberInput({
 	placeHolder?: string;
 	id?: string;
 	name?: string;
-    callBack?:Dispatch<SetStateAction<number>>;
+	callBack?: (value: number) => void;
+	value?: string;
+	onChange?: (value: string) => void;
 }) {
-	const [value, setValue] = useState(defaultValue);
-
-	const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
 		// 빈 문자열이거나 자연수만 허용
 		if (inputValue === '' || /^[1-9]\d*$/.test(inputValue)) {
-			setValue(inputValue);
-            callBack&& callBack(parseInt(inputValue))
+			if (propOnChange) {
+				propOnChange(inputValue);
+			}
+			if (callBack && inputValue) {
+				callBack(parseInt(inputValue));
+			}
 		}
-
 	};
+
 	return (
 		<div className="w-full max-w-80">
 			<Input
-				id={id && id}
-				name={name && name}
+				id={id}
+				name={name}
 				type={type}
-				defaultValue={defaultValue}
-				value={value}
+				value={propValue}
 				onChange={handleChange}
 				required={required}
-				placeholder={placeHolder && placeHolder}
+				placeholder={placeHolder}
 			/>
 		</div>
 	);

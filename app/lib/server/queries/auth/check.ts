@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { getToken } from '@/app/lib/utils/cookie';
+import { getToken, updateToken } from '@/app/lib/utils/cookie';
 import { SPRING_URL } from '@/app/lib/utils/constants';
 
 export async function infoCheck(tokenParam?: string) {
@@ -26,6 +26,10 @@ export async function infoCheck(tokenParam?: string) {
 		});
 		if (!response.ok) {
 			throw new Error(`${response.status}`);
+		}
+		const newToken = response.headers.get('Authorization');
+		if (newToken) {
+			updateToken(newToken);
 		}
 		const data = await response.json();
 		if (data.status == 'complete') {
