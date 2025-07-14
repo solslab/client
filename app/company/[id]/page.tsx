@@ -65,7 +65,7 @@ export default async function Page({
 
 	return (
 		<>
-			<div className="relative h-32 w-full bg-gradient-to-b from-[#F8F9FB] to-[#ECEEF6] bg-cover bg-center md:h-64 lg:h-64"></div>
+			<div className="relative h-32 w-full bg-gradient-to-b to-[#F8F9FB] from-[#ECEEF6] bg-cover bg-center md:h-64 lg:h-64"></div>
 			<div className="relative flex flex-col items-center justify-center border-b border-gray-30 bg-bg-base py-10 md:py-16">
 				<Container>
 					<div
