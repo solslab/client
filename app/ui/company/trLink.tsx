@@ -6,7 +6,7 @@ export default function TrLink({ onClick }: { company_id?: string,onClick:()=>Pr
 
 	return (
 		<>
-			<Button onClick={onClick} type="button" variant="main" className="px-10 py-5">
+			<Button onClick={onClick} type="button" variant="main" className="px-10 py-5 text-base">
 				코딩테스트 후기 작성하기
 			</Button>
 		</>
