@@ -184,7 +184,7 @@ const config: Config = {
 		function ({ addUtilities }: { addUtilities: (utilities: Record<string, any>) => void }) {
 			const newUtilities = {
 				'.hover-effect': {
-					'@apply transition-all duration-300 ease-in-out hover:scale-[1.02] hover:border-main-base hover:bg-main-light hover:shadow-lg':
+					'@apply transition-all duration-200 ease-in-out hover:border-main-base hover:bg-main-light hover:shadow-lg':
 						{}
 				}
 			};
