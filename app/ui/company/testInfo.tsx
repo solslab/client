@@ -21,7 +21,7 @@ export default function TestInfo({
 			<div className="w-full rounded-md text-gray-90">
 				<div className="flex flex-col items-center justify-between border-b border-gray-30 py-7">
 					<div className="w-full px-6">
-						<div className="mb-4 flex w-full flex-row flex-wrap">
+						<div className="mb-8 flex w-full flex-row flex-wrap">
 							<div className="my-auto w-full text-base md:w-1/4">시기/직무구분</div>
 							<div className="relative mt-4 flex w-full md:mt-0 md:w-3/4">
 								<PositionSelectBox
@@ -39,7 +39,7 @@ export default function TestInfo({
 							</div>
 						</div>
 						<div className="flex w-full flex-row flex-wrap">
-							<div className="my-auto mb-4 w-full text-base sm:mb-0 md:w-1/4">지원 언어</div>
+							<div className="mb-4 w-full text-base sm:mb-0 md:w-1/4">지원 언어</div>
 							<div className="flex w-full flex-wrap md:w-3/4">
 								{data.support_languages.length > 0 ? (
 									data.support_languages.map((language) => (

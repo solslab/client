@@ -1,5 +1,5 @@
 "use client";
-import clsx from "clsx";
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 
 export default function BaseSubmitButton({
   text,
@@ -12,16 +12,8 @@ export default function BaseSubmitButton({
   const isActive = active ?? true;
 
   return (
-    <button
-      type="submit"
-      className={clsx(
-        `w-full py-3 rounded-xl  text-text-base cursor-default bg-gray-10  text-xl font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`,
-        {
-          "bg-main-base text-white cursor-pointer": isActive,
-        }
-      )}
-    >
+    <Button type="submit" disabled={!isActive} className="w-full bg-main-base hover:bg-main-base/90 text-sm md:text-base">
       {btnText}
-    </button>
+    </Button>
   );
 }

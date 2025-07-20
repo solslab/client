@@ -31,7 +31,7 @@ export default async function Page({
 					<div className="px-5 py-16">
 						<div className="flex">
 							<div
-								className="h-16 w-16 rounded-md border-gray-10 bg-cover bg-center bg-no-repeat"
+								className="h-12 w-12 rounded-md border border-gray-30 bg-cover bg-center bg-no-repeat mr-2"
 								style={{ backgroundImage: ` url(${companyData.company_logo})` }}
 							/>
 							<div className="ml-2 flex flex-row items-center">

@@ -22,7 +22,7 @@ export default async function InfoItem({
 					</div>
 					<div className="my-auto ml-2 text-sm md:text-base">{label}</div>
 				</div>
-				<div className="my-auto text-base font-medium md:text-lg">{data}</div>
+				<div className="my-auto text-sm font-medium md:text-base">{data}</div>
 			</div>
 		</div>
 	);

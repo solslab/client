@@ -23,7 +23,7 @@ export default function SuggestionForm({ position_id }: { position_id: string })
 					<textarea
 						id="suggestion_content"
 						name="suggestion_content"
-						className="mt-4 h-80 w-full resize-none rounded-lg border border-gray-50 p-3 focus:outline-none"
+						className="mt-4 h-80 w-full resize-none rounded-lg border border-gray-30 p-3 focus:outline-none"
 						placeholder="내용을 작성해주세요."
 						maxLength={200}
 					/>

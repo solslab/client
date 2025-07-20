@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { Position, TestData } from '@/app/lib/types/models/company';
 import { Company } from '@/app/lib/types/models/company';
 import { fetchCompanyDetail, fetchPositionData } from '@/app/lib/server/queries/company';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const company_id = params.id;
@@ -110,12 +111,14 @@ export default async function Page({
 										<div className="sm:text-70 my-auto text-center text-sm text-gray-90 md:mb-2 md:text-gray-70">
 											잘못된 정보가 있나요?
 										</div>
-										<Link
-											href={`/company/${company_id}/suggestion?position=${position_id}`}
-											className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base"
+										<Button
+											asChild
+											className="w-36 rounded-md bg-main-light px-6 py-3 text-center text-main-base hover:bg-main-base/15"
 										>
-											정보 수정 요청
-										</Link>
+											<Link href={`/company/${company_id}/suggestion?position=${position_id}`}>
+												정보 수정 요청
+											</Link>
+										</Button>
 									</div>
 								</div>
 							</div>
