@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { DataItem } from '@/app/lib/types/models';
 import { EmptyState, UnauthorizedState, AuthorizedState } from '@/app/ui/company/datalab/components';
+import CenterLoginOverlay from '@/app/ui/company/datalab/components/CenterLoginOverlay';
 
 type DataLabSectionProps = {
 	dataLabDetails: {
@@ -124,16 +125,17 @@ export default function DataLabSection({ dataLabDetails, company_id }: DataLabSe
 	const problemStats = useMemo(() => calculateProblemStats(filteredData), [filteredData]);
 
 	return (
-		<div className="mx-auto w-full max-w-5xl rounded-md bg-white p-10">
+		<div className="relative mx-auto w-full max-w-5xl rounded-md bg-white p-10">
 			{dataLabDetails.success === 404 ? (
 				<EmptyState company_id={company_id} />
 			) : dataLabDetails.success === 403 ? (
-				<UnauthorizedState
-					company_id={company_id}
-					filteredData={filteredData}
-					tierStats={tierStats}
-					problemStats={problemStats}
-				/>
+				<>
+					<UnauthorizedState
+						tierStats={tierStats}
+						company_id={company_id}
+					/>
+					<CenterLoginOverlay company_id={company_id} />
+				</>
 			) : (
 				<AuthorizedState
 					company_id={company_id}
