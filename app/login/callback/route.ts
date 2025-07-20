@@ -31,9 +31,12 @@ export async function GET(request: NextRequest) {
 
 		// 이전 경로로 리다이렉트
 		const prevPath = cookies().get('sols-lastPath');
-		const redirectUrl = prevPath ? prevPath.value : '/';
 		
-		return NextResponse.redirect(new URL(redirectUrl, request.url));
+		if (prevPath?.value) {
+			redirect(prevPath.value);
+		} else {
+			redirect('/');
+		}
 	} catch (error) {
 		console.error('카카오 로그인 에러:', error);
 		return NextResponse.redirect(new URL('/login?error=unknown&message=알 수 없는 오류가 발생했습니다.', request.url));
