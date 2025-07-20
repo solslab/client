@@ -1,24 +1,33 @@
+import { Dialog, DialogContent, DialogDescription } from '@/app/ui/shadcn/components/ui/dialog';
+import { Button } from '@/app/ui/shadcn/components/ui/button';
 
 export default function BasicAlert({
   children,
   onClick,
-  type='button'
+  type = 'button',
+  open = true,
+  onOpenChange,
 }: {
   children: React.ReactNode;
   onClick: () => void;
-  type?:'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   return (
-    <div className='fixed inset-0 w-screen h-screen flex justify-center items-center bg-black/50 z-50'>
-        <div className="w-96 px-16 py-8 shadow-customShadow bg-white border border-gray-50 rounded-xl flex flex-col items-center ">
-      <div className="min-h-44 py-12 flex flex-col justify-center items-center">
-        {children}
-      </div>
-      <button type={type} onClick={onClick} className="w-24 h-10 text-white bg-main-base rounded-2xl font-bold">
-        확인
-      </button>
-    </div>
-    </div>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-full max-w-md flex flex-col items-center py-12">
+        <DialogDescription className="text-center min-h-44">
+          {children}
+        </DialogDescription>
+        <Button
+          type={type}
+          onClick={onClick}
+          className="w-24 h-10 bg-main-base text-white rounded-2xl font-bold"
+        >
+          확인
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
 }
