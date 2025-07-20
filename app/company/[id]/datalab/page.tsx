@@ -1,5 +1,5 @@
 import CompanyMenu from '@/app/ui/company/CompanyMenu';
-import DataLabSection from '@/app/ui/company/DataLabSection';
+import DataLabSection from '@/app/ui/company/datalab/DataLabSection';
 import Container from '@/app/ui/common/container';
 import FeedBackBtn from '@/app/ui/common/feedBackBtn';
 import { Metadata } from 'next';
