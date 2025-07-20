@@ -145,7 +145,7 @@ export default function TierModal({ setVisible }: TierModalProps) {
 							<Button type="button" variant="outline" onClick={resetState}>
 								다시 불러오기
 							</Button>
-							<Button type="submit" className="bg-main-base">
+							<Button type="submit" className="bg-main-base hover:bg-main-base/90">
 								제출하고 후기 작성하기
 							</Button>
 						</div>
@@ -199,7 +199,7 @@ const InputStep = ({
 			후기 작성 전 정보 입력이 필요합니다.
 			<br />
 			<br />
-			회원님의 <span className="font-semibold">solved.ac 티어</span>를 입력주세요!
+			회원님의 <span className="font-semibold">solved.ac 티어</span>를 입력해주세요!
 		</DialogDescription>
 		<div className="flex justify-center space-x-2">
 			<Input
@@ -208,7 +208,7 @@ const InputStep = ({
 				value={solvedId}
 				onChange={(e) => setSolvedId(e.target.value)}
 			/>
-			<Button onClick={onCheck} className="whitespace-nowrap bg-text-base text-[13px]">
+			<Button onClick={onCheck} className="whitespace-nowrap bg-main-base text-[13px] hover:bg-main-base/90">
 				티어 불러오기
 			</Button>
 		</div>
