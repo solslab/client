@@ -137,15 +137,18 @@ export default function ProfileDropdown({
 									</Link>
 								))}
 							</div>
-							<div className="py-1" role="none">
+							<div
+								className="py-1 cursor-pointer"
+								role="none"
+								onClick={() => {
+									handleProfileClicked();
+									logout();
+								}}
+							>
 								<button
 									className="block px-4 py-2 text-sm text-text-base"
 									role="menuitem"
 									tabIndex={-1}
-									onClick={() => {
-										handleProfileClicked();
-										logout();
-									}}
 								>
 									로그아웃
 								</button>
