@@ -14,24 +14,21 @@ export async function GET(request: NextRequest) {
 
 		if (error) {
 			console.error('OAuth error:', error);
-			return NextResponse.redirect(new URL('/', request.url));
+			return NextResponse.redirect(new URL('/login?error=oauth&message=소셜 로그인에 실패했습니다.', request.url));
 		}
 
 		if (!code) {
 			console.error('No authorization code received');
-			return NextResponse.redirect(new URL('/', request.url));
+			return NextResponse.redirect(new URL('/login?error=no_code&message=인증 코드를 받지 못했습니다.', request.url));
 		}
 
 		// 백엔드 API 호출
-		const backendUrl = SPRING_URL || 'http://localhost:8080';
 		const requestBody = {
 			code,
-			redirectUri: `${NEXT_URL || 'http://localhost:3000'}/api/login/callback`
+			redirectUri: `${NEXT_URL}/login/callback`
 		};
 
-		console.log('Backend request:', requestBody);
-
-		const response = await fetch(`${backendUrl}/auth/kakao`, {
+		const response = await fetch(`${SPRING_URL}/auth/kakao`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -40,11 +37,10 @@ export async function GET(request: NextRequest) {
 		});
 
 		const data = await response.json();
-		console.log('Backend response data:', data, data.access_token);
 
 		if (!response.ok) {
 			console.error('Backend login failed:', data);
-			return NextResponse.redirect(new URL('/', request.url));
+			return NextResponse.redirect(new URL('/login?error=backend&message=서버 오류가 발생했습니다.', request.url));
 		}
 
 		// 성공 시 쿠키 설정
@@ -63,6 +59,6 @@ export async function GET(request: NextRequest) {
 		return NextResponse.redirect(new URL(redirectUrl, request.url));
 	} catch (error) {
 		console.error('카카오 로그인 에러:', error);
-		return NextResponse.redirect(new URL('/', request.url));
+		return NextResponse.redirect(new URL('/login?error=unknown&message=알 수 없는 오류가 발생했습니다.', request.url));
 	}
 }
