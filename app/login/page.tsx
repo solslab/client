@@ -24,7 +24,7 @@ export default function Page() {
 				</div>
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<div className="flex items-center justify-center">
-						<Link href="https://solslab.site/api/oauth2/authorization/kakao" className=" ">
+						<Link href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_NEXT_URL || 'http://localhost:3000'}/api/login/callback&response_type=code`} className=" ">
 							<div className="flex rounded-md bg-kakao px-6 py-2 text-sm font-semibold text-black shadow-sm">
 								<div className="flex">
 									<svg viewBox="0 0 21 20" width="21" height="20" fill="none">

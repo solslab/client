@@ -2,7 +2,8 @@
 
 import { redirect } from 'next/navigation';
 import { deleteToken, getAdminToken, getToken, updateToken } from '@/app/lib/utils/cookie';
-import { SPRING_URL } from '@/app/lib/utils/constants';
+import { SPRING_URL, NEXT_URL } from '@/app/lib/utils/constants';
+import { NextResponse } from 'next/server';
 import { DeletionState } from '@/app/lib/types/actions/auth';
 
 export async function logOut(path: string) {
@@ -72,8 +73,10 @@ export async function deleteMember(prevState: DeletionState, formData: FormData)
 		console.error('deleteMember중 오류발생', error);
 		return {
 			submitted: true,
-			message: '탈퇴가 정상적으로 완료되지않았습니다.',
+			message: '탈퇴가 정상적으로 완료되지 않았습니다.',
 			fullfiled: false
 		};
 	}
 }
+
+
