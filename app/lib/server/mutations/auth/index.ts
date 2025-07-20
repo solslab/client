@@ -5,6 +5,8 @@ import { deleteToken, getAdminToken, getToken, updateToken } from '@/app/lib/uti
 import { SPRING_URL, NEXT_URL } from '@/app/lib/utils/constants';
 import { NextResponse } from 'next/server';
 import { DeletionState } from '@/app/lib/types/actions/auth';
+import { cookies } from 'next/headers';
+import { getDateOneMonthLater } from '@/app/lib/utils/helpers';
 
 export async function logOut(path: string) {
 	try {
@@ -76,6 +78,39 @@ export async function deleteMember(prevState: DeletionState, formData: FormData)
 			message: '탈퇴가 정상적으로 완료되지 않았습니다.',
 			fullfiled: false
 		};
+	}
+}
+
+export async function handleKakaoLogin(code: string, redirectUri: string) {
+	try {
+		const response = await fetch(`${SPRING_URL}/auth/kakao`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ code, redirectUri })
+		});
+
+		const data = await response.json();
+
+		if (!response.ok) {
+			console.error('Backend login failed:', data);
+			return { success: false, error: 'backend', message: '서버 오류가 발생했습니다.' };
+		}
+
+		// 성공 시 쿠키 설정
+		if (data.access_token) {
+			cookies().set('sols-accessToken', data.access_token, {
+				httpOnly: true,
+				secure: true,
+				expires: getDateOneMonthLater()
+			});
+		}
+
+		return { success: true, data };
+	} catch (error) {
+		console.error('카카오 로그인 에러:', error);
+		return { success: false, error: 'unknown', message: '알 수 없는 오류가 발생했습니다.' };
 	}
 }
 
