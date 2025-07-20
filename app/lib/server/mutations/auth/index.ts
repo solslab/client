@@ -107,7 +107,11 @@ export async function handleKakaoLogin(code: string, redirectUri: string) {
 			});
 		}
 
-		return { success: true, data };
+		// 성공 시 리다이렉트 경로 반환
+		const prevPath = cookies().get('sols-lastPath');
+		const redirectPath = prevPath?.value || '/';
+		
+		return { success: true, data, redirectPath };
 	} catch (error) {
 		console.error('카카오 로그인 에러:', error);
 		return { success: false, error: 'unknown', message: '알 수 없는 오류가 발생했습니다.' };

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { NEXT_URL } from '@/app/lib/utils/constants';
 import { handleKakaoLogin } from '@/app/lib/server/mutations/auth';
 
@@ -31,12 +30,9 @@ export async function GET(request: NextRequest) {
 
 		// 이전 경로로 리다이렉트
 		const prevPath = cookies().get('sols-lastPath');
+		const redirectPath = prevPath?.value || '/';
 		
-		if (prevPath?.value) {
-			redirect(prevPath.value);
-		} else {
-			redirect('/');
-		}
+		return NextResponse.redirect(new URL(redirectPath, request.url));
 	} catch (error) {
 		console.error('카카오 로그인 에러:', error);
 		return NextResponse.redirect(new URL('/login?error=unknown&message=알 수 없는 오류가 발생했습니다.', request.url));
