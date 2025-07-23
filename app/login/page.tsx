@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 	title: '로그인 | 몇솔'
 };
 
-export default function Page({ searchParams }: { searchParams: { error?: string; message?: string } }) {
+export default function Page({
+	searchParams
+}: {
+	searchParams: { error?: string; message?: string };
+}) {
 	return (
 		<div className="relative flex min-h-[calc(100vh-152px-64px)] flex-col items-center justify-center">
 			<Float />
@@ -26,7 +30,7 @@ export default function Page({ searchParams }: { searchParams: { error?: string;
 					<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 						<div className="flex items-center justify-center">
 							<Link
-								href={`https://kauth.kakao.com/oauth/authorize?client_id=${NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${NEXT_URL}/login/callback&response_type=code`}
+								href={`https://kauth.kakao.com/oauth/authorize?client_id=${NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${NEXT_URL}/api/auth/kakao/callback&response_type=code`}
 								className=" "
 							>
 								<div className="flex rounded-md bg-kakao px-6 py-2 text-sm font-semibold text-black shadow-sm">
