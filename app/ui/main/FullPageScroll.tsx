@@ -84,13 +84,13 @@ const FullPageScroll: React.FC<FullPageScrollProps> = ({ children, isSearching }
 					display: none;
 				}
 			`}</style>
-			<div ref={containerRef} className="h-screen overflow-hidden touch-none">
+			<div ref={containerRef} className="h-full touch-none overflow-hidden">
 				{React.Children.map(children, (child, index) => (
 					<div
 						ref={(el) => {
 							if (el) sectionRefs.current[index] = el;
 						}}
-						className="h-screen w-full snap-start"
+						className="h-full w-full snap-start"
 					>
 						{child}
 					</div>

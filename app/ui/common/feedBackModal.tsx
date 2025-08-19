@@ -63,14 +63,12 @@ export default function FeedBackModal({
 					<div className="px-16 pb-2 pt-10">
 						<form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
 							<div className="pb-4 text-xl font-semibold">Send Feedback!</div>
-							<div className="text-base">
-								더 나은 서비스 제공을 위해 평가를 남겨주세요!
-							</div>
+							<div className="text-base">더 나은 서비스 제공을 위해 평가를 남겨주세요!</div>
 							<div className="pb-2 pt-10">
 								<div className="flex">
 									{STARS.map((star, index) => (
 										<Image
-											className="px-2 cursor-pointer"
+											className="cursor-pointer px-2"
 											key={star.value}
 											onMouseEnter={() => setActive(star.value)}
 											onMouseLeave={() => setActive(rating)}
@@ -101,11 +99,7 @@ export default function FeedBackModal({
 									name="feedback_content"
 									placeholder="평가 내용 입력(선택)"
 								/>
-								<Button
-									type="submit"
-									variant="main"
-									className="ml-2 h-9 w-24 bg-main-base"
-								>
+								<Button type="submit" variant="main" className="ml-2 h-9 w-24 bg-main-base">
 									제출
 								</Button>
 							</div>

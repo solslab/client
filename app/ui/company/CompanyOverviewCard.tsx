@@ -24,7 +24,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 				<h2>{companyData.company_name}</h2>
 			</div>
 			<div className="flex flex-row gap-2">
-				{companyData.industry_type.length>0 ? (
+				{companyData.industry_type.length > 0 ? (
 					companyData.industry_type.map((industry) => (
 						<div
 							className="rounded-xl border-[1px] border-gray-50 bg-white px-3 py-1 text-xs text-text-base"
@@ -34,7 +34,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 						</div>
 					))
 				) : (
-					<div style={{ height: 26, }}></div>
+					<div style={{ height: 26 }}></div>
 				)}
 			</div>
 		</Link>

@@ -1,14 +1,17 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './ui/global.css';
-import Topnav from './ui/navigation/topNav';
-import LastPathSetter from './ui/common/lastPathSetter';
-import PrelineScript from './ui/common/PrelineScript';
+
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
-import Script from 'next/script';
-import Footer from './ui/common/Footer';
-import { headers } from 'next/headers';
+
 import AdminPageLayout from '@/app/admin/components/admin-page-layout';
+import Footer from './ui/common/Footer';
+import LastPathSetter from './ui/common/lastPathSetter';
+import type { Metadata } from 'next';
+import PrelineScript from './ui/common/PrelineScript';
+import Script from 'next/script';
+import ScrollbarHandler from './ui/common/ScrollbarHandler';
+import Topnav from './ui/navigation/topNav';
+import { headers } from 'next/headers';
+import localFont from 'next/font/local';
 
 const pretendard = localFont({
 	src: '../public/fonts/PretendardVariable.woff2',
@@ -35,6 +38,7 @@ export default function RootLayout({
 			/>
 			<GoogleTagManager gtmId="GTM-57ML2L7S" />
 			<body className={`${pretendard.className}`}>
+				<ScrollbarHandler />
 				<LastPathSetter />
 				<Topnav />
 				<AdminPageLayout></AdminPageLayout>

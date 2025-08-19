@@ -1,9 +1,8 @@
 'use client';
 
-
 import ProfileDropdown from './profileDropdown';
 import { useState, useEffect, useCallback } from 'react';
-import { usePathname,} from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import NavSearchBox from './navSearchBox';
 import MobileNavSearchBox from './mobileNavSearchBox';
 
@@ -14,7 +13,6 @@ export default function NavBtn() {
 	const [userName, setUserName] = useState('');
 	const [visible, setVisible] = useState(true);
 	const [innerWidth, setInnerWidth] = useState(0);
-
 
 	const containsException = useCallback((path: string) => {
 		return exception.some((exceptionStr) => path.includes(exceptionStr));
@@ -46,13 +44,7 @@ export default function NavBtn() {
 				<MobileNavSearchBox visible={innerWidth < 640} />
 				<NavSearchBox visible={innerWidth > 640} />
 				<div className="relative ml-3">
-					{
-						visible?
-						<ProfileDropdown userName={userName} visible={innerWidth > 640} />
-						:
-						<></>
-					}
-
+					{visible ? <ProfileDropdown userName={userName} visible={innerWidth > 640} /> : <></>}
 				</div>
 			</div>
 		</>

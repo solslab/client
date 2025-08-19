@@ -1,9 +1,7 @@
 'use client';
-import { Button } from "../shadcn/components/ui/button";
+import { Button } from '../shadcn/components/ui/button';
 
-export default function TrLink({ onClick }: { company_id?: string,onClick:()=>Promise<void> }) {
-
-
+export default function TrLink({ onClick }: { company_id?: string; onClick: () => Promise<void> }) {
 	return (
 		<>
 			<Button onClick={onClick} type="button" variant="main" className="px-10 py-5">

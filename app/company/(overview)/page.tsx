@@ -1,11 +1,11 @@
-import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import { BsThreeDots } from 'react-icons/bs';
-import { PaginationButtons } from '@/app/ui/paging/Pagination';
-import { Metadata } from 'next';
-import ScrollToTop from '@/app/ui/common/ScrollToTop';
+import { CompanyOverviewCard } from '@/app/ui/company/CompanyOverviewCard';
 import Container from '@/app/ui/common/container';
-import { fetchCompanyData } from '../../lib/server/queries/company';
 import FeedBackBtn from '@/app/ui/common/feedBackBtn';
+import { Metadata } from 'next';
+import { PaginationButtons } from '@/app/ui/paging/Pagination';
+import ScrollToTop from '@/app/ui/common/ScrollToTop';
+import { fetchCompanyData } from '../../lib/server/queries/company';
 
 const PAGE_SIZE = 10;
 
