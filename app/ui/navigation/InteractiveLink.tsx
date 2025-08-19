@@ -14,7 +14,7 @@ export default function InteractiveLink({
 	return (
 		<Link
 			href={href}
-			className={`rounded-md px-3 py-2 text-base ${isActive ? 'text-main-base font-medium' : 'text-black hover:text-main-base'}`}
+			className={`rounded-md px-3 py-2 text-base ${isActive ? 'font-medium text-main-base' : 'text-black hover:text-main-base'}`}
 		>
 			{children}
 		</Link>

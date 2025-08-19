@@ -1,30 +1,31 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
 }
 
 #__next {
-  height: 100%;
+	height: 100%;
 }
 
 .full-height-container {
-  height: 100%;
+	height: 100%;
 }
 
 .full-page-container {
-  height: 100%;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
+	height: 100%;
+	overflow-y: auto;
+	scroll-snap-type: y mandatory;
 }
 
 .full-page-section {
-  height: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+	height: 100%;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }

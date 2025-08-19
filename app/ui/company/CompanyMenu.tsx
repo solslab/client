@@ -25,7 +25,7 @@ export default function CompanyMenu({ company_id, currentPage }: CompanyMenuProp
 				<Link
 					key={item.label}
 					href={item.href}
-					className={`flex items-center justify-center w-40 ${
+					className={`flex w-40 items-center justify-center ${
 						item.isActive ? 'border-b-2 border-main-base font-bold text-main-base' : 'text-gray-500'
 					}`}
 				>
