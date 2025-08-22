@@ -1,7 +1,13 @@
 'use client';
 import Link from 'next/link';
 
-export default function SuggestionBtn({company_id,position_id}:{company_id:string,position_id:string}) {
+export default function SuggestionBtn({
+	company_id,
+	position_id
+}: {
+	company_id: string;
+	position_id: string;
+}) {
 	return (
 		<Link
 			href={`/company/${company_id}/suggestion?position=${position_id}`}

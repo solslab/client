@@ -1,19 +1,19 @@
 'use client';
 
-import FullPageScroll from './FullPageScroll';
-import Container from '../common/container';
-import Float from '../interaction/float';
 import ClientSearchBox from '../common/clientSearchBox';
-import Script from 'next/script';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
+import Container from '../common/container';
 import FadeIn from '@/app/ui/motion/FadeIn';
-import IndexTrLink from './IndexTrLink';
-import { useState } from 'react';
-import clsx from 'clsx';
-import TierGuard from '../common/tierGuard';
 import FeedBackBtn from '../common/feedBackBtn';
+import Float from '../interaction/float';
+import FullPageScroll from './FullPageScroll';
+import Image from 'next/image';
+import IndexTrLink from './IndexTrLink';
+import Link from 'next/link';
+import Script from 'next/script';
+import TierGuard from '../common/tierGuard';
+import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -35,7 +35,7 @@ export default function Home() {
 	const [isMouseIconActive, setIsMouseIconActive] = useState(true);
 
 	return (
-		<div className="h-screen">
+		<div className="h-[calc(100vh-4rem)]">
 			<Script
 				id="jsonLd"
 				type="application/ld+json"
@@ -100,7 +100,7 @@ export default function Home() {
 								응시 환경부터 합격자 후기까지 한눈에 볼 수 있어요
 							</span>
 						</article>
-						<div className="flex md:max-w-3xl flex-col items-center justify-center gap-8 py-8 max-w-[400px]">
+						<div className="flex max-w-[400px] flex-col items-center justify-center gap-8 py-8 md:max-w-3xl">
 							<LogoCarousel />
 							<Link
 								className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-md"

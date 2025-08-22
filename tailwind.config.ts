@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
 	darkMode: ['class'],
@@ -180,7 +180,8 @@ const config: Config = {
 	},
 	plugins: [
 		require('preline/plugin'),
-		require('tailwind-scrollbar-hide'),
+		// tailwind-scrollbar-hide 플러그인 제거 또는 주석 처리
+		// require('tailwind-scrollbar-hide'),
 		function ({ addUtilities }: { addUtilities: (utilities: Record<string, any>) => void }) {
 			const newUtilities = {
 				'.hover-effect': {

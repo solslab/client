@@ -31,7 +31,7 @@ const ComboBox = ({
 					aria-expanded={true}
 					data-hs-combo-box-toggle=""
 				>
-					<button type="button" className="text-gray-60 flex justify-center items-center">
+					<button type="button" className="flex items-center justify-center text-gray-60">
 						<svg
 							className="size-3.5 shrink-0 text-gray-500 dark:text-neutral-500"
 							xmlns="http://www.w3.org/2000/svg"

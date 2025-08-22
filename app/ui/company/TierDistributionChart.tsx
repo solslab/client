@@ -93,15 +93,15 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 	const [isMobile, setIsMobile] = useState(false);
 	useEffect(() => {
 		const handleResize = () => {
-		  setIsMobile(window.innerWidth < 560); // 768px 이하이면 모바일로 간주
+			setIsMobile(window.innerWidth < 560); // 768px 이하이면 모바일로 간주
 		};
-		
+
 		window.addEventListener('resize', handleResize);
 		handleResize(); // 초기 상태 설정
-	
+
 		return () => window.removeEventListener('resize', handleResize); // cleanup
-	  }, []);
-	
+	}, []);
+
 	const chartData = generateData(dataLabDetails);
 	const maxTotal = Math.max(...chartData.map((d) => d.total));
 
@@ -120,35 +120,34 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 
 		return (
 			<g>
-			  {Object.entries(tierBars).map(([tier, bars]) => {
-				const topBar = bars.reduce((prevBar, currBar) =>
-				  currBar.y < prevBar.y ? currBar : prevBar
-				);
-				const tierData = chartData.find((d) => d.tier === tier);
-				const total = tierData?.total ?? 0;
-				if (total === 0) return null; // total이 0이면 렌더링하지 않음
-		  
-				const x = topBar.x + topBar.width / 2;
-				const y = topBar.y - 5;
-				return (
-				  <text
-					key={tier}
-					x={x}
-					y={y}
-					textAnchor="middle"
-					style={{
-					  fill: '#000',
-					  fontSize: 12,
-					  fontWeight: 'bold'
-					}}
-				  >
-					{total}
-				  </text>
-				);
-			  })}
+				{Object.entries(tierBars).map(([tier, bars]) => {
+					const topBar = bars.reduce((prevBar, currBar) =>
+						currBar.y < prevBar.y ? currBar : prevBar
+					);
+					const tierData = chartData.find((d) => d.tier === tier);
+					const total = tierData?.total ?? 0;
+					if (total === 0) return null; // total이 0이면 렌더링하지 않음
+
+					const x = topBar.x + topBar.width / 2;
+					const y = topBar.y - 5;
+					return (
+						<text
+							key={tier}
+							x={x}
+							y={y}
+							textAnchor="middle"
+							style={{
+								fill: '#000',
+								fontSize: 12,
+								fontWeight: 'bold'
+							}}
+						>
+							{total}
+						</text>
+					);
+				})}
 			</g>
-		  );
-		  
+		);
 	};
 
 	return (
@@ -157,7 +156,16 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 				tooltip={({ id, value }) => {
 					const formattedId = String(id).replace(/(\D+)(\d)/, '$1 $2'); // id를 문자열로 변환 후 공백 추가
 					return (
-						<div style={{ fontSize: '13px', fontWeight: "400", background: 'white', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}>
+						<div
+							style={{
+								fontSize: '13px',
+								fontWeight: '400',
+								background: 'white',
+								padding: '5px',
+								borderRadius: '4px',
+								border: '1px solid #ddd'
+							}}
+						>
 							<strong>{formattedId}</strong>: {value}명
 						</div>
 					);
@@ -200,19 +208,19 @@ const TierDistributionChart = ({ data: dataLabDetails }: Props) => {
 				axisLeft={
 					isMobile
 						? {
-							tickSize: 5,
-							tickPadding: 10,
-							tickRotation: 0,
-							tickValues: 3,
-							format: (value: number) => `${value}`,
-						} // 모바일에서 축을 숨김
+								tickSize: 5,
+								tickPadding: 10,
+								tickRotation: 0,
+								tickValues: 3,
+								format: (value: number) => `${value}`
+							} // 모바일에서 축을 숨김
 						: {
 								tickSize: 5,
 								tickPadding: 10,
 								tickRotation: 0,
 								tickValues: 5,
-								format: (value: number) => `${value}`,
-						  }
+								format: (value: number) => `${value}`
+							}
 				}
 				enableGridY={false}
 				enableGridX={false}
