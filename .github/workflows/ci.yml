@@ -8,10 +8,11 @@ on:
     branches: [ main ]
 
 jobs:
-  # 배포 작업 정의
-  deploy:
-    # Self-Hosted 러너에서 실행
+  # 빌드 작업
+  build:
     runs-on: self-hosted
+    outputs:
+      image-tag: ${{ steps.build.outputs.image-tag }}
     
     steps:
     # 1. 코드 체크아웃
@@ -56,16 +57,28 @@ jobs:
         
     # 8. Docker 이미지 빌드
     - name: Build Docker image
+      id: build
       run: |
-        docker build -t sols-client .
+        docker build -t sols-client:${{ github.sha }} .
+        echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
         
-    # 9. 기존 컨테이너 중지 및 제거 (새 배포를 위해)
+    # 9. 빌드 결과 확인
+    - name: Verify build
+      run: docker images | grep sols-client
+
+  # 배포 작업 (빌드 완료 후 실행)
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    
+    steps:
+    # 1. 기존 컨테이너 정리
     - name: Stop and remove existing container
       run: |
         docker stop sols-client || true
         docker rm sols-client || true
         
-    # 10. 새로운 Docker 컨테이너 실행
+    # 2. 새로운 Docker 컨테이너 실행
     - name: Run new container
       run: |
         docker run -d \
@@ -73,9 +86,20 @@ jobs:
           --restart unless-stopped \
           -p 3000:3000 \
           --env-file .env.local \
-          sols-client
-          
-    # 11. 사용하지 않는 Docker 이미지 정리 (디스크 공간 절약)
-    - name: Clean up old images
+          sols-client:${{ needs.build.outputs.image-tag }}
+        
+    # 3. 컨테이너 상태 확인
+    - name: Verify container status
       run: |
-        docker image prune -f
+        sleep 5
+        docker ps | grep sols-client
+        
+    # 4. 헬스체크
+    - name: Health check
+      run: |
+        sleep 10
+        curl -f http://localhost:3000 > /dev/null 2>&1
+        
+    # 5. 정리 작업
+    - name: Clean up old images
+      run: docker image prune -f
