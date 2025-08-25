@@ -1,6 +1,6 @@
 # Self-Hosted 환경 자동 배포 워크플로우
 # main 브랜치에 push가 발생하면 자동으로 실행됩니다
-name: Deploy to Self-Hosted
+name: Simple CI Test
 
 # 워크플로우 실행 조건: main 브랜치에 push될 때
 on:
@@ -8,98 +8,118 @@ on:
     branches: [ main ]
 
 jobs:
-  # 빌드 작업
-  build:
+  # 간단한 테스트 작업
+  test:
     runs-on: [self-hosted, macOS, ARM64]
-    outputs:
-      image-tag: ${{ steps.build.outputs.image-tag }}
     
     steps:
     # 1. 코드 체크아웃
     - name: Checkout code
       uses: actions/checkout@v4
       
-    # 2. Node.js 환경 설정 (버전 20)
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        
-    # 3. pnpm 패키지 매니저 설치
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
-        
-    # 4. pnpm 캐시 디렉토리 경로 가져오기 (캐싱 최적화용)
-    - name: Get pnpm store directory
-      shell: bash
+    # 2. 간단한 테스트
+    - name: Simple test
       run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-        
-    # 5. pnpm 캐시 설정 (빌드 속도 향상을 위해)
-    - name: Setup pnpm cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ env.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-          
-    # 6. 프로젝트 의존성 설치
-    - name: Install dependencies
-      run: pnpm install --frozen-lockfile
-      
-    # 7. 환경변수 파일 생성 (GitHub Secrets의 PROD_CONFIG 사용)
-    - name: Create .env file
-      run: |
-        echo "${{ secrets.PROD_CONFIG }}" > .env.local
-        
-    # 8. Docker 이미지 빌드
-    - name: Build Docker image
-      id: build
-      run: |
-        docker build -t sols-client:${{ github.sha }} .
-        echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
-        
-    # 9. 빌드 결과 확인
-    - name: Verify build
-      run: docker images | grep sols-client
+        echo "Hello from CI test!"
+        echo "Current directory: $(pwd)"
+        echo "Files in directory:"
+        ls -la
+        echo "Test completed successfully!"
 
-  # 배포 작업 (빌드 완료 후 실행)
-  deploy:
-    needs: build
-    runs-on: [self-hosted, macOS, ARM64]
-    
-    steps:
-    # 1. 기존 컨테이너 정리
-    - name: Stop and remove existing container
-      run: |
-        docker stop sols-client || true
-        docker rm sols-client || true
-        
-    # 2. 새로운 Docker 컨테이너 실행
-    - name: Run new container
-      run: |
-        docker run -d \
-          --name sols-client \
-          --restart unless-stopped \
-          -p 3000:3000 \
-          --env-file .env.local \
-          sols-client:${{ needs.build.outputs.image-tag }}
-        
-    # 3. 컨테이너 상태 확인
-    - name: Verify container status
-      run: |
-        sleep 5
-        docker ps | grep sols-client
-        
-    # 4. 헬스체크
-    - name: Health check
-      run: |
-        sleep 10
-        curl -f http://localhost:3000 > /dev/null 2>&1
-        
-    # 5. 정리 작업
-    - name: Clean up old images
-      run: docker image prune -f
+# 기존 워크플로우 주석처리
+# jobs:
+#   # 빌드 작업
+#   build:
+#     runs-on: [self-hosted, macOS, ARM64]
+#     outputs:
+#       image-tag: ${{ steps.build.outputs.image-tag }}
+#     
+#     steps:
+#     # 1. 코드 체크아웃
+#     - name: Checkout code
+#       uses: actions/checkout@v4
+#       
+#     # 2. Node.js 환경 설정 (버전 20)
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: '20'
+#         
+#     # 3. pnpm 패키지 매니저 설치
+#     - name: Install pnpm
+#       uses: pnpm/action-setup@v2
+#       with:
+#         version: latest
+#         
+#     # 4. pnpm 캐시 디렉토리 경로 가져오기 (캐싱 최적화용)
+#     - name: Get pnpm store directory
+#       shell: bash
+#       run: |
+#         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+#         
+#     # 5. pnpm 캐시 설정 (빌드 속도 향상을 위해)
+#     - name: Setup pnpm cache
+#       uses: actions/cache@v3
+#       with:
+#         path: ${{ env.STORE_PATH }}
+#         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+#         restore-keys: |
+#           ${{ runner.os }}-pnpm-store-
+#           
+#     # 6. 프로젝트 의존성 설치
+#     - name: Install dependencies
+#       run: pnpm install --frozen-lockfile
+#       
+#     # 7. 환경변수 파일 생성 (GitHub Secrets의 PROD_CONFIG 사용)
+#     - name: Create .env file
+#       run: |
+#         echo "${{ secrets.PROD_CONFIG }}" > .env.local
+#         
+#     # 8. Docker 이미지 빌드
+#     - name: Build Docker image
+#       id: build
+#       run: |
+#         docker build -t sols-client:${{ github.sha }} .
+#         echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
+#         
+#     # 9. 빌드 결과 확인
+#     - name: Verify build
+#       run: docker images | grep sols-client
+
+#   # 배포 작업 (빌드 완료 후 실행)
+#   deploy:
+#     needs: build
+#     runs-on: [self-hosted, macOS, ARM64]
+#     
+#     steps:
+#     # 1. 기존 컨테이너 정리
+#     - name: Stop and remove existing container
+#       run: |
+#         docker stop sols-client || true
+#         docker rm sols-client || true
+#         
+#     # 2. 새로운 Docker 컨테이너 실행
+#     - name: Run new container
+#       run: |
+#         docker run -d \
+#           --name sols-client \
+#           --restart unless-stopped \
+#           -p 3000:3000 \
+#           --env-file .env.local \
+#           sols-client:${{ needs.build.outputs.image-tag }}
+#         
+#     # 3. 컨테이너 상태 확인
+#     - name: Verify container status
+#       run: |
+#         sleep 5
+#         docker ps | grep sols-client
+#         
+#     # 4. 헬스체크
+#     - name: Health check
+#       run: |
+#         sleep 10
+#         curl -f http://localhost:3000 > /dev/null 2>&1
+#         
+#     # 5. 정리 작업
+#     - name: Clean up old images
+#       run: docker image prune -f
