@@ -10,7 +10,7 @@ on:
 jobs:
   # 빌드 작업
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, macOS, ARM64]
     outputs:
       image-tag: ${{ steps.build.outputs.image-tag }}
     
@@ -69,7 +69,7 @@ jobs:
   # 배포 작업 (빌드 완료 후 실행)
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [self-hosted, macOS, ARM64]
     
     steps:
     # 1. 기존 컨테이너 정리
