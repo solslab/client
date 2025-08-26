@@ -46,8 +46,8 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
-    # 7. 환경변수 파일 생성
-    - name: Create .env file
+    # 7. 환경변수 파일 생성 (배포용)
+    - name: Create production .env file
       run: |
         echo "${{ secrets.PROD_CONFIG }}" > .env.production
 
@@ -58,11 +58,7 @@ jobs:
         docker build -t sols-client:${{ github.sha }} .
         echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
 
-    # 9. (옵션) Docker Hub 푸시
-    - name: Push Docker image
-      run: docker push sols-client:${{ github.sha }}
-
-    # 10. 빌드 결과 확인
+    # 9. 빌드 결과 확인
     - name: Verify build
       run: docker images | grep sols-client
 
@@ -84,7 +80,7 @@ jobs:
           --name sols-client \
           --restart unless-stopped \
           -p 3000:3000 \
-          --env-file .env.local \
+          --env-file .env.production \
           sols-client:${{ needs.build.outputs.image-tag }}
 
     # 3. 컨테이너 상태 확인
@@ -99,6 +95,6 @@ jobs:
         sleep 10
         curl -f http://localhost:3000 > /dev/null 2>&1
 
-    # 5. 정리 작업 (불필요한 이미지 삭제)
+    # 5. 불필요한 이미지 정리
     - name: Clean up old images
       run: docker image prune -f
