@@ -1,4 +1,4 @@
-name: Deploy to Self-Hosted
+name: Deploy to Self-Hosted (ARM 최적화)
 
 on:
   push:
@@ -11,29 +11,30 @@ jobs:
       image-tag: ${{ steps.build.outputs.image-tag }}
 
     steps:
-    # 1. 코드 체크아웃
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # 2. Node.js 환경 설정 (버전 20)
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
 
-    # 3. pnpm 설치
     - name: Install pnpm
       uses: pnpm/action-setup@v2
       with:
         version: latest
 
-    # 4. pnpm 캐시 경로
     - name: Get pnpm store directory
       shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-    # 5. pnpm 캐시 설정
+    # 5. pigz 설치 (멀티코어 압축 지원)
+    - name: Install pigz
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pigz
+
+    # 6. pnpm 캐시 압축 (pigz 사용)
     - name: Setup pnpm cache
       uses: actions/cache@v3
       with:
@@ -41,24 +42,20 @@ jobs:
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
+        compression: "pigz"
 
-    # 6. 프로젝트 의존성 설치
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
-    # 7. 환경변수 파일 생성 (배포용)
     - name: Create production .env file
-      run: |
-        echo "${{ secrets.PROD_CONFIG }}" > .env.production
+      run: echo "${{ secrets.PROD_CONFIG }}" > .env.production
 
-    # 8. Docker 이미지 빌드
     - name: Build Docker image
       id: build
       run: |
         docker build -t sols-client:${{ github.sha }} .
         echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
 
-    # 9. 빌드 결과 확인
     - name: Verify build
       run: docker images | grep sols-client
 
@@ -67,13 +64,11 @@ jobs:
     runs-on: [self-hosted, client]
 
     steps:
-    # 1. 기존 컨테이너 정리
     - name: Stop and remove existing container
       run: |
         docker stop sols-client || true
         docker rm sols-client || true
 
-    # 2. 새로운 Docker 컨테이너 실행
     - name: Run new container
       run: |
         docker run -d \
@@ -83,18 +78,15 @@ jobs:
           --env-file .env.production \
           sols-client:${{ needs.build.outputs.image-tag }}
 
-    # 3. 컨테이너 상태 확인
     - name: Verify container status
       run: |
         sleep 5
         docker ps | grep sols-client
 
-    # 4. 헬스체크
     - name: Health check
       run: |
         sleep 10
         curl -f http://localhost:3000 > /dev/null 2>&1
 
-    # 5. 불필요한 이미지 정리
     - name: Clean up old images
       run: docker image prune -f
