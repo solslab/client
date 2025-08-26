@@ -28,13 +28,7 @@ jobs:
       shell: bash
       run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-    # 5. pigz 설치 (멀티코어 압축 지원)
-    - name: Install pigz
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y pigz
-
-    # 6. pnpm 캐시 압축 (pigz 사용)
+    # 5. pnpm 캐시 압축 (pigz 사용)
     - name: Setup pnpm cache
       uses: actions/cache@v3
       with:
