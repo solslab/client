@@ -51,21 +51,16 @@ jobs:
       run: |
         echo "${{ secrets.PROD_CONFIG }}" > .env.local
 
-    # 8. Docker Hub 로그인 (Keychain-Free)
-    - name: Docker Hub Login
-      env:
-        DOCKER_CONFIG: $HOME/.docker   # 홈 디렉토리 기반 Docker 설정
-      run: |
-        mkdir -p $DOCKER_CONFIG
-        echo '{"credsStore":""}' > $DOCKER_CONFIG/config.json
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    # 9. Docker 이미지 빌드
+    # 8. Docker 이미지 빌드
     - name: Build Docker image
       id: build
       run: |
         docker build -t sols-client:${{ github.sha }} .
         echo "image-tag=${{ github.sha }}" >> $GITHUB_OUTPUT
+
+    # 9. (옵션) Docker Hub 푸시
+    - name: Push Docker image
+      run: docker push sols-client:${{ github.sha }}
 
     # 10. 빌드 결과 확인
     - name: Verify build
