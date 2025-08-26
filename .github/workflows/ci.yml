@@ -55,9 +55,13 @@ jobs:
       run: |
         echo "${{ secrets.PROD_CONFIG }}" > .env.local
         
-    # 8. Docker Hub 로그인
+    # 8. Docker 설정 및 로그인
     - name: Docker Hub Login
       run: |
+        # macOS에서 keychain 사용 비활성화
+        mkdir -p ~/.docker
+        echo '{"credsStore":"","auths":{}}' > ~/.docker/config.json
+        # Docker Hub 로그인
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         
     # 9. Docker 이미지 빌드
