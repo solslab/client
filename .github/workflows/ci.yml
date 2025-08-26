@@ -10,7 +10,7 @@ on:
 jobs:
   # 간단한 테스트 작업
   test:
-    runs-on: [self-hosted, macOS, ARM64]
+    runs-on: [self-hosted, client]
     
     steps:
     # 1. 코드 체크아웃
