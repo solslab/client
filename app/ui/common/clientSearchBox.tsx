@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import { CompanyQuery } from '@/app/lib/types/models';
 import { fetchFilteredCompanys } from '../../lib/server/queries/company';
 import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
-import { getImageUrl } from '@/app/lib/utils/helpers';
 
 interface ClientSearchBoxProps {
 	onSearchStart: () => void;
