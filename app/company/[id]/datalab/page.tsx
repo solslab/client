@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { fetchCompanyDetail } from '@/app/lib/server/queries/company/index';
 import { Company } from '@/app/lib/types/models';
 import { fetchDatalabData } from '@/app/lib/server/queries/datalab';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const company_id = params.id;
@@ -70,7 +71,7 @@ export default async function DataLabPage({ params }: { params: { id: string } }
 						className="absolute top-[-1.375rem] h-16 w-16 rounded-xl border border-gray-30 bg-cover bg-center bg-no-repeat md:top-[-3rem] md:h-24 md:w-24"
 						style={{
 							backgroundImage: companyData.company_logo
-								? `url(${companyData.company_logo})`
+								? `url(${NEXT_PUBLIC_IMAGE_URL}/${companyData.company_logo})`
 								: 'url(/companyLogo/default_company_logo.png)',
 							backgroundColor: '#F0F1F2'
 						}}

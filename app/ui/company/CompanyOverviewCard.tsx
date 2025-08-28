@@ -1,6 +1,7 @@
 import { CompanyOverviewData } from '@/app/lib/types/models/company';
 import Image from 'next/image';
 import Link from 'next/link';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 
 export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverviewData }) {
 	return (
@@ -13,7 +14,7 @@ export function CompanyOverviewCard({ companyData }: { companyData: CompanyOverv
 				<Image
 					src={
 						companyData.company_logo
-							? companyData.company_logo
+							? `${NEXT_PUBLIC_IMAGE_URL}/${companyData.company_logo}`
 							: '/companyLogo/default_company_logo.png'
 					}
 					alt={`${companyData.company_name} 로고 - 몇솔`}

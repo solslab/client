@@ -7,6 +7,8 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { CompanyQuery } from '@/app/lib/types/models';
 import { fetchFilteredCompanys } from '../../lib/server/queries/company';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
+import { getImageUrl } from '@/app/lib/utils/helpers';
 
 interface ClientSearchBoxProps {
 	onSearchStart: () => void;
@@ -110,7 +112,7 @@ export default function ClientSearchBox({
 											className="mr-4 h-12 w-12 rounded-lg border border-gray-20 bg-cover bg-center bg-no-repeat"
 											style={{
 												backgroundImage: el.company_logo
-													? 'url(' + el.company_logo + ')'
+													? `url(${NEXT_PUBLIC_IMAGE_URL}/${el.company_logo})`
 													: 'url(/companyLogo/default_company_logo.png)'
 											}}
 										/>

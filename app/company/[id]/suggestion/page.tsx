@@ -3,6 +3,7 @@ import { Company, Position, TestData } from '@/app/lib/types/models/company';
 import SuggestionForm from '@/app/ui/company/suggestionForm';
 import { notFound } from 'next/navigation';
 import SmallContainer from '@/app/ui/common/smallContainer';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 
 export default async function Page({
 	params,
@@ -32,7 +33,11 @@ export default async function Page({
 						<div className="flex">
 							<div
 								className="h-12 w-12 rounded-md border border-gray-30 bg-cover bg-center bg-no-repeat mr-2"
-								style={{ backgroundImage: ` url(${companyData.company_logo})` }}
+								style={{
+									backgroundImage: companyData.company_logo
+										? `url(${NEXT_PUBLIC_IMAGE_URL}/${companyData.company_logo})`
+										: 'url(/companyLogo/default_company_logo.png)'
+								}}
 							/>
 							<div className="ml-2 flex flex-row items-center">
 								<div className="text-base">{companyData.company_name}</div>

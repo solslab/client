@@ -6,6 +6,7 @@ import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Link from 'next/link';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 import { fetchRandomCompany } from '@/app/lib/server/queries/company';
 import { CompanyQuery } from '@/app/lib/types/models';
 
@@ -61,7 +62,7 @@ const LogoCarousel: React.FC = () => {
 									<Image
 										src={
 											company.company_logo
-												? company.company_logo
+												? `${NEXT_PUBLIC_IMAGE_URL}/${company.company_logo}`
 												: '/companyLogo/default_company_logo_white.png'
 										}
 										alt={`기업 로고 ${index + 1} - 몇솔`}

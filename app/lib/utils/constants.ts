@@ -1,5 +1,6 @@
 export const NEXT_URL = process.env.NEXT_URL;
 export const SPRING_URL = process.env.SPRING_URL;
+export const NEXT_PUBLIC_IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 export const ADMIN_URL: string = process.env.ADMIN_URL || '';
 export const NEXT_PUBLIC_KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
 export const SKILLS = [

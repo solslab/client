@@ -5,8 +5,8 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 's3.ap-northeast-2.amazonaws.com',
-				pathname: '/solslab/**'
+				hostname: 'api.sols.kr',
+				pathname: '/images/**'
 			}
 		]
 	},

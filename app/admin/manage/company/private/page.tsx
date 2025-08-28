@@ -20,6 +20,7 @@ import { CirclePlus } from 'lucide-react';
 import CreateCompanyModal from '../../../components/create-company';
 import { CompanyPageResponse, CompanyQuery } from '@/app/lib/types/models';
 import { getAllPrivateCompanyData, searchPrivateCompanies } from '@/app/lib/server/queries/admin';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 
 export default function PrivateCompanyOverviewPage() {
 	const [companies, setCompanies] = useState<CompanyPageResponse | undefined>();
@@ -88,7 +89,7 @@ export default function PrivateCompanyOverviewPage() {
 								onClick={() => router.push(`${company.company_id}`)}
 							>
 								<Image
-									src={company.company_logo || '/companyLogo/default_company_logo.png'}
+									src={company.company_logo ? `${NEXT_PUBLIC_IMAGE_URL}/${company.company_logo}` : '/companyLogo/default_company_logo.png'}
 									alt={`${company.company_name} 로고`}
 									width={48}
 									height={48}
@@ -105,7 +106,7 @@ export default function PrivateCompanyOverviewPage() {
 								onClick={() => router.push(`${company.company_id}`)}
 							>
 								<Image
-									src={company.company_logo || '/companyLogo/default_company_logo.png'}
+									src={company.company_logo ? `${NEXT_PUBLIC_IMAGE_URL}/${company.company_logo}` : '/companyLogo/default_company_logo.png'}
 									alt={`${company.company_name} 로고`}
 									width={48}
 									height={48}

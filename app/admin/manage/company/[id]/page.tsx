@@ -30,6 +30,7 @@ import {
 	AlertDialogAction
 } from '@/app/ui/shadcn/components/ui/alert-dialog';
 import { useIsAdminDomain } from '@/app/lib/hooks/useIsAdminDomain';
+import { NEXT_PUBLIC_IMAGE_URL } from '@/app/lib/utils/constants';
 
 export default function CompanyDetailPage() {
 	const [companyDetail, setCompanyDetail] = useState<Company | undefined>(undefined);
@@ -209,7 +210,7 @@ export default function CompanyDetailPage() {
 
 						<div className="w-1/2">
 							<Image
-								src={companyDetail.company_logo || '/companyLogo/default_company_logo.png'}
+								src={companyDetail.company_logo ? `${NEXT_PUBLIC_IMAGE_URL}/${companyDetail.company_logo}` : '/companyLogo/default_company_logo.png'}
 								alt={`${companyDetail.company_name} 로고`}
 								width={192}
 								height={192}
